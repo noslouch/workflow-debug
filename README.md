@@ -22,7 +22,7 @@
 
 ## Resources
 
-- Read our [CONTRIBUTING](docs/CONTIRBUTING.md) guidelines to get started
+- Read our [CONTRIBUTING](docs/CONTRIBUTING.md) guidelines to get started
 - Reach out on slack channel [#TBD]()
 - Our [roadmap]()
 - Our [RFCs]()
