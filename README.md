@@ -1,6 +1,6 @@
-# dj-rendering-ui-kit
+# dj-rendering
 
-[name TBD] is a UI Library for [TODO: add description]
+[TODO: add description]
 
 ## Getting started
 
