@@ -4,11 +4,43 @@
 
 ## Getting started
 
-## Working principles
+### CI/CD workflows
+
+## Standards & Guidelines
+
+### Documentation
+
+### Tests
+
+### Customisable (themes, styles)
+
+### Shared components decision tree
+
+### CI/CD Process
+
+### Performance benchmarks
+
 
 ## Component development guidelines
 
+### SSR Friendly
+
+Components should be able to render server side.
+
 ## Package creation guidelines
+
+Each package should strive to adhere to these core tenets.
+
+### Light packages
+
+Packages should be tree shakable so the consumers only bundle what they need.
+[TODO: add tree shakability how tos, samples (Brian's PR)]
+
+### Follow semver
+
+### Define CODEOWNERS
+
+
 
 ## Docs 📚
 
