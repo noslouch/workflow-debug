@@ -12,7 +12,7 @@
 
 ### Tests
 
-### Customisable (themes, styles)
+### Customizable (themes, styles)
 
 ### Shared components decision tree
 
@@ -20,8 +20,13 @@
 
 ### Performance benchmarks
 
-
 ## Component development guidelines
+
+Components follow [Atomic design principles](https://atomicdesign.bradfrost.com/chapter-2/) and need to meet certain conventions, standards and best practices so that they can be used and re-used across apps, teams and projects in a consistent and user friendly manner.
+
+Checkout the architecture and detailed guidelines [here](docs/component-design.md).
+
+## Package creation guidelines
 
 ### SSR Friendly
 
@@ -39,8 +44,6 @@ Packages should be tree shakable so the consumers only bundle what they need.
 ### Follow semver
 
 ### Define CODEOWNERS
-
-
 
 ## Docs 📚
 
