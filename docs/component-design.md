@@ -1,5 +1,7 @@
 # Component Design
 
+## Component Classifications
+
 ![atomic design](images/atomic%20design.png)
 
 ### Atom
@@ -15,3 +17,13 @@ Molecule is the first unit that makes business decisions ranging from business l
 An organism is a group of molecules, atoms composed together to form a feature on a page.
 
 [Food for thought: should the be part of UI library or app itself?]
+
+### Example
+
+![atomic design example](images/atomic%20design%20-%20example.png)
+
+## Shared Components Decision Tree
+
+There needs to be at least 3 (or 2?) common use cases before thinking about making a component shared.
+
+[todo: how do we decide if a component should be under `/shared` repo]

@@ -20,30 +20,15 @@
 
 ### Performance benchmarks
 
-## Component development guidelines
+## Component Development Guidelines
 
 Components follow [Atomic design principles](https://atomicdesign.bradfrost.com/chapter-2/) and need to meet certain conventions, standards and best practices so that they can be used and re-used across apps, teams and projects in a consistent and user friendly manner.
 
 Checkout the architecture and detailed guidelines [here](docs/component-design.md).
 
-## Package creation guidelines
+## Package Creation Guidelines
 
-### SSR Friendly
-
-Components should be able to render server side.
-
-## Package creation guidelines
-
-Each package should strive to adhere to these core tenets.
-
-### Light packages
-
-Packages should be tree shakable so the consumers only bundle what they need.
-[TODO: add tree shakability how tos, samples (Brian's PR)]
-
-### Follow semver
-
-### Define CODEOWNERS
+Checkout the package guidelines [here](docs/packages.md).
 
 ## Docs 📚
 
