@@ -1,24 +1,44 @@
 # dj-rendering
 
-[TODO: add description]
-
-## Getting started
-
-### CI/CD workflows
+This is repo for documenting common standards & guidelines for DJ Rendering UI library.
 
 ## Standards & Guidelines
 
 ### Documentation
 
+#### Storybook
+
+#### Schema props
+
 ### Tests
+
+#### Snapshot tests
+
+#### Test coverage
 
 ### Customizable (themes, styles)
 
 ### Shared components decision tree
 
+How do I decide if a component should be shared? Refer to [Component Design/Shared Components Decision Tree](/.component-deisgn#sharedcomponentsdecisiontree) for the checklist and process to do so.
+
 ### CI/CD Process
 
+#### Automated versioning
+
+#### Automated linting, fixing
+
+#### Automated testing
+
+#### Automated deployments
+
+#### Automated PR process helpers
+
 ### Performance benchmarks
+
+#### Bundle size checks
+
+#### Build time checks
 
 ## Component Development Guidelines
 
@@ -30,15 +50,21 @@ Checkout the architecture and detailed guidelines [here](docs/component-design.m
 
 Checkout the package guidelines [here](docs/packages.md).
 
-## Docs 📚
-
 ## How to? 🙋‍♂️
 
 ### Reach out for help
 
+- slack channel
+- distribution list?
+
 ### Propose new changes
 
+- RFC process?
+- Raise an issue
+
 ### Upgrade shared dependencies
+
+- how to upgrade shared dependencies
 
 ## Resources
 
