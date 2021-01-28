@@ -27,3 +27,9 @@ An organism is a group of molecules, atoms composed together to form a feature o
 Development on shared components is complex and adds to cost (time and effort). This process is to make sure that the cost of developing on Shared Components is worth the gain.
 
 ![shared component decision tree](images/shared-comp-decision-tree.png)
+
+## Migrating components
+
+You can migrate existing web-ui or other components to get a jump start on developing a component. A typical migration flow would involve the following steps
+
+![existing component migration steps](images/comp-migration-flow.png)
