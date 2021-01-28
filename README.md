@@ -2,6 +2,8 @@
 
 This is repo for documenting common standards & guidelines for DJ Rendering UI library.
 
+![shared ui library](docs/images/shared-ui-library.png)
+
 ## Standards & Guidelines
 
 ### Documentation
