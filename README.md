@@ -22,7 +22,7 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
 
 ### Shared components decision tree
 
-How do I decide if a component should be shared? Refer to [Component Design/Shared Components Decision Tree](/.component-deisgn#sharedcomponentsdecisiontree) for the checklist and process to do so.
+How do I decide if a component should be shared? Refer to [Component Design/Shared Components Decision Tree](docs/component-design.md#shared-components-decision-tree) for the checklist and process to do so.
 
 ### CI/CD Process
 
