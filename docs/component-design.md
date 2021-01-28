@@ -24,6 +24,6 @@ An organism is a group of molecules, atoms composed together to form a feature o
 
 ## Shared Components Decision Tree
 
-There needs to be at least 3 (or 2?) common use cases before thinking about making a component shared.
+Development on shared components is complex and adds to cost (time and effort). This process is to make sure that the cost of developing on Shared Components is worth the gain.
 
-[todo: how do we decide if a component should be under `/shared` repo]
+![shared component decision tree](images/shared-comp-decision-tree.png)
