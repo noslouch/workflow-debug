@@ -56,13 +56,13 @@ Checkout the package guidelines [here](docs/packages.md).
 
 ### Reach out for help
 
-- slack channel
+- Slack [#gcn-component-library](https://app.slack.com/client/T025QN6JG/C01LF5KCX0C)
 - distribution list?
 
 ### Propose new changes
 
 - RFC process?
-- Raise an issue
+- Raise a GitHub issue
 
 ### Upgrade shared dependencies
 
