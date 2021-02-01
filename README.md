@@ -50,6 +50,15 @@ How do I decide if a component should be shared? Refer to [Component Design/Shar
 
 #### Build time checks
 
+## Getting Started
+### To install for local development: 
+```
+$ git clone git@github.com:newscorp-ghfb/dj-rendering.git
+$ cd dj-rendering
+$ npm install
+$ npm run themes
+$ npm run storybook
+```
 ## Component Development Guidelines
 
 Components follow [Atomic design principles](https://atomicdesign.bradfrost.com/chapter-2/) and need to meet certain conventions, standards and best practices so that they can be used and re-used across apps, teams and projects in a consistent and user friendly manner.
