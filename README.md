@@ -56,8 +56,7 @@ How do I decide if a component should be shared? Refer to [Component Design/Shar
 $ git clone git@github.com:newscorp-ghfb/dj-rendering.git
 $ cd dj-rendering
 $ npm install
-$ npm run themes
-$ npm run storybook
+$ npm run start
 ```
 ## Component Development Guidelines
 
