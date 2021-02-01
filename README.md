@@ -8,6 +8,14 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
 
 ### Documentation
 
+### Brief guide to repo structure 🗺
+* `docs/` contains assets, components, and guides
+  * `components/` contains `README` files for each component 
+* `src/` contains all of the source material + subdirectories
+  * `components/` contains each exportable component as well as a `shared` folder for reusable internal components
+  * `icons/`
+  * `index.js` dictates exportable components
+
 #### Storybook
 
 #### Schema props
