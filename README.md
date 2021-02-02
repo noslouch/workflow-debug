@@ -8,6 +8,14 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
 
 ### Documentation
 
+### Brief guide to repo structure 🗺
+* `docs/` contains assets, components, and guides
+  * `components/` contains `README` files for each component 
+* `src/` contains all of the source material + subdirectories
+  * `components/` contains each exportable component as well as a `shared` folder for reusable internal components
+  * `icons/`
+  * `index.js` dictates exportable components
+
 #### Storybook
 
 #### Schema props
@@ -42,11 +50,110 @@ How do I decide if a component should be shared? Refer to [Component Design/Shar
 
 #### Build time checks
 
+## Getting Started
+### To install for local development: 
+```
+$ git clone git@github.com:newscorp-ghfb/dj-rendering.git
+$ cd dj-rendering
+$ npm install
+$ npm run start
+```
 ## Component Development Guidelines
 
 Components follow [Atomic design principles](https://atomicdesign.bradfrost.com/chapter-2/) and need to meet certain conventions, standards and best practices so that they can be used and re-used across apps, teams and projects in a consistent and user friendly manner.
 
 Checkout the architecture and detailed guidelines [here](docs/component-design.md).
+
+### Conventions
+* Use `dj-design-tokens` in CSS whenever possible via import
+```js
+import { ColorMidnight } from '@newscorp-ghfb/dj-design-tokens/dist/js/wsj/tokens.es6';
+```
+* If there are several different styles via dark mode and light mode, save those as separate styles: 
+```js
+
+import styled, { css } from 'styled-components';
+import { ColorWhite, ColorMidnight } from '@newscorp-ghfb/dj-design-tokens/dist/js/wsj/tokens.es6.js';
+
+const darkStyles = css`
+  background: ${ColorMidnight};
+  color: ${ColorWhite};
+`;
+
+const lightStyles = css`
+  background: ${ColorWhite};
+  color: ${ColorMidnight};
+`;
+
+const StyledNewComponent = styled.div`
+  @media (prefers-color-scheme: dark) {
+    ${darkStyles}
+  }
+  
+  @media (prefers-color-scheme: light) {
+    ${lightStyles}
+  }
+
+  && {${(props) => (props.isDark ? darkStyles : lightStyles)}}
+`;
+
+const NewComponent = ({isDark}) => (
+  <StyledNewComponent isDark={isDark}>
+    hello, i am new
+  </StyledNewComponent>
+);
+
+```
+* Set the respective `darkMode` setting within `NewComponent.stories.js`: 
+```js
+
+export default {
+  title: 'New Component',
+  component: NewComponent,
+  parameters: {
+    darkMode: {
+      current: 'light',
+    },
+    'in-dsm': {
+      id: 'XXXX',
+    },     
+  },
+};
+
+export const LightNewComponent = () => (
+  <NewComponent />
+);
+
+export const DarkNewComponent = () => (
+  <NewComponent isDark />
+);
+
+DarkNewComponent.parameters = {
+  darkMode: {
+    current: 'dark',
+  },
+};
+
+```
+
+### To build a component: 
+_using `NewComponent` as an example_
+
+**1. Create a new component folder to `src/components/`**
+```
+src/components/NewComponent/
+```
+* Add an `index.js` file where you will create & export your `styled-component` as well as dictate `propTypes` and `defaultProps`.
+* Add `NewComponent.stories.js` where you will import your component, export stories, pass `darkMode` parameters, and eventually pass your `in-dsm` id.
+* Pull from `src/components/shared` when you can
+* If your component has subcomponents that are small and do not need to be shared among other components or exportable, add them within the main index folder. If they are larger / require use of `state`, etc, create a folder -> `NewComponent/SubComponent/`
+
+**2. Export the component from `src/index.js`**
+```js
+export { default as NewComponent } from './components/NewComponent';
+```
+
+**3. Create a doc for your component at `docs/components/NewComponent.md`**
 
 ## Package Creation Guidelines
 
