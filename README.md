@@ -10,9 +10,10 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
 
 ### Brief guide to repo structure 🗺
 * `docs/` contains assets, components, and guides
-  * `components/` contains `README` files for each component 
+  * `packages/` contains `README` files for each component 
 * `src/` contains all of the source material + subdirectories
-  * `components/` contains each exportable component as well as a `shared` folder for reusable internal components
+  * `packages/` contains the source code, storybook data and tests of all components
+     * `/packages/:package` Contains groups of components that are logical to separate. This can be grouped by brand - like WSJ, Barrons etc or by application, for example /newsletter-center 
   * `icons/`
   * `index.js` dictates exportable components
 
@@ -139,21 +140,21 @@ DarkNewComponent.parameters = {
 ### To build a component: 
 _using `NewComponent` as an example_
 
-**1. Create a new component folder to `src/components/`**
+**1. Create a new component folder inside a package `src/packages/:package`**
 ```
-src/components/NewComponent/
+src/packages/:package/NewComponent/
 ```
 * Add an `index.js` file where you will create & export your `styled-component` as well as dictate `propTypes` and `defaultProps`.
 * Add `NewComponent.stories.js` where you will import your component, export stories, pass `darkMode` parameters, and eventually pass your `in-dsm` id.
-* Pull from `src/components/shared` when you can
+* Pull from `src/packages/shared` when you can
 * If your component has subcomponents that are small and do not need to be shared among other components or exportable, add them within the main index folder. If they are larger / require use of `state`, etc, create a folder -> `NewComponent/SubComponent/`
 
 **2. Export the component from `src/index.js`**
 ```js
-export { default as NewComponent } from './components/NewComponent';
+export { default as NewComponent } from './packages/:package/NewComponent';
 ```
 
-**3. Create a doc for your component at `docs/components/NewComponent.md`**
+**3. Create a doc for your component at `docs/packages/:package/NewComponent.md`**
 
 ## Package Creation Guidelines
 
