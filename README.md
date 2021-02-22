@@ -65,6 +65,30 @@ How do I decide if a component should be shared? Refer to [Component Design/Shar
 
 #### Build time checks
 
+### Usage of 3rd party React components inside this library
+
+Using third party libraries and componens can speed up delivery of product but it carries a few risks and drawbacks.
+
+Each team needs to assess including third party and make concious decision if a third party is needed. 
+
+Here are some guidelines to help decide:
+ 
+ - Only use well-supported and documened code.
+Is this library / component well supported. Inspect its NPM profile page to learn weekly downloads / repo stars etc.
+ 
+ - Do not use security vulnerable code
+ Github flags security risk in packages and dependancies - avoid using packages that are flagged as high/critical risk 
+  
+  - The size of the package should match its usefulness
+Based on our rendering app or build strategy, dependancies would end up loaded on user client. We should analyze and avoid using big bundles if we don't have to as this would have negative impact on performance
+
+  - Ensure similar library is not already used in the package
+Sometimes differnet teams might not be aware a similar package already has been used in the package. 
+ 
+   - Packages used by multiple teams would require cross-team approval or the core team's approval. 
+ 
+**With the above in mind, do not re-invent the wheel but leverage good, secure, popular and maintained third party code.**
+
 ## Getting Started
 
 ### To install for local development:
