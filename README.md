@@ -50,19 +50,73 @@ How do I decide if a component should be shared? Refer to [Component Design/Shar
 
 #### Automated versioning
 
+During deployment process, we automatically bump version based on [Conventional Commits](https://www.conventionalcommits.org/).
+
+`lerna version --conventional-commits` will use the Conventional Commits Specification to [determine the version bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) and generate `CHANGELOG.md` files.
+
+##### On merge to `main`
+
+With the `--conventional-prerelease` flag, `lerna version --conventional-commits`
+creates pre release versions by prefixing the version recommendation from conventional commits with `pre`.
+
+##### On release deploy
+
+With the `--conventional-graduate` flag, `lerna version --conventional-commits` graduates the specified packages with the version recommendation from conventional commits.
+
 #### Automated linting, fixing
+
+`.github/workflows/linter.yml` runs linting and provides automatic fixes when feasible. Any linting errors that cannot be auto-fixed are bubbled up for the developer to take fix. This is done via branch protection mandatory checks. The PR will show any linting failures as failed status checks preventing merges to main branch.
+
+##### Linter workflow
+
+When a commit is pushed to a PR:
+
+- run prettier to format code according to defined rules
+- if changes made, auto commit them to PR
+- attempt linting most recent code
+- if no errors, report status `PASS`
+- if errors, report status `FAIL` (blocks PR from getting merged)
+
+Example auto fix commit:
+
+![auto commit fixes](docs/images/auto-commit-fixes.png)
 
 #### Automated testing
 
+`.github/workflows/continous-testing.yml` runs unit testing for each commit as it is pushed in a PR. The PR is blocked from merging if tests fail.
+
+`.github/workflows/continous-code-quality.yml` runs code quality checks for each commit as it is pushed in a PR. PR reviewers can weigh in if a piece of code is too complex and ask for refactoring or override with justifications on a case by case basis. [TODO: Exact tool, implementation TBD after SPIKE is concluded].
+
 #### Automated deployments
 
+When a PR is merged to `main` branch, `.github/workflows/continous-deploy.yml` triggers an automatic deploy of the **_changed_** packages to create a **prerelease** version of the package. This enables users to start using the changes immediately without releasing an unstable version in the wild.
+
+Automatic deploy follows these rules:
+
+- check if `no-deploy` label is applied to PR. If so, skip deploy. This is an escape hatch for emergency cases and should not be used normally
+- run `lerna changed` to get a list of changed packages
+- run `lerna version --conventional-commits --conventional-prerelease=package-X,package-M` to create pre release packages in the npm registry
+
+Once a package is deemed stable, a new version can be released by triggering the [release workflow](TODO add link).
+
 #### Automated PR process helpers
+
+In order to ease the maintenance burden on library maintainers, there are several automated chores that get executed when a PR is opened/changed. Some of these are:
+
+- **PR Labeler** - Adds a repo label based on changed files. This allows developer to quickly sort out what relevant PRs based on their domain.
+- **PR Size** - Analyzes changed files, insertions/deletions per file and total number of changes for the changeset and adds a t-shirt size label. It also posts a helpful comment explaining what it means. E.g., PR sizes of `small`, `medium` are preferred and encouraged. `large` PRs are borderline acceptable if the reviewers agree (the dev needs to provide reasons as to why this couldn't be broken into smaller PRs). `x-large` PRs are a strict no no and should be refactored.
+- **Stale** - Labels PRs with no activity and cleans them up if no further activity is found after a certain amount of time.
+- **Semantic Pull Request** - ensures pull request title or at least one commit (in case of single commit PRs) conforms to [Conventional Commits spec](https://www.conventionalcommits.org/).
 
 ### Performance benchmarks
 
 #### Bundle size checks
 
+Automated check that analyzes the bundle size when a commit is pushed to a PR. The new stats are compared to the benchmark stats stored in `main` branch and the delta is reported in the PR. This flags any unwanted bundle size increases for PR reviewers.
+
 #### Build time checks
+
+Automated check that analyzes the `npm install` when a commit is pushed to a PR. This flags any potential increases to PR reviewers so that corrective actions can be taken.
 
 ## Getting Started
 
