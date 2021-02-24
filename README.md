@@ -36,9 +36,55 @@ Storybook is used to preview and document our UI components. [See our guidelines
 
 ### Tests
 
+The library's NPM modules should be maintaned like an open-source project. As such, each contributor should write tests that ensure that whoever picks up their component can be sure of its functionality 
+
+**Unit tests** should be fundamental part of each component added to the library. Their goal is to test the component output, given props and ensure smooth refactoring is possible with high trust in the end result. 
+
+The library is using `Jest` as a test runner and `React Testing Library` for API and a test helper when working with components
+
+When designing tests, follow industry standards described here: ![React Testing](https://reactjs.org/docs/testing-recipes.html) and ![React Testing Library helpers](https://testing-library.com/docs/react-testing-library/api)
+
+
+**Integration tests**  can be achieved by using visual rendering tools such as Storybook. There, we should expect to visualise and preview components. More in the Storybook section above.
+
+**Page Browser tests** is the domain of each team and not part of this library. They would be responsible for creating end-to-end testing suite to test their web pages as desired. Some tools to use could be:
+
+- New Relic Syntetics
+- Selenium Web Driver / Mocha
+- Nightwatch / Cucumber
+
+#### Testing Principles
+
+1) Each component should contain tests that cover **all** real-use cases as well as edge-cases
+2) Child components should be mocked
+3) Dependencies, even built-in one like setTimeOut should be mocked
+4) API calls should be stubbed/mocked
+5) When refactoring components, failed tests should not be ignored. This might indicate app will fail with the newer version of the library.
+6) Difficult to test component might indicate badly written one - consider refactoring it to reduce effects/dependancies
+
 #### Snapshot tests
 
+We should avoid using snapshot tests. While easy to set up, they can lead to poor functionality coverage and can lead to developer detachment from the testing problem. 
+
 #### Test coverage
+
+While flawed, it is the metric we have to use to ensure teams follow testing requirements. As such, the library enforces minimum testing coverage for each and every component.
+
+The following minimums would be set:
+
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      },
+      "./packages/shared": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      },
+ 
 
 ### Customizable (themes, styles)
 
