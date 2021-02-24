@@ -183,37 +183,28 @@ Checkout the architecture and detailed guidelines [here](docs/component-design.m
 
 ### Conventions
 
-- Use `dj-design-tokens` in CSS whenever possible via import
+- **WSJ** Use `dj-design-tokens` in CSS whenever possible via import
 
 ```js
 import { ColorMidnight } from '@newscorp-ghfb/dj-design-tokens/dist/js/wsj/tokens.es6'
 ```
 
-- If there are several different styles via dark mode and light mode, save those as separate styles:
+- If there are different styles via dark mode and light mode, save those as separate styles:
 
 ```js
 import styled, { css } from 'styled-components'
-import { ColorWhite, ColorMidnight } from '@newscorp-ghfb/dj-design-tokens/dist/js/wsj/tokens.es6.js'
 
 const darkStyles = css`
-  background: ${ColorMidnight};
-  color: ${ColorWhite};
+  background: #000;
+  color: #FFF;
 `
 
 const lightStyles = css`
-  background: ${ColorWhite};
-  color: ${ColorMidnight};
+  background: #FFF;
+  color: #000;
 `
 
 const StyledNewComponent = styled.div`
-  @media (prefers-color-scheme: dark) {
-    ${darkStyles}
-  }
-
-  @media (prefers-color-scheme: light) {
-    ${lightStyles}
-  }
-
   && {
     ${(props) => (props.isDark ? darkStyles : lightStyles)}
   }
