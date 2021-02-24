@@ -22,10 +22,21 @@ An organism is a group of molecules, atoms composed together to form a feature o
 
 ![atomic design example](images/atomic%20design%20-%20example.png)
 
-## Shared Components Decision Tree
+## Shared Components
 
-Development on shared components is complex and adds to cost (time and effort). This process is to make sure that the cost of developing on Shared Components is worth the gain.
+Shared components are components that are widely used across products with a shared UX. They encapsulate logic that is shared across products allowing all to benefit from their utility.
 
+Product specific design should be customizable based on props or themes without the need to change markup.
+
+Shared components should not include any product specific logic. Accordingly props should all be generic and not reference specific products.
+
+### Complexity
+Development on shared components is complex and adds to cost (time and effort). Only components that have sufficient complexity to warrant the cost of upkeep should be shared, ensuring that the cost of developing on Shared Components is worth the gain.
+
+### New Features
+Product specific features that are unlikely to be implement across all products should not be included in a shared component.
+
+Features that are intially being implemented for a single product, with the possibility of wider use, should take into account the current complexity of the component when deciding if adding the logic to the existing shared component is recommended. 
 ![shared component decision tree](images/shared-comp-decision-tree.png)
 
 ## Migrating components
