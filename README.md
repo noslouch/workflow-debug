@@ -244,18 +244,18 @@ DarkNewComponent.parameters = {
 
 _using `NewComponent` as an example_
 
-**1. Create a new component folder inside a package `src/packages/:package`**
+**1. Create a new component folder inside a package `packages/:package`**
 
 ```
-src/packages/:package/NewComponent/
+packages/:package/NewComponent/
 ```
 
 - Add an `index.js` file where you will create & export your `styled-component` as well as dictate `propTypes` and `defaultProps`.
 - Add `NewComponent.stories.js` where you will import your component, export stories, pass `darkMode` parameters, and eventually pass your `in-dsm` id.
-- Pull from `src/packages/shared` when you can
+- Pull from `packages/shared` when you can
 - If your component has subcomponents that are small and do not need to be shared among other components or exportable, add them within the main index folder. If they are larger / require use of `state`, etc, create a folder -> `NewComponent/SubComponent/`
 
-**2. Export the component from `src/index.js`**
+**2. Export the component from `index.js`**
 
 ```js
 export { default as NewComponent } from './packages/:package/NewComponent'
