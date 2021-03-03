@@ -92,6 +92,10 @@ The following minimums would be set:
 
 How do I decide if a component should be shared? Refer to [Component Design/Shared Components Decision Tree](docs/component-design.md#shared-components-decision-tree) for the checklist and process to do so.
 
+### Should it be a stand-alone package?
+
+There are times when a component might offer utility across so many use-cases that it merits its own repository. Refer to the [stand-alone guidelines](docs/stand-alone-guidelines.md) for more information.
+
 ### CI/CD Process
 
 #### Automated versioning
