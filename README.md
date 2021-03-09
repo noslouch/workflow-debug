@@ -42,7 +42,7 @@ The library's NPM modules should be maintaned like an open-source project. As su
 
 The library is using `Jest` as a test runner and `React Testing Library` for API and a test helper when working with components
 
-When designing tests, follow industry standards described here: ![React Testing](https://reactjs.org/docs/testing-recipes.html) and ![React Testing Library helpers](https://testing-library.com/docs/react-testing-library/api)
+When designing tests, follow industry standards described here: [React Testing](https://reactjs.org/docs/testing-recipes.html) and [React Testing Library helpers](https://testing-library.com/docs/react-testing-library/api)
 
 
 **Integration tests**  can be achieved by using visual rendering tools such as Storybook. There, we should expect to visualise and preview components. More in the Storybook section above.
