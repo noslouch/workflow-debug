@@ -12,3 +12,4 @@ jobs:
         uses: adamzolyak/monorepo-pr-labeler-action@2.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_DIRS: 'packages'
