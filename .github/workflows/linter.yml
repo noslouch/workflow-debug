@@ -1,0 +1,140 @@
+# This workflow will lint and format JS, HTML, CSS, Markdown, Yaml, Python & Docker files.
+# It runs Prettier to autofix any inconsistencies and autocommits those changes.
+# If prettier fixes and changes any files, it'll skip linting in the same run as there's no point in linting current code (we know it had issues);
+# however, committing the most recent changes will again trigger this workflow and this time, Prettier should be a no-op and thus, linting will
+# flag any issues that cannot be automatically fixed.
+#
+# 1. Auto fixing is optional. If you prefer not to autofix, simply delete the first job.
+#
+# 2. Autocommit is optional. If you prefer to detect any issues Prettier finds but not autocommit the changes,
+#    then remove the last 2 steps (as marked in the comments below)
+#
+# 3. In order to trigger workflow runs on auto commits, you must use a PAT.
+#    Creating a service account is highly recommended as using your own PAT opens your own account for misuse.
+#
+# 4. To setup autcommits:
+#    a. Create a service account
+#    b. Create a PAT for the service account
+#    c. [Optional] Setup commit verification for service account: https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification
+#    d. [Optional] If you setup code signing, add the GPG Private key and Passphrase as secrets.
+
+# 5. Secrets used and their purpose
+#    a. BOT_TOKEN: Service account's PAT (only needed for auto commit)
+#    b. BOT_EMAIL: Service account's Email (only needed for auto commit)
+#    c. GPG_PRIVATE_KEY: Service account's GPG Private key (only needed for auto commit)
+#    d. GPG_PASSPHRASE: Service account's GPG Passphrase (only needed for auto commit)
+#
+# Logo By Isarra - Own work, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=61576718
+
+name: Auto format & Lint files
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  
+jobs:
+  # delete this job if you just want to lint and not autofix with prettier
+  format:
+    runs-on: ubuntu-latest
+    outputs:
+      filesChanged: ${{ steps.autocommit.outputs.changes_detected }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+          # you can use GITHUB_TOKEN here if you don't want to auto commit changes
+          token: ${{ secrets.BOT_TOKEN }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
+      - name: Detects Files Changes
+        id: file_changes
+        uses: trilom/file-changes-action@v1.2.4
+
+      - name: Files to Prettify
+        id: prettify
+        run: |
+          changedFiles=$(jq -c -s '.[0] + .[1]' "$HOME/files_modified.json" "$HOME/files_added.json")
+          supportedFiles=$(jq -c \
+            '[.[] | select(. | test(".(json|html|css|js|md)$") or (endswith(".yml") and (contains(".github/workflows/") | not)))]' \
+            <<< ${changedFiles} \
+          )
+          echo "::set-output name=files::$supportedFiles"
+
+      - name: Prettify Code Base
+        if: "!contains(toJson(steps.prettify.outputs.files), '[]')"
+        run: |
+          npx prettier --config .config/.prettierrc.json --ignore-path .config/.prettierignore \
+            --write ${{ join(fromJSON(steps.prettify.outputs.files), ' ') }}
+
+      # delete these following steps if you don't want to auto commit changes
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v2
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Commit changes
+        id: autocommit
+        uses: stefanzweifel/git-auto-commit-action@v4.4.0
+        with:
+          commit_message: 'chore: Auto commit changes 🛠'
+          commit_options: '--no-verify -S'
+          commit_user_email: ${{ secrets.BOT_EMAIL }}
+
+  linter:
+    runs-on: ubuntu-latest
+    needs: format
+    # skip linting if prettier made newer commits. they will be linted on the pushed commit.
+    if: needs.format.outputs.filesChanged == 'false'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: File Changes Action
+        id: file_changes
+        uses: trilom/file-changes-action@v1.2.4
+
+      - name: Group Files by extension
+        id: group_files
+        run: |
+          FILES_CHANGED=$(jq -c -s '.[0] + .[1]' "$HOME/files_modified.json" "$HOME/files_added.json")
+          echo "::set-output name=jsFiles::$(jq -c -s '.[] | map(select(. | endswith(".js")))' <<< ${FILES_CHANGED})"
+          echo "::set-output name=jsonFiles::$(jq -c -s '.[] | map(select(. | endswith(".json")))' <<< ${FILES_CHANGED})"
+          echo "::set-output name=markdowns::$(jq -c -s '.[] | map(select(. | endswith(".md")))' <<< ${FILES_CHANGED})"
+          echo "::set-output name=yamls::$(jq -c -s '.[] | map(select(. | endswith(".yml") and (contains(".github/workflows/") | not)))' <<< ${FILES_CHANGED})"
+
+      - name: Lint JSON Files
+        if: always() && endsWith(steps.group_files.outputs.jsonFiles, '.json"]')
+        run: |
+          set +e
+          npm i jsonlint -s
+          jsonFiles=${{ join(fromJSON(steps.group_files.outputs.jsonFiles), ',') }}
+
+          # jsonlint will exit on the first error; we want it report all errors, so we need to do some hand holding
+          jsonlintExitCode=0
+          for i in ${jsonFiles//,/ }; do
+            lintErrors="$(./node_modules/.bin/jsonlint -q -c $i 2>&1 >/dev/null)"
+            ec=$?
+            if [ $ec -ne 0 ]; then
+                jsonlintExitCode=$ec
+                echo "${lintErrors}"
+            fi
+          done
+          exit $jsonlintExitCode
+
+      - name: Lint Markdown Files
+        if: always() && endsWith(steps.group_files.outputs.markdowns, '.md"]')
+        run: npx -q markdownlint-cli -c .config/.markdownlint.json ${{ join(fromJSON(steps.group_files.outputs.markdowns), ' ') }}
+
+      - name: Lint Yaml Files
+        if: always() && endsWith(steps.group_files.outputs.yamls, '.yml"]')
+        run: |
+          sudo apt-get install yamllint -qq > /dev/null
+          yamllint -c .config/.yamllint.yml ${{ join(fromJSON(steps.group_files.outputs.yamls), ' ') }}
