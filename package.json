@@ -1,0 +1,20 @@
+{
+  "name": "@dj-rendering/monorepo",
+  "description": "The Dow Jones components monorepo",
+  "author": "DJ Engineering <DJEngineering@dowjones.com>",
+  "private": true,
+  "version": "0.0.0",
+  "engines": {
+    "node": "^14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:newscorp-ghfb/dj-rendering.git"
+  },
+  "devDependencies": {
+    "lerna": "^4.0.0"
+  },
+  "workspaces": [
+    "packages/**"
+  ]
+}

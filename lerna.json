@@ -1,0 +1,15 @@
+{
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "packages": ["packages/*"],
+  "ignoreChanges": ["README.md", "docs/*"],
+  "command": {
+    "publish": {
+      "registry": "https://npm.pkg.github.com"
+    },
+    "version": {
+      "allowBranch": "main"
+    }
+  }
+}
