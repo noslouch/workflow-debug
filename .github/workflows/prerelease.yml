@@ -1,0 +1,74 @@
+# when a PR is merged into `main`, this will run the tests for every package and publish a new package
+# prerelease packages are identified with `pre` after the next version number
+# e.g. @newscorp-ghfb/<pkg>@0.2.0-pre.0 will eventually become @newscorp-ghfb@0.2.0
+# successive prereleases will bump the final number, so `pre.0` becomes `pre.1`, and so on.
+#
+# PRs with the `no-deploy` label will skip this workflow
+
+name: Prerelease
+
+on:
+  pull_request:
+    types: [closed]
+    branches: [main]
+
+jobs:
+  main:
+    # filter for merged PRs and skip any with our escape hatch label 'no-deploy'
+    if: ${{ github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no-deploy') }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        # so lerna can properly compare versions
+        with:
+          fetch-depth: "0"
+    
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+          scope: '@newscorp-ghfb'
+
+      - name: install lerna locally
+        run: yarn
+      
+      - name: bootstrap deps
+        run: lerna bootstrap --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+
+      # run scripts without auth token
+      # https://github.com/actions/setup-node
+      - name: run any postinstall scripts
+        run: lerna exec -- npm rebuild
+
+      - name: tests
+        run: lerna run test
+
+      - name: import GPG key
+        uses: crazy-max/ghaction-import-gpg@v2
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: publish prerelease
+        run: |
+          git config user.eamil ${{ secrets.BOT_EMAIL }}
+
+          # TODO: remove --allow-branch before merging to master
+          lerna publish \
+            --yes \
+            --preid pre \
+            --conventional-commits \
+            --conventional-prerelease \
+            --sign-git-tag \
+            --sign-git-commit \
+            --message "chore(publish): prerelease"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}

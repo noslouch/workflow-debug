@@ -1,0 +1,94 @@
+name: PR Deployer
+
+on:
+  workflow_dispatch:
+  repository_dispatch: 
+    types: [deploy-pr]
+
+env:
+  ref: ${{ github.event.client_payload.ref }}
+  branch: ${{ github.event.client_payload.branch }}
+  pr_number: ${{ github.event.client_payload.pr_number }}
+
+jobs:
+  # debug:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: hmarr/debug-action@v2
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - run: 'echo "payload: ${{ toJson(github.event) }}"'
+
+  deploy_pr:
+    name: PR Deployer
+    runs-on: ubuntu-latest
+
+    # first case is for adding the label
+    # second case is when the PR is updated after having been labelled
+    # this avoids running when other labels are applied
+
+    steps:
+      - uses: actions/checkout@v2
+        # so lerna can properly compare versions
+        with:
+          fetch-depth: "0"
+          ref: ${{ env.ref }}
+      
+      # these event types leave us in a detached state
+      # lerna needs to be on a branch to publish
+      - name: checkout branch
+        run: git checkout ${{ env.branch }}
+    
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+          scope: '@newscorp-ghfb'
+
+      - name: install lerna locally
+        run: yarn
+
+      - name: bootstrap deps
+        run: lerna bootstrap --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+
+      # run scripts without auth token
+      # https://github.com/actions/setup-node
+      - name: run any postinstall scripts
+        run: lerna exec -- npm rebuild
+
+      - name: tests
+        run: lerna run test
+
+      - name: import GPG key
+        uses: crazy-max/ghaction-import-gpg@v2
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: publish prerelease
+        run: |
+          git config user.eamil ${{ secrets.BOT_EMAIL }}
+
+          PREID="pr${{ env.pr_number }}"
+
+          # TODO: remove --allow-branch before merging to master
+          lerna publish \
+            --allow-branch ${{ env.branch }} \
+            --yes \
+            --preid $PREID \
+            --pre-dist-tag $PREID \
+            --conventional-commits \
+            --conventional-prerelease \
+            --sign-git-tag \
+            --sign-git-commit \
+            --message "chore(publish): deploy $PREID"
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+          

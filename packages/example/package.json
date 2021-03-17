@@ -1,6 +1,6 @@
 {
-  "name": "@dj-rendering/example",
-  "version": "0.1.0",
+  "name": "@newscorp-ghfb/example",
+  "version": "0.2.0-pre.0",
   "description": "just an example package",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",

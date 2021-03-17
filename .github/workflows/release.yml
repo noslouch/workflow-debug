@@ -1,0 +1,68 @@
+# TKTK how is a graduated release triggered?
+
+name: Release
+
+# what's the target here?
+on:
+  pull_request:
+    types: [closed]
+
+jobs:
+
+  main:
+    if: false
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        # so lerna can properly compare versions
+        with:
+          fetch-depth: "0"
+    
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+          scope: '@newscorp-ghfb'
+
+      - name: install lerna locally
+        run: yarn
+
+      - name: bootstrap deps
+        run: lerna bootstrap --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+
+      # run scripts without auth token
+      # https://github.com/actions/setup-node
+      - name: run any postinstall scripts
+        run: lerna exec -- npm rebuild
+
+      - name: tests
+        run: lerna run test
+
+      - name: import GPG key
+        uses: crazy-max/ghaction-import-gpg@v2
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: publish prerelease
+        run: |
+          git config user.eamil ${{ secrets.BOT_EMAIL }}
+
+          # TODO: remove --allow-branch before merging to master
+          lerna publish \
+            --yes \
+            --conventional-commits \
+            --conventional-graduate \
+            --sign-git-tag \
+            --sign-git-commit \
+            --message "chore(publish): releaseing" \
+            --create-release github
+        env:
+          GH_TOKEN: ${{ secrets.BOT_TOKEN }}

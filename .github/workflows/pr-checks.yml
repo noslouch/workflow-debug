@@ -1,49 +1,61 @@
-# This workflow will lint and format JS, HTML, CSS, Markdown, Yaml, Python & Docker files.
-# It runs Prettier to autofix any inconsistencies and autocommits those changes.
-# If prettier fixes and changes any files, it'll skip linting in the same run as there's no point in linting current code (we know it had issues);
-# however, committing the most recent changes will again trigger this workflow and this time, Prettier should be a no-op and thus, linting will
-# flag any issues that cannot be automatically fixed.
+# This workflow runs on all PRs to enforce coding standards, naming conventions and optionally publish to a unique dist tag.
 #
-# 1. Auto fixing is optional. If you prefer not to autofix, simply delete the first job.
-#
-# 2. Autocommit is optional. If you prefer to detect any issues Prettier finds but not autocommit the changes,
-#    then remove the last 2 steps (as marked in the comments below)
-#
-# 3. In order to trigger workflow runs on auto commits, you must use a PAT.
-#    Creating a service account is highly recommended as using your own PAT opens your own account for misuse.
-#
-# 4. To setup autcommits:
-#    a. Create a service account
-#    b. Create a PAT for the service account
-#    c. [Optional] Setup commit verification for service account: https://docs.github.com/en/github/authenticating-to-github/managing-commit-signature-verification
-#    d. [Optional] If you setup code signing, add the GPG Private key and Passphrase as secrets.
+# The jobs are:
+#   `label_pr`: label the PR based on which files are changed
+#   `lint_pr`: enforces the conventional commit naming convention for PR titles
+#   `format_code`: runs our prettier config on the code base, fixes violations in place and commits them
+#   `lint_code`: runs syntax checking and linting over JSON, Markdown, Yaml, and JS (soon) files. This job will only run if `format_code` did not make any changes. If `format_code` commits, a new workflow run for the branch will kick off.
+#   `pr_deployer`: if this PR has been given a `deploy` label, build and publish this commit under a dist tag `pr<pr number>`, e.g. `pr45`. Users can specify the dist tag instead of a version number to install this branch in their apps.
 
-# 5. Secrets used and their purpose
-#    a. BOT_TOKEN: Service account's PAT (only needed for auto commit)
-#    b. BOT_EMAIL: Service account's Email (only needed for auto commit)
-#    c. GPG_PRIVATE_KEY: Service account's GPG Private key (only needed for auto commit)
-#    d. GPG_PASSPHRASE: Service account's GPG Passphrase (only needed for auto commit)
-#
-# Logo By Isarra - Own work, CC BY 4.0, https://commons.wikimedia.org/w/index.php?curid=61576718
-
-name: Auto format & Lint files
+name: PR Management
 
 on:
-  push:
-    branches: [main]
   pull_request:
+    types: [opened, synchronize, edited]
   
 jobs:
-  # delete this job if you just want to lint and not autofix with prettier
-  format:
+  skip_if_bot:
+    name: Bot-check
     runs-on: ubuntu-latest
+    
+    steps:
+      - uses: hmarr/debug-action@v2
+
+  label_pr:
+    name: Label PR with package(s)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Label PRs
+        uses: adamzolyak/monorepo-pr-labeler-action@2.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE_DIRS: 'packages'
+
+  lint_pr:
+    name: Enforce conventional commit PR titles
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: semantic-pull-request
+        uses: amannn/action-semantic-pull-request@v3.4.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  format_code:
+    name: Format with prettier
+    runs-on: ubuntu-latest
+
     outputs:
       filesChanged: ${{ steps.autocommit.outputs.changes_detected }}
+
     steps:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-          # you can use GITHUB_TOKEN here if you don't want to auto commit changes
           token: ${{ secrets.BOT_TOKEN }}
 
       - uses: actions/setup-node@v2
@@ -65,12 +77,11 @@ jobs:
           echo "::set-output name=files::$supportedFiles"
 
       - name: Prettify Code Base
-        if: "!contains(toJson(steps.prettify.outputs.files), '[]')"
+        if: ${{ !contains(toJson(steps.prettify.outputs.files), '[]') }}
         run: |
           npx prettier --config .config/.prettierrc.json --ignore-path .config/.prettierignore \
             --write ${{ join(fromJSON(steps.prettify.outputs.files), ' ') }}
 
-      # delete these following steps if you don't want to auto commit changes
       - name: Import GPG key
         uses: crazy-max/ghaction-import-gpg@v2
         with:
@@ -88,11 +99,15 @@ jobs:
           commit_options: '--no-verify -S'
           commit_user_email: ${{ secrets.BOT_EMAIL }}
 
-  linter:
+  lint_code:
+    name: Lint code
     runs-on: ubuntu-latest
-    needs: format
+
+    needs: format_code
+
     # skip linting if prettier made newer commits. they will be linted on the pushed commit.
-    if: needs.format.outputs.filesChanged == 'false'
+    if: ${{ needs.format.outputs.filesChanged == 'false' }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -138,3 +153,33 @@ jobs:
         run: |
           sudo apt-get install yamllint -qq > /dev/null
           yamllint -c .config/.yamllint.yml ${{ join(fromJSON(steps.group_files.outputs.yamls), ' ') }}
+
+  trigger_pr_deploy:
+    name: Deploy PR Trigger
+    runs-on: ubuntu-latest
+
+    needs: lint_code
+
+    if: ${{ always() }}
+
+    steps:
+      - id: skip_check
+        uses: fkirc/skip-duplicate-actions@master
+        with:
+          concurrent_skipping: outdated_runs
+          paths_ignore: '["**/README.md", "**/docs/**", "**/CHANGELOG.md"]'
+      
+      - name: debug
+        run: |
+          echo "run next step" ${{ steps.skip_check.outputs.should_skip != 'true' }}
+          echo "deploy label" ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
+          echo "correct action" ${{ contains(fromJSON('["opened", "synchronize"]'), github.event.action) }}
+          echo ${{ steps.skip_check.outputs.should_skip != 'true' && (contains(github.event.pull_request.labels.*.name, 'deploy') && contains(fromJSON('["opened", "synchronize"]'), github.event.action)) }}
+
+      - name: trigger pr deployer
+        if: ${{ steps.skip_check.outputs.should_skip != 'true' && (contains(github.event.pull_request.labels.*.name, 'deploy') && contains(fromJSON('["opened", "synchronize"]'), github.event.action)) }}
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          event-type: deploy-pr
+          token: ${{ secrets.BOT_TOKEN }}
+          client-payload: '{ "ref": "${{ github.ref }}", "branch": "${{ github.head_ref }}", "pr_number": "${{ github.event.pull_request.number }}" }'
