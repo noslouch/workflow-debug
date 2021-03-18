@@ -24,6 +24,7 @@ jobs:
         # so lerna can properly compare versions
         with:
           fetch-depth: "0"
+          persist-credentials: false
     
       - uses: actions/setup-node@v2
         with:
@@ -60,6 +61,7 @@ jobs:
       - name: publish prerelease
         run: |
           git config user.eamil ${{ secrets.BOT_EMAIL }}
+          git remote set-url origin https://x-access-token:${{ secrets.PUBLISH_TOKEN }}@github.com/${{ github.repository }}
 
           # TODO: remove --allow-branch before merging to master
           lerna publish \
@@ -71,4 +73,4 @@ jobs:
             --sign-git-commit \
             --message "chore(publish): prerelease"
         env:
-          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
