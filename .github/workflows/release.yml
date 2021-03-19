@@ -53,7 +53,7 @@ jobs:
 
       - name: publish prerelease
         run: |
-          git config user.eamil ${{ secrets.BOT_EMAIL }}
+          git config user.email ${{ secrets.BOT_EMAIL }}
 
           # TODO: remove --allow-branch before merging to master
           lerna publish \

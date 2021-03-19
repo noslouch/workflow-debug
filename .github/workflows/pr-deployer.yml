@@ -74,7 +74,7 @@ jobs:
 
       - name: publish prerelease
         run: |
-          git config user.eamil ${{ secrets.BOT_EMAIL }}
+          git config user.email ${{ secrets.BOT_EMAIL }}
 
           PREID="pr${{ env.pr_number }}"
 
