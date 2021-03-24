@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       packages: 
-        description: 'which packages to release'
+        description: 'Package to release. Enter a comma-seprated list of folder names under packages/. e.g. wsj.'
         required: true
 
 env:
