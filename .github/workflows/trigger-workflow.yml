@@ -25,7 +25,7 @@ jobs:
       - name: find changed files         
         id: changed_files
         run: |
-          CHANGED=$(jq -Rcs '. | split("\n")' <<< $(git diff-tree --no-commit-id --name-only -r HEAD~1))
+          CHANGED=$(jq -Rcs 'split("\n") | join(",")' <<< $(git diff-tree --no-commit-id --name-only -r HEAD~1))
           echo "::set-output name=changed_paths::$CHANGED"
 
       - name: trigger release workflow
@@ -39,6 +39,6 @@ jobs:
               workflow_id: 'runner.yml',
               ref: ${{ github.ref }},
               inputs: {
-                packages: "${{ toJSON(steps.changed_files.outputs.changed_paths) }}"
+                packages: ${{ steps.changed_files.outputs.changed_paths }}
               }
             });
