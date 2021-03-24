@@ -15,7 +15,7 @@ jobs:
     
     steps:
       - id: parse
-        run: echo "::set-output name=packages::$(jq -Rc 'split(",") | map(gsub(" ";""))' <<< "${{ github.event.inputs.packages }}")"
+        run: echo "::set-output name=packages::$(jq -Rc 'split(",") | map(ltrimstr(" ")  | rtrimstr(" "))' <<< "${{ github.event.inputs.packages }}")"
   
   matrix:
     needs: main
