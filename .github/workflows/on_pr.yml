@@ -1,0 +1,17 @@
+name: PR Management
+
+on:
+  pull_request:
+    types: [opened, synchronize, edited]
+    
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+    
+    steps:      
+      - name: trigger pr deployer
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          event-type: debug-dispatch
+          token: ${{ secrets.PAT }}
+          client-payload: '{ "ref": "${{ github.ref }}", "branch": "${{ github.head_ref }}", "pr_number": "${{ github.event.pull_request.number }}" }'
