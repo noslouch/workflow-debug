@@ -1,12 +1,18 @@
 name: dispatch
 
 on:
+  repository_dispatch:
+    types: [cut-release]
   workflow_dispatch:
     inputs:
       packages: 
         description: 'which packages to release'
         required: true
-      
+
+env:
+  ref: ${{ github.ref || github.event.client_payload.ref }}
+  packages: ${{ github.event.inputs.packages || github.event.client_payload.packages }}
+  
 jobs:
   main:
     outputs:
@@ -15,7 +21,7 @@ jobs:
     
     steps:
       - id: parse
-        run: echo "::set-output name=packages::$(jq -Rc 'split(",") | map(ltrimstr(" ")  | rtrimstr(" "))' <<< "${{ github.event.inputs.packages }}")"
+        run: echo "::set-output name=packages::$(jq -Rc 'split(",") | map(ltrimstr(" ")  | rtrimstr(" "))' <<< "${{ env.packages }}")"
   
   matrix:
     needs: main
@@ -23,5 +29,12 @@ jobs:
     strategy:
       matrix:
         package: ${{ fromJSON(needs.main.outputs.packages) }}
-    steps:
-      - run: echo "${{ matrix.package }}"
+    steps:      
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+          ref: ${{ env.ref }}
+      
+      - run: |
+          echo "${{ matrix.package }}"
+          git log ${{ env.ref }}
