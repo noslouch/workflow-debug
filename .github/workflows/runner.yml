@@ -18,3 +18,5 @@ jobs:
     strategy:
       matrix:
         package: ${{ github.event.inputs.packages }}
+    steps:
+      - run: echo "${{ matrix.package }}"
