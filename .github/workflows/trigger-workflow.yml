@@ -33,7 +33,7 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            await github.actions.createWorkflowDispatch({
+            const response = await github.actions.createWorkflowDispatch({
               owner,
               repo,
               workflow_id: 'runner.yml',
@@ -42,3 +42,4 @@ jobs:
                 packages: ${{ steps.changed_files.outputs.changed_paths }}
               }
             });
+            console.log({response});
