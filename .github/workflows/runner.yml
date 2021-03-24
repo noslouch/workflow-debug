@@ -2,9 +2,10 @@ name: dispatch
 
 on:
   workflow_dispatch:
-    input:
-      packages: 'which packages to release'
-      required: true
+    inputs:
+      packages: 
+        description: 'which packages to release'
+        required: true
       
 jobs:
   main:
