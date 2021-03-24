@@ -1,0 +1,20 @@
+name: dispatch
+
+on:
+  workflow_dispatch:
+    input:
+      packages: 'which packages to release'
+      required: true
+      
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - run: echo "${{ github.event.inputs.packges }}"
+  
+  matrix:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        package: ${{ github.event.inputs.packages }}
