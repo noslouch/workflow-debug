@@ -31,7 +31,7 @@ jobs:
       - name: trigger release workflow
         uses: peter-evans/repository-dispatch@v1
         with:
-          event-type: deploy-pr
+          event-type: cut-release
           token: ${{ secrets.PAT }}
           client-payload: '{ "ref": "${{ github.ref }}", "packages": ${{ steps.changed_files.outputs.changed_paths }} }'
 
