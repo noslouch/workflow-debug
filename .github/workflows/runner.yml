@@ -9,15 +9,19 @@ on:
       
 jobs:
   main:
+    outputs:
+      packages: ${{ steps.parse.outputs.packages }}
     runs-on: ubuntu-latest
     
     steps:
-      - run: echo "${{ github.event.inputs.packges }}"
+      - id: parse
+        run: echo "::set-output name=packages::$(jq -c split(",") | map(gsub(" ";"")) <<< ${{ github.event.inputs.packages }})"
   
   matrix:
+    needs: main
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: ${{ github.event.inputs.packages }}
+        package: ${{ fromJSON(needs.main.outputs.packages) }}
     steps:
       - run: echo "${{ matrix.package }}"
