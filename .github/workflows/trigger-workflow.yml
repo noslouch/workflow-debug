@@ -1,0 +1,38 @@
+name: Relase Branch Merged
+
+on:
+  pull_request:
+    types: [labelled, closed]
+
+jobs:
+  trigger_release:
+    name: trigger release workflow
+    if: ${{ startsWith(github.ref, 'release-') || github.ref == 'main'}}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
+      - name: find changed files         
+        id: changed_files
+        run: |
+          CHANGED=$(jq -Rc '[.]' <<< "${{github.event.label.name}}")
+          echo "::set-output name=changed_paths::$CHANGED"
+
+      - name: trigger release workflow
+        uses: actions/github-script@v3
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            await github.actions.createWorkflowDispatch({
+              owner,
+              repo,
+              workflow_id: 'runner.yml',
+              ref: ${{ github.ref }},
+              inputs: {
+                packages: "${{ toJSON(steps.changed_files.outputs.changed_paths) }}"
+              }
+            });
