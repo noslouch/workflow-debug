@@ -2,7 +2,7 @@ name: Relase Branch Merged
 
 on:
   pull_request:
-    types: [labeled, closed]
+    types: [closed]
 
 jobs:
   debug:
@@ -13,7 +13,7 @@ jobs:
   trigger_release:
     runs-on: ubuntu-latest
     name: trigger release workflow
-    if: ${{ startsWith(github.ref, 'release-') || github.ref == 'main'}}
+    if: ${{ startsWith(github.head_ref, 'release-') }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -25,7 +25,7 @@ jobs:
       - name: find changed files         
         id: changed_files
         run: |
-          CHANGED=$(jq -Rc '[.]' <<< "${{github.event.label.name}}")
+          CHANGED=$(jq -Rcs '. | split("\n")' <<< $(git diff --name-only main))
           echo "::set-output name=changed_paths::$CHANGED"
 
       - name: trigger release workflow
