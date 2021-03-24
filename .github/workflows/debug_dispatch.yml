@@ -1,17 +1,32 @@
 name: debug
 
 on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Provide the branch name to checkout'
+        required: true
+      pr:
+        description: 'Provide the PR number to properly rev the version'
+        required: true
   repository_dispatch: 
     types: [debug-dispatch]
     
     
 env:
-  ref: ${{ github.ref || github.event.client_payload.ref }}
-  branch: ${{ github.head_ref || github.event.client_payload.branch }}
-  pr_number: ${{ github.event.pull_request.number || github.event.client_payload.pr_number }}
+  branch: ${{ github.event.inputs.branch || github.event.client_payload.branch }}
+  pr_number: ${{ github.event.inputs.pr || github.event.client_payload.pr_number }}
 
 jobs:
   debug:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          # so lerna can properly compare versions
+          fetch-depth: "0"
+          ref: ${{ env.branch }}
+          
       - run: echo "${{ toJSON(github) }}"
+      
+      - run: git log
