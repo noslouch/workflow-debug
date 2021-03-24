@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:      
+      - run: echo "${{ toJSON(github) }}"
       - name: trigger pr deployer
         uses: peter-evans/repository-dispatch@v1
         with:
