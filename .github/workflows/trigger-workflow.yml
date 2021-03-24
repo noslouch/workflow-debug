@@ -2,10 +2,11 @@ name: Relase Branch Merged
 
 on:
   pull_request:
-    types: [labelled, closed]
+    types: [labeled, closed]
 
 jobs:
   trigger_release:
+    runs-on: ubuntu-latest
     name: trigger release workflow
     if: ${{ startsWith(github.ref, 'release-') || github.ref == 'main'}}
     steps:
