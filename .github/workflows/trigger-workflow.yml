@@ -29,17 +29,9 @@ jobs:
           echo "::set-output name=changed_paths::$CHANGED"
 
       - name: trigger release workflow
-        uses: actions/github-script@v3
+        uses: peter-evans/repository-dispatch@v1
         with:
-          script: |
-            const { owner, repo } = context.repo;
-            const response = await github.actions.createWorkflowDispatch({
-              owner,
-              repo,
-              workflow_id: 'runner.yml',
-              ref: '${{ github.ref }}',
-              inputs: {
-                packages: ${{ steps.changed_files.outputs.changed_paths }}
-              }
-            });
-            console.log({response});
+          event-type: deploy-pr
+          token: ${{ secrets.PAT }}
+          client-payload: '{ "ref": "${{ github.ref }}", "packages": ${{ steps.changed_files.outputs.changed_paths }} }'
+
