@@ -1,0 +1,17 @@
+name: debug
+
+on:
+  repository_dispatch: 
+    types: [debug-dispatch]
+    
+    
+env:
+  ref: ${{ github.ref || github.event.client_payload.ref }}
+  branch: ${{ github.head_ref || github.event.client_payload.branch }}
+  pr_number: ${{ github.event.pull_request.number || github.event.client_payload.pr_number }}
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ toJSON(github) }}"
