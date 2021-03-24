@@ -5,6 +5,11 @@ on:
     types: [labeled, closed]
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ toJSON(github) }}"
+      
   trigger_release:
     runs-on: ubuntu-latest
     name: trigger release workflow
