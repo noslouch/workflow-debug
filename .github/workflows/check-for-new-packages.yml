@@ -1,0 +1,65 @@
+# When a PR is opened or updated with new commits, check to see if any new packages are being added to the mono repo
+# For any new package found, ensure that it's starting at "0.0.0" for its version.
+
+name: Check for New Packages
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  new_package_check:
+    name: Check changes against main
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
+      - name: check for commits on main
+        id: check
+        env:
+          MAIN: ${{ github.event.pull_request.base.sha }}
+        run: |
+          # get files that changed under `packages/`
+          CHANGES_IN_PACKAGES=$(git diff $MAIN --name-only -- packages)
+          
+          # strip to just `packages/<pkg>`
+          FOLDERS_ONLY=$(cut -f 1,2 -d / <<< $CHANGES_IN_PACKAGES | uniq)
+
+          # check for commits on main in each folder
+          # if no commits in main for a given path, must be a new package
+          while IFS= read -r folder; do
+            HAS_COMMITS=$(git log $MAIN -- $folder)
+            if [[ -z $HAS_COMMITS ]]; then
+              if [[ $(jq -j .version "$folder/package.json") != "0.0.0" ]]; then
+                echo "::warning ::$folder is a new package. new packages must have their version set to 0.0.0. updating."
+
+                cd $folder
+                # update the package version
+                npm version 0.0.0
+                cd -
+              fi
+            fi
+          done <<< $FOLDERS_ONLY
+
+      - name: import GPG key
+        uses: crazy-max/ghaction-import-gpg@v2
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v4.4.0
+        with:
+          commit_message: 'chore: fix initial package number 🛠'
+          commit_options: '--no-verify -S'
+          commit_user_email: ${{ secrets.BOT_EMAIL }}

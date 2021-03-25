@@ -1,30 +1,34 @@
 # when a PR is merged into `main`, this will run the tests for every package and publish a new package
 # prerelease packages are identified with `pre` after the next version number
-# e.g. @newscorp-ghfb/<pkg>@0.2.0-pre.0 will eventually become @newscorp-ghfb@0.2.0
+# e.g. @newscorp-ghfb/<pkg>@0.2.0-pre.0 will eventually become @newscorp-ghfb/<pkg>@0.2.0
 # successive prereleases will bump the final number, so `pre.0` becomes `pre.1`, and so on.
+#
+# When a prerelease is first prepared, a new "release" PR against `main` will be opened. The new PR will contain
+# the updated CHANGELOG (according to conventional commits) and the bumped version number.
+# The "release" PRs will stay in sync with subsequent prereleases.
 #
 # PRs with the `no-deploy` label will skip this workflow
 
-name: Prerelease
+name: Cut a Prerelease
 
 on:
   pull_request:
     types: [closed]
-    branches: [main]
+    paths:
+      - 'packages/**'
+  # TODO revert to closed PR
+    branches: [ci/test-prerelease]
 
 jobs:
-  main:
-    # filter for merged PRs and skip any with our escape hatch label 'no-deploy'
-    if: ${{ github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'no-deploy') }}
+  build_and_test:
+    name: build and test
+    # filter for merged PRs and skip release branches or any with our escape hatch label 'no-deploy'
+    if: ${{ github.event.pull_request.merged == true && !startsWith(github.head_ref, 'release-') && !contains(github.event.pull_request.labels.*.name, 'no-deploy') }}
 
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-        # so lerna can properly compare versions
-        with:
-          fetch-depth: "0"
-          persist-credentials: false
     
       - uses: actions/setup-node@v2
         with:
@@ -49,6 +53,41 @@ jobs:
       - name: tests
         run: lerna run test
 
+  find_changes:
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    outputs:
+      changed_packages: ${{ steps.changes.outputs.changed_paths }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+      - id: changes
+        run: |
+          CHANGED=$(lerna changed -p | xargs realpath --relative-to=. | jq --slurp --raw-input --compact-output '[split("\n")[:-1] | .[] | split("/") | .[1]]')
+          echo "::set-output name=changed_paths::$CHANGED"
+
+  # creates/updates release PR
+  # outputs `pr` if PR was created or updated, `undefined` otherwise
+  release_pr:
+    name: Create/Update Release PR
+    runs-on: ubuntu-latest
+    needs: find_changes
+    outputs:
+      pr: ${{ steps.create-pr.outputs.pr }}
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.find_changes.outputs.changed_packages) }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+    
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+
       - name: import GPG key
         uses: crazy-max/ghaction-import-gpg@v2
         with:
@@ -58,19 +97,125 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: publish prerelease
+      - name: check for previous prereleases
+        env:
+          PREID: beta
         run: |
           git config user.email ${{ secrets.BOT_EMAIL }}
-          git remote set-url origin https://x-access-token:${{ secrets.PUBLISH_TOKEN }}@github.com/${{ github.repository }}
 
-          # TODO: remove --allow-branch before merging to master
-          lerna publish \
-            --yes \
-            --preid pre \
-            --conventional-commits \
-            --conventional-prerelease \
-            --sign-git-tag \
-            --sign-git-commit \
-            --message "chore(publish): prerelease"
+          echo "::debug::previous tags for this package: $(git tag --list "${{ matrix.package }}-v*")"
+
+          LAST_TAG=$(git tag --sort -refname --list "${{ matrix.package }}-v*" | head -n1)
+          LAST_REV=$(echo $LAST_TAG | sed -E "s/${{matrix.package}}-v(.*)/\1/")
+
+          # if grep doesn't match, use "|| :;" to prevent the runner from dying
+          IN_PRERELEASE=$(echo $LAST_TAG | { grep -E "-$PREID\.[0-9]+" || :; })
+
+          echo "::debug::last tag: $LAST_TAG"
+          echo "::debug::last rev: $LAST_REV"
+          echo "::debug::in pre: $IN_PRERELEASE"
+
+          if [[ $IN_PRERELEASE ]]; then
+            echo "::debug::setting rev for prerelease bump"
+            cd packages/${{ matrix.package }}
+            npm version $LAST_REV
+            git commit -am 'rev for publishing'
+            cd ../..
+          fi
+
+      - uses: google-github-actions/release-please-action@v2
+        name: open (or edit) release PR for this package version
+        id: create-pr
+        with:
+           path: packages/${{ matrix.package }}
+           token: ${{ secrets.BOT_TOKEN }}
+           release-type: node
+           package-name: "@${{ github.repository_owner }}/${{ matrix.package }}"
+           monorepo-tags: true
+           bump-minor-pre-major: true
+           command: release-pr
+           default-branch: ci/test-prerelease
+
+  prerelease:
+    name: Publish Prerelease to Package Registry
+    runs-on: ubuntu-latest
+    needs: [find_changes, release_pr]
+
+    if: needs.release_pr.outputs.pr
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+          scope: '@newscorp-ghfb'
+
+      - name: install lerna locally
+        run: yarn
+      
+      - name: bootstrap deps
+        run: lerna bootstrap --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+
+      # run scripts without auth token
+      # https://github.com/actions/setup-node
+      - name: run any postinstall scripts
+        run: lerna exec -- npm rebuild
+
+      - name: import GPG key
+        uses: crazy-max/ghaction-import-gpg@v2
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+      
+      - name: publish prerelease
         env:
           NODE_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
+          PREID: beta
+        run: |
+          git config user.email ${{ secrets.BOT_EMAIL }}
+
+          # TODO: remove this protection
+          lerna publish \
+            --allow-branch ci/test-prerelease \
+            --yes \
+            --conventional-commits \
+            --conventional-prerelease \
+            --no-changelog \
+            --no-push \
+            --preid $PREID
+      
+      - name: sign and push prerelease tags
+        env:
+          PREID: beta
+        run: |
+          git config user.email ${{ secrets.BOT_EMAIL }}
+
+          # gather tags from this release
+          TAGS=$(git tag --points-at HEAD)
+          PACKAGES=$(sed -E "s|@newscorp-ghfb/(.*)@[0-9.]+-$PREID\.[0-9]+|\1|" <<< $TAGS)
+
+          # generate release tags using values from package files
+          # lerna revved the numbers so they're reliable
+          # tags must be signed and annotated in order for lerna
+          # to recognize them when calculating version bumps in future commits
+          #
+          # NOTE this tag format (<pkg>-v<rev>) matches the format
+          # release-please generates for releases
+
+          while IFS= read -r PKG; do
+            NEXT_REV=$(jq -j .version "packages/$PKG/package.json")
+            NEXT_TAG="$PKG-v$NEXT_REV"
+
+            git tag -s --force -m $NEXT_TAG $NEXT_TAG ${{ github.sha }}
+            git push origin $NEXT_TAG --force
+          done <<< $PACKAGES

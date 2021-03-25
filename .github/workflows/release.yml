@@ -1,23 +1,45 @@
-# TKTK how is a graduated release triggered?
+# Release workflow.
+# Packages to be released are provided from the `merged-release` workflow, which triggers
+# the `cut-release` repository dispatch event.
+# The workflow dispatch is provided as an escape hatch.
+ 
+name: Cut a Release
 
-name: Release
-
-# what's the target here?
 on:
-  pull_request:
-    types: [closed]
+  repository_dispatch:
+    types: [cut-release]
+  workflow_dispatch:
+    inputs:
+      packages:
+        description: 'Emergencies only. Release a package from `main`. Enter the folder name under packages/. e.g. wsj'
+        required: true
+      sha:
+        description: Cut releases from the provided sha
+
+env:
+  packages: ${{ github.event.inputs.packages || github.event.client_payload.packages }}
+  ref: ${{ github.event.client_payload.sha || github.event.inputs.sha || github.sha }}
 
 jobs:
 
-  main:
-    if: false
+  parse:
+    name: parse inputs to JSON array
+    outputs:
+      packages: ${{ steps.parse.outputs.packages }}
+    runs-on: ubuntu-latest
+    
+    steps:
+      - id: parse
+        run: echo "::set-output name=packages::$(jq -Rc 'split(",") | map(ltrimstr(" ")  | rtrimstr(" "))' <<< "${{ env.packages }}")"
+
+  build_and_test:
+    name: build and test
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-        # so lerna can properly compare versions
         with:
-          fetch-depth: "0"
+          ref: ${{ env.ref }}
     
       - uses: actions/setup-node@v2
         with:
@@ -28,7 +50,7 @@ jobs:
 
       - name: install lerna locally
         run: yarn
-
+      
       - name: bootstrap deps
         run: lerna bootstrap --ignore-scripts
         env:
@@ -42,6 +64,61 @@ jobs:
       - name: tests
         run: lerna run test
 
+  github_release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: [build_and_test, parse]
+    outputs:
+      release_created: ${{ steps.gh-release.outputs.release_created }}
+    strategy:
+      fail-fast: false
+      matrix:
+        package: ${{ fromJson(needs.parse.outputs.packages) }}
+    steps:
+      - uses: google-github-actions/release-please-action@v2
+        id: gh-release
+        with:
+           path: packages/${{ matrix.package }}
+           token: ${{ secrets.GITHUB_TOKEN }}
+           release-type: node
+           package-name: "@${{ github.repository_owner }}/${{ matrix.package }}"
+           monorepo-tags: true
+           bump-minor-pre-major: true
+           command: github-release
+           default-branch: ci/test-prerelease
+
+  publish_release:
+    name: Publish to Package Registry
+    runs-on: ubuntu-latest
+    needs: github_release
+
+    if: needs.github_release.outputs.release_created
+
+    steps: 
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+    
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+          scope: '@newscorp-ghfb'
+
+      - name: install lerna locally
+        run: yarn
+      
+      - name: bootstrap deps
+        run: lerna bootstrap --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+
+      # run scripts without auth token
+      # https://github.com/actions/setup-node
+      - name: run any postinstall scripts
+        run: lerna exec -- npm rebuild
+
       - name: import GPG key
         uses: crazy-max/ghaction-import-gpg@v2
         with:
@@ -51,18 +128,35 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
-      - name: publish prerelease
+      - name: publish release
         run: |
+          # reset the checkout to the provided ref
+          git reset --hard ${{ env.ref }}
+
           git config user.email ${{ secrets.BOT_EMAIL }}
 
-          # TODO: remove --allow-branch before merging to master
-          lerna publish \
+          lerna publish from-package \
             --yes \
             --conventional-commits \
             --conventional-graduate \
-            --sign-git-tag \
-            --sign-git-commit \
-            --message "chore(publish): releaseing" \
-            --create-release github
+            --no-changelog \
+            --no-push
         env:
-          GH_TOKEN: ${{ secrets.BOT_TOKEN }}
+          NODE_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
+
+      - name: sign release tag
+        run: |
+          git config user.email ${{ secrets.BOT_EMAIL }}
+
+          # release-please doesn't sign release tags
+          # gather them up and create new signed versions
+          NEW_TAGS=$(git tag --points-at HEAD)
+
+          while IFS= read -r TAG; do
+            MSG=$(git tag -l $TAG --format "%(subject)
+
+            %(body)")
+
+            git tag -sfm "$MSG" $TAG HEAD
+            gp origin $TAG --force
+          done <<< $NEW_TAGS

@@ -1,3 +1,5 @@
+# When a PR is labeled, check to see if its one of our special labels and trigger the corresponding workflow
+
 name: PR Label Handler
 
 on:

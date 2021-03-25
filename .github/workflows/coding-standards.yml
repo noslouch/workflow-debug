@@ -7,20 +7,13 @@
 #   `lint_code`: runs syntax checking and linting over JSON, Markdown, Yaml, and JS (soon) files. This job will only run if `format_code` did not make any changes. If `format_code` commits, a new workflow run for the branch will kick off.
 #   `pr_deployer`: if this PR has been given a `deploy` label, build and publish this commit under a dist tag `pr<pr number>`, e.g. `pr45`. Users can specify the dist tag instead of a version number to install this branch in their apps.
 
-name: PR Management
+name: Enforce Coding Standards
 
 on:
   pull_request:
     types: [opened, synchronize, edited]
   
 jobs:
-  skip_if_bot:
-    name: Bot-check
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: hmarr/debug-action@v2
-
   label_pr:
     name: Label PR with package(s)
     runs-on: ubuntu-latest
@@ -154,6 +147,36 @@ jobs:
           sudo apt-get install yamllint -qq > /dev/null
           yamllint -c .config/.yamllint.yml ${{ join(fromJSON(steps.group_files.outputs.yamls), ' ') }}
 
+  run_tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+    
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+          scope: '@newscorp-ghfb'
+
+      - name: install lerna locally
+        run: yarn
+      
+      - name: bootstrap deps
+        run: lerna bootstrap --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+
+      # run scripts without auth token
+      # https://github.com/actions/setup-node
+      - name: run any postinstall scripts
+        run: lerna exec -- npm rebuild
+
+      - name: tests
+        run: lerna run test
+
   trigger_pr_deploy:
     name: Deploy PR Trigger
     runs-on: ubuntu-latest
@@ -169,17 +192,10 @@ jobs:
           concurrent_skipping: outdated_runs
           paths_ignore: '["**/README.md", "**/docs/**", "**/CHANGELOG.md"]'
       
-      - name: debug
-        run: |
-          echo "run next step" ${{ steps.skip_check.outputs.should_skip != 'true' }}
-          echo "deploy label" ${{ contains(github.event.pull_request.labels.*.name, 'deploy') }}
-          echo "correct action" ${{ contains(fromJSON('["opened", "synchronize"]'), github.event.action) }}
-          echo ${{ steps.skip_check.outputs.should_skip != 'true' && (contains(github.event.pull_request.labels.*.name, 'deploy') && contains(fromJSON('["opened", "synchronize"]'), github.event.action)) }}
-
       - name: trigger pr deployer
         if: ${{ steps.skip_check.outputs.should_skip != 'true' && (contains(github.event.pull_request.labels.*.name, 'deploy') && contains(fromJSON('["opened", "synchronize"]'), github.event.action)) }}
         uses: peter-evans/repository-dispatch@v1
         with:
           event-type: deploy-pr
           token: ${{ secrets.BOT_TOKEN }}
-          client-payload: '{ "ref": "${{ github.ref }}", "branch": "${{ github.head_ref }}", "pr_number": "${{ github.event.pull_request.number }}" }'
+          client-payload: '{"sha": "${{ github.event.pull_request.head.sha }}", "branch": "${{ github.head_ref }}", "pr_number": "${{ github.event.pull_request.number }}" }'

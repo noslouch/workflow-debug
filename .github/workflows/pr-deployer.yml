@@ -1,45 +1,43 @@
+# Build, tag, and publish a PR for use in development environments
+# Packages will be published under a dist tag with the PR number, so "pr55" for PR #55.
+# They will also be published with a prerelease version that looks like "<scope>/<pkg>@<rev>-pr<pr##>.#"
+# e.g. @newscorp-ghfb/wsj@0.2.0-pr55.0
+
 name: PR Deployer
 
 on:
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Provide the branch name to checkout'
+        required: true
+      pr:
+        description: 'Provide the PR number to properly rev the version'
+        required: true
+      sha:
+        description: 'Optionally deploy a specific sha'
+
   repository_dispatch: 
     types: [deploy-pr]
 
 env:
-  ref: ${{ github.event.client_payload.ref }}
-  branch: ${{ github.event.client_payload.branch }}
-  pr_number: ${{ github.event.client_payload.pr_number }}
+  branch: ${{ github.event.inputs.branch || github.event.client_payload.branch }}
+  pr_number: ${{ github.event.inputs.pr || github.event.client_payload.pr_number }}
+  sha: ${{ github.event.inputs.sha || github.event.client_payload.sha }}
 
 jobs:
-  # debug:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: hmarr/debug-action@v2
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - run: 'echo "payload: ${{ toJson(github.event) }}"'
 
   deploy_pr:
     name: PR Deployer
     runs-on: ubuntu-latest
 
-    # first case is for adding the label
-    # second case is when the PR is updated after having been labelled
-    # this avoids running when other labels are applied
-
     steps:
       - uses: actions/checkout@v2
-        # so lerna can properly compare versions
         with:
+          # so lerna can properly compare versions
           fetch-depth: "0"
-          ref: ${{ env.ref }}
+          ref: ${{ env.branch }}
       
-      # these event types leave us in a detached state
-      # lerna needs to be on a branch to publish
-      - name: checkout branch
-        run: git checkout ${{ env.branch }}
-    
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
@@ -76,9 +74,11 @@ jobs:
         run: |
           git config user.email ${{ secrets.BOT_EMAIL }}
 
-          PREID="pr${{ env.pr_number }}"
+          # if a sha is provided, point at that for the publish
+          if [[ "${{ env.sha }}" ]]; then
+            git reset --hard ${{ env.sha }}
+          fi
 
-          # TODO: remove --allow-branch before merging to master
           lerna publish \
             --allow-branch ${{ env.branch }} \
             --yes \
@@ -91,4 +91,5 @@ jobs:
             --message "chore(publish): deploy $PREID"
         env:
           NODE_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
+          PREID: "pr${{ env.pr_number }}"
           

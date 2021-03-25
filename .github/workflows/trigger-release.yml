@@ -1,0 +1,40 @@
+# Release branches all follow a naming convention: `release-<pkg>-<rev>`
+# When a release branch is merged, trigger the release workflow
+
+name: Trigger New Release
+
+on:
+  pull_request:
+    types: [closed]
+    paths:
+      - 'packages/**'
+    # TODO change to main
+    branches: [ci/test-prerelease]
+
+jobs:
+  trigger_release:
+    name: trigger release workflow
+    if: ${{ startsWith(github.head_ref, 'release-') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14.x'
+      - name: install lerna locally
+        run: yarn
+
+      - name: find changed files
+        id: changed_files
+        run: |
+          CHANGED=$(lerna changed -p | xargs realpath --relative-to=. | jq --slurp --raw-input --compact-output '[split("\n")[:-1] | .[] | split("/") | .[1]] | join(",")')
+          echo "::set-output name=changed_packages::$CHANGED"
+
+      - name: trigger release workflow
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          event-type: cut-release
+          token: ${{ secrets.BOT_TOKEN }}
+          client-payload: '{ "sha": "${{ github.sha }}", "packages": ${{ steps.changed_files.outputs.changed_packages }} }'

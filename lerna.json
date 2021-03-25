@@ -3,7 +3,7 @@
   "npmClient": "yarn",
   "useWorkspaces": true,
   "packages": ["packages/*"],
-  "ignoreChanges": ["README.md", "docs/*"],
+  "ignoreChanges": ["README.md", "docs/*", "CHANGELOG.md"],
   "command": {
     "publish": {
       "registry": "https://npm.pkg.github.com"
