@@ -32,20 +32,20 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
 ```
 
 ### Storybook
+
 Storybook is used to preview and document our UI components. [See our guidelines here](docs/storybook.md).
 
 ### Tests
 
-The library's NPM modules should be maintaned like an open-source project. As such, each contributor should write tests that ensure that whoever picks up their component can be sure of its functionality 
+The library's NPM modules should be maintained like an open-source project. As such, each contributor should write tests that ensure that whoever picks up their component can be sure of its functionality
 
-**Unit tests** should be fundamental part of each component added to the library. Their goal is to test the component output, given props and ensure smooth refactoring is possible with high trust in the end result. 
+**Unit tests** should be a fundamental part of each component added to the library. Their goal is to test the component output, given props and to ensure smooth refactoring is possible with high trust in the end result.
 
 The library is using `Jest` as a test runner and `React Testing Library` for API and a test helper when working with components
 
 When designing tests, follow industry standards described here: [React Testing](https://reactjs.org/docs/testing-recipes.html) and [React Testing Library helpers](https://testing-library.com/docs/react-testing-library/api)
 
-
-**Integration tests**  can be achieved by using visual rendering tools such as Storybook. There, we should expect to visualise and preview components. More in the Storybook section above.
+**Integration tests** can be achieved by using visual rendering tools such as Storybook. There, we should expect to visualise and preview components. More in the Storybook section above.
 
 **Page Browser tests** is the domain of each team and not part of this library. They would be responsible for creating end-to-end testing suite to test their web pages as desired. Some tools to use could be:
 
@@ -55,16 +55,16 @@ When designing tests, follow industry standards described here: [React Testing](
 
 #### Testing Principles
 
-1) Each component should contain tests that cover **all** real-use cases as well as edge-cases
-2) Child components should be mocked
-3) Dependencies, even built-in one like setTimeOut should be mocked
-4) API calls should be stubbed/mocked
-5) When refactoring components, failed tests should not be ignored. This might indicate app will fail with the newer version of the library.
-6) Difficult to test component might indicate badly written one - consider refactoring it to reduce effects/dependancies
+1. Each component should contain tests that cover **all** real-use cases as well as edge-cases
+2. Don't test child components; they should have their own tests. Consider using mocks if necessary.
+3. Dependencies, even built-in one like setTimeOut should be mocked
+4. API calls should be stubbed/mocked
+5. When refactoring components, failed tests should not be ignored. This might indicate app will fail with the newer version of the library.
+6. Difficult to test component might indicate badly written one - consider refactoring it to reduce effects/dependancies
 
 #### Snapshot tests
 
-We should avoid using snapshot tests. While easy to set up, they can lead to poor functionality coverage and can lead to developer detachment from the testing problem. 
+We should avoid using snapshot tests. While easy to set up, they can lead to poor functionality coverage and can lead to developer detachment from the testing problem.
 
 #### Test coverage
 
@@ -84,7 +84,6 @@ The following minimums would be set:
         "lines": 90,
         "statements": 90
       },
- 
 
 ### Customizable (themes, styles)
 
@@ -166,18 +165,33 @@ Automated check that analyzes the bundle size when a commit is pushed to a PR. T
 
 #### Build time checks
 
-Automated check that analyzes the `npm install` when a commit is pushed to a PR. This flags any potential increases to PR reviewers so that corrective actions can be taken.
+Automated check that analyzes the `yarn install` when a commit is pushed to a PR. This flags any potential increases to PR reviewers so that corrective actions can be taken.
 
 ## Getting Started
 
 ### To install for local development:
 
+This monorepo uses `yarn` as its npm client. Please ensure you've [installed `yarn` for your system](https://yarnpkg.com/getting-started/install).
+
+close the repo and go into the new directory:
+
 ```
-$ git clone git@github.com:newscorp-ghfb/dj-rendering.git
-$ cd dj-rendering
-$ npm install
-$ npm run start
+$ git clone git@github.com:newscorp-ghfb/dj-rendering.git && cd dj-rendering
 ```
+
+Bootstrap the project with `lerna bootstrap`. This will install common dependencies in the root of the project so you aren't installing more than one copy of any module for a given version.
+
+```
+$ npx lerna bootstrap
+```
+
+`cd` into the package you are working on, e.g.
+
+```
+$ cd packages/wsj
+```
+
+and follow that package's readme.
 
 ## Component Development Guidelines
 
@@ -200,11 +214,11 @@ import styled, { css } from 'styled-components'
 
 const darkStyles = css`
   background: #000;
-  color: #FFF;
+  color: #fff;
 `
 
 const lightStyles = css`
-  background: #FFF;
+  background: #fff;
   color: #000;
 `
 
@@ -267,6 +281,52 @@ export { default as NewComponent } from './packages/:package/NewComponent'
 
 **3. Create a doc for your component at `docs/packages/:package/NewComponent.md`**
 
+### Managing Component Dependencies
+
+We use lerna to manage this monorepo. Lerna maintains a single lockfile for the repo in the root and uses yarn workspaces to properly install conflicting versions in appropriate packages.
+
+For example:
+
+```
+packages/
+  foo/
+    package.json <-- declares react ^17
+  bar/
+    package.json <-- declares react ^16
+```
+
+The root `yarn.lock` will have entries for both version of react. When you run `lerna bootstrap`, `react@17` will be installed in `pacakges/foo/node_modules`, and `react@16` will be installed in `./node_modules` (the root).
+
+#### Adding a New Dependency
+
+Use `lerna` to add a new dependency so that the lockfile is properly updated.
+
+```
+$ lerna add [--dev] --scope <package name> <dependency>
+```
+
+**Note** that `<pacakge name>` must match the `name` field in `packages/<pkg>/package.json`, and will most likely be in the format `@newscorp-gfhb/<pkg>`.
+
+**Note** that `lerna` only allows for installing [one dependency at a time](https://github.com/lerna/lerna/tree/f6e7a13e60fefc523d701efddfcf0ed41a77749b/commands/add#usage).
+
+If you have a dependency to add to all packages, drop the `--scope` flag:
+
+```
+$ lerna add [--dev] <dependency>
+```
+
+After installing, `lerna` will run `bootstrap`, which handles any linking that may be required, and will ensure only a single copy of a shared dependency (given the version numbers match) is installed.
+
+Lerna will install dependencies to the root of the repository by default, which allows the module to be used by all packages, thanks to node's resolution algorithm. If there's a conflict in dependency name and version number (like the react example above), lerna will install one copy at the root, and the conflicting copy in the package's local `node_modules`.
+
+#### Install Dependencies at the Root
+
+Of course, if you have a script that needs to run from the root, any dependencies of that script must be installed at the top level as well. You may install these with `yarn`, using the `-W` flag:
+
+```
+yarn add -W <some script runner>
+```
+
 ## Package Creation Guidelines
 
 Checkout the package guidelines [here](docs/packages.md).
@@ -282,10 +342,6 @@ Checkout the package guidelines [here](docs/packages.md).
 
 - RFC process?
 - Raise a GitHub issue
-
-### Upgrade shared dependencies
-
-- how to upgrade shared dependencies
 
 ## Resources
 
