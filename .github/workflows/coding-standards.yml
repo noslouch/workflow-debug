@@ -1,8 +1,6 @@
-# This workflow runs on all PRs to enforce coding standards, naming conventions and optionally publish to a unique dist tag.
+# This workflow runs on all PRs to enforce coding standards and optionally publish to a unique dist tag.
 #
 # The jobs are:
-#   `label_pr`: label the PR based on which files are changed
-#   `lint_pr`: enforces the conventional commit naming convention for PR titles
 #   `format_code`: runs our prettier config on the code base, fixes violations in place and commits them
 #   `lint_code`: runs syntax checking and linting over JSON, Markdown, Yaml, and JS (soon) files. This job will only run if `format_code` did not make any changes. If `format_code` commits, a new workflow run for the branch will kick off.
 #   `pr_deployer`: if this PR has been given a `deploy` label, build and publish this commit under a dist tag `pr<pr number>`, e.g. `pr45`. Users can specify the dist tag instead of a version number to install this branch in their apps.
@@ -11,33 +9,9 @@ name: Enforce Coding Standards
 
 on:
   pull_request:
-    types: [opened, synchronize, edited]
+    types: [opened, synchronize]
   
 jobs:
-  label_pr:
-    name: Label PR with package(s)
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Label PRs
-        uses: adamzolyak/monorepo-pr-labeler-action@2.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BASE_DIRS: 'packages'
-
-  lint_pr:
-    name: Enforce conventional commit PR titles
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: semantic-pull-request
-        uses: amannn/action-semantic-pull-request@v3.4.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   format_code:
     name: Format with prettier
     runs-on: ubuntu-latest
@@ -99,7 +73,7 @@ jobs:
     needs: format_code
 
     # skip linting if prettier made newer commits. they will be linted on the pushed commit.
-    if: ${{ needs.format.outputs.filesChanged == 'false' }}
+    if: ${{ needs.format_code.outputs.filesChanged == 'false' }}
 
     steps:
       - name: Checkout
@@ -119,7 +93,7 @@ jobs:
           echo "::set-output name=yamls::$(jq -c -s '.[] | map(select(. | endswith(".yml") and (contains(".github/workflows/") | not)))' <<< ${FILES_CHANGED})"
 
       - name: Lint JSON Files
-        if: always() && endsWith(steps.group_files.outputs.jsonFiles, '.json"]')
+        if: ${{ always() && endsWith(steps.group_files.outputs.jsonFiles, '.json"]') }}
         run: |
           set +e
           npm i jsonlint -s
@@ -138,11 +112,11 @@ jobs:
           exit $jsonlintExitCode
 
       - name: Lint Markdown Files
-        if: always() && endsWith(steps.group_files.outputs.markdowns, '.md"]')
+        if: ${{ always() && endsWith(steps.group_files.outputs.markdowns, '.md"]') }}
         run: npx -q markdownlint-cli -c .config/.markdownlint.json ${{ join(fromJSON(steps.group_files.outputs.markdowns), ' ') }}
 
       - name: Lint Yaml Files
-        if: always() && endsWith(steps.group_files.outputs.yamls, '.yml"]')
+        if: ${{ always() && endsWith(steps.group_files.outputs.yamls, '.yml"]') }}
         run: |
           sudo apt-get install yamllint -qq > /dev/null
           yamllint -c .config/.yamllint.yml ${{ join(fromJSON(steps.group_files.outputs.yamls), ' ') }}
@@ -183,8 +157,6 @@ jobs:
 
     needs: lint_code
 
-    if: ${{ always() }}
-
     steps:
       - id: skip_check
         uses: fkirc/skip-duplicate-actions@master
@@ -193,7 +165,10 @@ jobs:
           paths_ignore: '["**/README.md", "**/docs/**", "**/CHANGELOG.md"]'
       
       - name: trigger pr deployer
-        if: ${{ steps.skip_check.outputs.should_skip != 'true' && (contains(github.event.pull_request.labels.*.name, 'deploy') && contains(fromJSON('["opened", "synchronize"]'), github.event.action)) }}
+        # check for required states to trigger pr deploy:
+        #   - skip if there's another workflow running for this branch
+        #   - this PR requires a 'deploy' label
+        if: ${{ steps.skip_check.outputs.should_skip != 'true' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
         uses: peter-evans/repository-dispatch@v1
         with:
           event-type: deploy-pr

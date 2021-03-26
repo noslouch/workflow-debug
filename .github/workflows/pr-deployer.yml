@@ -88,6 +88,7 @@ jobs:
             --conventional-prerelease \
             --sign-git-tag \
             --sign-git-commit \
+            --no-changelog \
             --message "chore(publish): deploy $PREID"
         env:
           NODE_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
