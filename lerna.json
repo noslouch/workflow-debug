@@ -8,6 +8,9 @@
     "publish": {
       "registry": "https://npm.pkg.github.com"
     },
+    "create": {
+      "registry": "https://npm.pkg.github.com"
+    },
     "version": {
       "allowBranch": "main"
     }
