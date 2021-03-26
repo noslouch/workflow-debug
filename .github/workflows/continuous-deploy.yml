@@ -134,6 +134,30 @@ jobs:
            bump-minor-pre-major: true
            command: release-pr
            default-branch: ci/test-prerelease
+      
+      - name: get release branch
+        uses: actions/github-script@v3
+        id: release-branch
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const { data } = await github.pulls.get({
+              owner,
+              repo,
+              pull_number: "${{ steps.create-pr.outputs.pr }}"
+            });
+
+            return { prBranch: data.head.ref, base: data.base.sha };
+      
+      - name: sign release branch commits
+        run: |
+          git fetch origin
+          git checkout $BRANCH
+          git rebase --exec 'git commit --amend --no-edit -n -S' $SHA
+          git push origin --force $BRANCH
+        env:
+          BRANCH: ${{ fromJSON(steps.release-branch.outputs.result).prBranch }}
+          SHA: ${{ fromJSON(steps.release-branch.outputs.result).base }}
 
   prerelease:
     name: Publish Prerelease to Package Registry
