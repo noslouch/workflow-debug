@@ -14,7 +14,7 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
 - `packages/` contains the source code, storybook data and tests of all components
   - `/packages/:package` Contains groups of components that are logical to separate. This can be grouped by brand - like WSJ, Barrons etc or by application. For example
 
-```
+```bash
 .
 └── packages
     ├── newsletter-center
@@ -72,18 +72,20 @@ While flawed, it is the metric we have to use to ensure teams follow testing req
 
 The following minimums would be set:
 
-      "global": {
-        "branches": 80,
-        "functions": 80,
-        "lines": 80,
-        "statements": 80
-      },
-      "./packages/shared": {
-        "branches": 90,
-        "functions": 90,
-        "lines": 90,
-        "statements": 90
-      },
+```json
+  "global": {
+    "branches": 80,
+    "functions": 80,
+    "lines": 80,
+    "statements": 80
+  },
+  "./packages/shared": {
+    "branches": 90,
+    "functions": 90,
+    "lines": 90,
+    "statements": 90
+  },
+```
 
 ### Customizable (themes, styles)
 
@@ -114,7 +116,7 @@ With the `--conventional-graduate` flag, `lerna version --conventional-commits` 
 
 #### Automated linting, fixing
 
-`.github/workflows/linter.yml` runs linting and provides automatic fixes when feasible. Any linting errors that cannot be auto-fixed are bubbled up for the developer to take fix. This is done via branch protection mandatory checks. The PR will show any linting failures as failed status checks preventing merges to main branch.
+[`.github/workflows/coding-standards.yml`](./.github/workflows/coding-standards.yml) runs linting and provides automatic fixes when feasible. Any linting errors that cannot be auto-fixed are bubbled up for the developer to fix. The PR will show any linting failures as failed status checks preventing merges to `main`.
 
 ##### Linter workflow
 
@@ -128,25 +130,25 @@ When a commit is pushed to a PR:
 
 Example auto fix commit:
 
-![auto commit fixes](docs/images/auto-commit-fixes.png)
+![auto commit fixes](./docs/images/auto-commit-fixes.png)
 
 #### Automated testing
 
-`.github/workflows/continous-testing.yml` runs unit testing for each commit as it is pushed in a PR. The PR is blocked from merging if tests fail.
-
-`.github/workflows/continous-code-quality.yml` runs code quality checks for each commit as it is pushed in a PR. PR reviewers can weigh in if a piece of code is too complex and ask for refactoring or override with justifications on a case by case basis. [TODO: Exact tool, implementation TBD after SPIKE is concluded].
+[`.github/workflows/coding-standards.yml`](./.github/workflows/coding-standards.yml) also runs unit testing for each commit as it is pushed in a PR. The PR is blocked from merging if tests fail. PRs may be published for development purposes using the `deploy` label. Failing tests will not prevent PRs from publishing.
 
 #### Automated deployments
 
-When a PR is merged to `main` branch, `.github/workflows/continous-deploy.yml` triggers an automatic deploy of the **_changed_** packages to create a **prerelease** version of the package. This enables users to start using the changes immediately without releasing an unstable version in the wild.
+When a PR is merged to `main` branch, [`.github/workflows/continuous-deploy.yml`](./.github/workflows/continuous-deploy.yml) triggers an automatic deploy of the **_changed_** packages to create a **prerelease** version of the package. This enables users to start using the changes immediately without releasing an unstable version in the wild.
 
 Automatic deploy follows these rules:
 
 - check if `no-deploy` label is applied to PR. If so, skip deploy. This is an escape hatch for emergency cases and should not be used normally
+- run unit tests
 - run `lerna changed` to get a list of changed packages
-- run `lerna version --conventional-commits --conventional-prerelease=package-X,package-M` to create pre release packages in the npm registry
+- for every package `lerna` identifies, `release-please` opens a new PR for the release associated with this prerelease (e.g. a PR for `v1.1.0` for `v1.0.0-beta.0`)
+- run `lerna publish --conventional-commits --conventional-prerelease` to create pre release packages in the npm registry
 
-Once a package is deemed stable, a new version can be released by triggering the [release workflow](TODO add link).
+Once a package is deemed stable, a new version can be released by triggering the [release workflow](#automated-releases).
 
 #### Automated PR process helpers
 
@@ -156,6 +158,18 @@ In order to ease the maintenance burden on library maintainers, there are severa
 - **PR Size** - Analyzes changed files, insertions/deletions per file and total number of changes for the changeset and adds a t-shirt size label. It also posts a helpful comment explaining what it means. E.g., PR sizes of `small`, `medium` are preferred and encouraged. `large` PRs are borderline acceptable if the reviewers agree (the dev needs to provide reasons as to why this couldn't be broken into smaller PRs). `x-large` PRs are a strict no no and should be refactored.
 - **Stale** - Labels PRs with no activity and cleans them up if no further activity is found after a certain amount of time.
 - **Semantic Pull Request** - ensures pull request title or at least one commit (in case of single commit PRs) conforms to [Conventional Commits spec](https://www.conventionalcommits.org/).
+
+#### Automated releases
+
+As part of the [Automated deployments](#automated-deployments) workflow, a new PR is created that will publish a new version when merged. The PR body will include the changelog and other useful metadata. As new commits are merged to `main`, the PR is kept in sync. The PR itself introduces the updated `CHANGELOG.md` and the updated version number for the packge.
+
+![automated release pr](./docs/images/release-pr.png)
+
+##### One PR for Multiple Packages
+
+This is generally discouraged, but in rare cases it is acceptable. If you have PR that introduces changes across multiple packages, you must choose the "Rebase and Merge" option when merging your PR, otherwise the commits won't be correctly parsed.
+
+![rebase and merge](./docs/images/rebase-and-merge.png)
 
 ### Performance benchmarks
 
@@ -169,26 +183,26 @@ Automated check that analyzes the `yarn install` when a commit is pushed to a PR
 
 ## Getting Started
 
-### To install for local development:
+### To install for local development
 
 This monorepo uses `yarn` as its npm client. Please ensure you've [installed `yarn` for your system](https://yarnpkg.com/getting-started/install).
 
 close the repo and go into the new directory:
 
-```
-$ git clone git@github.com:newscorp-ghfb/dj-rendering.git && cd dj-rendering
+```bash
+git clone git@github.com:newscorp-ghfb/dj-rendering.git && cd dj-rendering
 ```
 
 Bootstrap the project with `lerna bootstrap`. This will install common dependencies in the root of the project so you aren't installing more than one copy of any module for a given version.
 
-```
-$ npx lerna bootstrap
+```bash
+npx lerna bootstrap
 ```
 
 `cd` into the package you are working on, e.g.
 
-```
-$ cd packages/wsj
+```bash
+cd packages/wsj
 ```
 
 and follow that package's readme.
@@ -258,13 +272,13 @@ DarkNewComponent.parameters = {
 }
 ```
 
-### To build a component:
+### To build a component
 
 _using `NewComponent` as an example_
 
 **1. Create a new component folder inside a package `packages/:package`**
 
-```
+```bash
 packages/:package/NewComponent/
 ```
 
@@ -287,7 +301,7 @@ We use lerna to manage this monorepo. Lerna maintains a single lockfile for the 
 
 For example:
 
-```
+```bash
 packages/
   foo/
     package.json <-- declares react ^17
@@ -301,8 +315,8 @@ The root `yarn.lock` will have entries for both version of react. When you run `
 
 Use `lerna` to add a new dependency so that the lockfile is properly updated.
 
-```
-$ lerna add [--dev] --scope <package name> <dependency>
+```bash
+lerna add [--dev] --scope <package name> <dependency>
 ```
 
 **Note** that `<pacakge name>` must match the `name` field in `packages/<pkg>/package.json`, and will most likely be in the format `@newscorp-gfhb/<pkg>`.
@@ -311,8 +325,8 @@ $ lerna add [--dev] --scope <package name> <dependency>
 
 If you have a dependency to add to all packages, drop the `--scope` flag:
 
-```
-$ lerna add [--dev] <dependency>
+```bash
+lerna add [--dev] <dependency>
 ```
 
 After installing, `lerna` will run `bootstrap`, which handles any linking that may be required, and will ensure only a single copy of a shared dependency (given the version numbers match) is installed.
@@ -323,7 +337,7 @@ Lerna will install dependencies to the root of the repository by default, which 
 
 Of course, if you have a script that needs to run from the root, any dependencies of that script must be installed at the top level as well. You may install these with `yarn`, using the `-W` flag:
 
-```
+```bash
 yarn add -W <some script runner>
 ```
 
@@ -346,7 +360,5 @@ Checkout the package guidelines [here](docs/packages.md).
 ## Resources
 
 - Read our [CONTRIBUTING](docs/CONTRIBUTING.md) guidelines to get started
-- Reach out on slack channel [#TBD]()
-- Our [roadmap]()
-- Our [RFCs]()
+- Reach out on slack channel [gcn-component-library](https://dowjones.slack.com/archives/C01LF5KCX0C)
 - ...

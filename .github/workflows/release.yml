@@ -85,7 +85,7 @@ jobs:
            monorepo-tags: true
            bump-minor-pre-major: true
            command: github-release
-           default-branch: ci/test-prerelease
+           default-branch: main
 
   publish_release:
     name: Publish to Package Registry

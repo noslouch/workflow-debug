@@ -9,15 +9,14 @@
 #
 # PRs with the `no-deploy` label will skip this workflow
 
-name: Cut a Prerelease
+name: Continuous Deployment
 
 on:
   pull_request:
     types: [closed]
     paths:
       - 'packages/**'
-  # TODO revert to closed PR
-    branches: [ci/test-prerelease]
+    branches: [main]
 
 jobs:
   build_and_test:
@@ -184,9 +183,7 @@ jobs:
         run: |
           git config user.email ${{ secrets.BOT_EMAIL }}
 
-          # TODO: remove this protection
           lerna publish \
-            --allow-branch ci/test-prerelease \
             --yes \
             --conventional-commits \
             --conventional-prerelease \

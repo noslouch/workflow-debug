@@ -8,8 +8,7 @@ on:
     types: [closed]
     paths:
       - 'packages/**'
-    # TODO change to main
-    branches: [ci/test-prerelease]
+    branches: [main]
 
 jobs:
   trigger_release:
