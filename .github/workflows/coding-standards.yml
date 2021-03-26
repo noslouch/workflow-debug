@@ -135,11 +135,10 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@newscorp-ghfb'
 
-      - name: install lerna locally
-        run: yarn
-      
       - name: bootstrap deps
-        run: lerna bootstrap --ignore-scripts
+        run: |
+          yarn --ignore-scripts
+          lerna bootstrap --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
 
