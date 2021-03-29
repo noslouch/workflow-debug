@@ -132,9 +132,10 @@ jobs:
            monorepo-tags: true
            bump-minor-pre-major: true
            command: release-pr
-           default-branch: ci/test-prerelease
+           default-branch: main
       
       - name: get release branch
+        if: steps.create-pr.outputs.pr
         uses: actions/github-script@v3
         id: release-branch
         with:
@@ -149,7 +150,8 @@ jobs:
             return { prBranch: data.head.ref, base: data.base.sha };
       
       - name: sign release branch commits
-        run: |
+        if: steps.release-branch.outputs.result
+          run: |
           git fetch origin
           git checkout $BRANCH
           git rebase --exec 'git commit --amend --no-edit -n -S' $SHA
