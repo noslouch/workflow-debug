@@ -151,7 +151,7 @@ jobs:
       
       - name: sign release branch commits
         if: steps.release-branch.outputs.result
-          run: |
+        run: |
           git fetch origin
           git checkout $BRANCH
           git rebase --exec 'git commit --amend --no-edit -n -S' $SHA
