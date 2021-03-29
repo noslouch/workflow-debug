@@ -1,0 +1,93 @@
+{
+  "name": "@newscorp-ghfb/wsj-react-library",
+  "version": "0.0.0",
+  "description": "Library of functional React components that implements the WSJ and Noted. design system.",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "sideEffects": false,
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "npm run storybook",
+    "test": "echo no tests yet. replace with jest for first component",
+    "deploy:ghpages": "run-s build:storybook ship:ghpages",
+    "deploy:dsm": "dsm-storybook publish",
+    "preview:dsm": "dsm-storybook preview",
+    "clean": "rm -rf dist .out",
+    "build": "NODE_ENV=production npm run build:dev",
+    "build:dev": "npm run compile",
+    "build:storybook": "build-storybook -c .storybook -o .out",
+    "ship:ghpages": "gh-pages -d .out",
+    "storybook": "start-storybook -p 6006",
+    "compile": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newscorp-ghfb/dj-rendering",
+    "directory": "packages/wsj"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "keywords": [],
+  "author": "WSJ Engineering",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/newscorp-ghfb/dj-rendering/issues"
+  },
+  "homepage": "https://github.com/newscorp-ghfb/dj-rendering/wsj#readme",
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.11.0",
+    "@invisionapp/dsm-storybook": "0.0.137",
+    "@newscorp-ghfb/dj-design-tokens": "0.0.20",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-replace": "^2.3.4",
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-docs": "6.1.10",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-knobs": "6.1.9",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/addon-options": "5.3.21",
+    "@storybook/addon-storysource": "^6.1.16",
+    "@storybook/addons": "6.1.10",
+    "@storybook/react": "^6.1.21",
+    "@svgr/rollup": "^5.5.0",
+    "@svgr/webpack": "^5.5.0",
+    "@testing-library/jest-dom": "5.9.0",
+    "@testing-library/react": "^11.2.5",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-require-context-hook": "1.0.0",
+    "babel-plugin-styled-components": "1.10.7",
+    "gh-pages": "2.2.0",
+    "jest": "^26.0.0",
+    "npm-run-all": "4.1.5",
+    "prop-types": "15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-test-renderer": "16.13.1",
+    "regenerator-runtime": "0.13.7",
+    "rollup": "^2.34.2",
+    "storybook-dark-mode": "^1.0.3",
+    "style-dictionary": "^2.10.2",
+    "styled-components": "^5.2.1",
+    "webpack": "^4.44.1"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "just-safe-get": "^2.0.0"
+  }
+}
