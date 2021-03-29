@@ -32,7 +32,7 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "keywords": [],
-  "author": "WSJ Engineering",
+  "author": "DJ Engineering <DJEngineering@dowjones.com>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/newscorp-ghfb/dj-rendering/issues"
