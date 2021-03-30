@@ -26,7 +26,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/newscorp-ghfb/dj-rendering",
-    "directory": "packages/wsj"
+    "directory": "packages/wsj-react-library"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"

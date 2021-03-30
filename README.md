@@ -185,6 +185,20 @@ Automated check that analyzes the `yarn install` when a commit is pushed to a PR
 
 ### To install for local development
 
+#### You must authenticate with a token in order to install
+
+- [Generate a Personal Access Token and Enable SSO Access](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token)
+  - Add the permissions `read:package` and `repo`
+  - Make sure `Enable SSO` is turned ON, click on authorize (You will need to do this even if you are updating the scope of an existing Token).
+- [Log in to npm using the Token you generated](https://docs.github.com/en/free-pro-team@latest/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages#authenticating-with-a-personal-access-token)
+- Your `~/.npmrc` should look like this:
+
+```bash
+registry=https://npm.onservo.com/
+@newscorp-ghfb:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=<PersonalAccessToken>
+```
+
 This monorepo uses `yarn` as its npm client. Please ensure you've [installed `yarn` for your system](https://yarnpkg.com/getting-started/install).
 
 close the repo and go into the new directory:
@@ -202,7 +216,7 @@ npx lerna bootstrap
 `cd` into the package you are working on, e.g.
 
 ```bash
-cd packages/wsj
+cd packages/wsj-react-library
 ```
 
 and follow that package's readme.
