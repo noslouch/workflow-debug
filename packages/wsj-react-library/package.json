@@ -67,6 +67,7 @@
     "@storybook/react": "^6.1.21",
     "@svgr/rollup": "^5.5.0",
     "@svgr/webpack": "^5.5.0",
+    "@styled-system/prop-types": "^5.1.5",
     "@testing-library/jest-dom": "5.9.0",
     "@testing-library/react": "^11.2.5",
     "babel-loader": "^8.2.2",
@@ -84,6 +85,7 @@
     "storybook-dark-mode": "^1.0.3",
     "style-dictionary": "^2.10.2",
     "styled-components": "^5.2.1",
+    "styled-system": "^5.1.5",
     "webpack": "^4.44.1"
   },
   "dependencies": {
