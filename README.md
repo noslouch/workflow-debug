@@ -101,18 +101,49 @@ There are times when a component might offer utility across so many use-cases th
 
 #### Automated versioning
 
-During deployment process, we automatically bump version based on [Conventional Commits](https://www.conventionalcommits.org/).
+During deployment, we automatically bump package versions based on [Conventional Commits](https://www.conventionalcommits.org/).
 
-`lerna version --conventional-commits` will use the Conventional Commits Specification to [determine the version bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump) and generate `CHANGELOG.md` files.
+`lerna version --conventional-commits` will use the Conventional Commits Specification to [determine the version bump](https://github.com/conventional-changelog/conventional-changelog/tree/master/packages/conventional-recommended-bump). [Release-please](https://github.com/google-github-actions/release-please-action) will generate `CHANGELOG.md` files.
 
 ##### On merge to `main`
 
 With the `--conventional-prerelease` flag, `lerna version --conventional-commits`
-creates pre release versions by prefixing the version recommendation from conventional commits with `pre`.
+creates pre release versions by suffixing the version recommendation from conventional commits with `beta`, e.g. `0.2.0-beta.0`. Subsequent merges to `main` will bump the final integer, e.g. `0.2.0-beta.1` and so on.
+
+Release-please will open a new PR against `main` to bump the version number and update the package's `CHANGELOG.md`. Merging this PR will trigger a new release. Release-please will keep the changelog in sync with subsequent merges to `main` before the next release.
 
 ##### On release deploy
 
-With the `--conventional-graduate` flag, `lerna version --conventional-commits` graduates the specified packages with the version recommendation from conventional commits.
+With the `--conventional-graduate` flag, `lerna version --conventional-commits` graduates the specified packages with the version recommendation from conventional commits. Releases are triggered by merging the relevant release PR.
+
+#### PR deploys
+
+Pull requests may be published by adding the `deploy` label to the pull request. The PR will be deployed as a prerelease using the PR number as an identifier, e.g. `0.2.0-pr55.0`. Subsequent commits to the PR will bump the final integer, e.g. `0.2.0-pr55.1` and so on.
+
+A `dist-tag` will be generated at publish time based on the pr number, e.g. `pr55`. You may use this value as a version identifier in `package.json` files or install commands:
+
+```json
+{
+  "name": "my-app",
+  "devDependencies": {
+    "@newscorp-ghfb/<pkg>": "pr55"
+  }
+}
+```
+
+```bash
+yarn add @newscorp-gfhb/wsj-components@pr55
+```
+
+To install subsequent releases, you may upgrade like any other node module:
+
+```bash
+yarn upgrade @newscorp-ghfb/<pkg>
+```
+
+**Note** that doing this will change the version identifier from the `dist-tag` (`pr55`) to a resolved version range, e.g. `^0.2.0-pr55.1`.
+
+This is needed since yarn will lock the version number and will not install later releases unless you explicitly upgrade the pr, e.g. if you install `0.2.0-pr55.0` and later release `0.2.0-pr55.1`, yarn will continue to install `.0` on builds in CI environments.
 
 #### Automated linting, fixing
 
