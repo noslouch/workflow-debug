@@ -70,17 +70,17 @@ Features that are intially being implemented for a single product, with the poss
 
 There are many different ways to create shareable components, but initially we will focus on two types:
 
-1. Themeable: these components will share 100% of logic and markup, their only difference will come from their themes which will only be able to change things like fonts, colors, spacing, etc. In the following example we are exporting a button styled with styled components, with css properties that have values that come from previously defined css variables:
+1. Themeable: these components will share 100% of logic and markup, their only difference will come from their themes which will only be able to change things like fonts, colors, spacing, etc. Additionally, while not required, you also have the option to set a default value in case your css variable is not defined in the document. In the following example we are exporting a button styled with styled components, with css properties that have values that come from previously defined css variables:
 
-```js
-const Button = styled.button`
-  color: var(--my-color);
-  font-family: var(--my-font);
-  font-size: var(--my-font-size);
-`
+   ```js
+   const Button = styled.button`
+     color: var(--my-color, #f00);
+     font-family: var(--my-font, 'Consolas, monaco, monospace');
+     font-size: var(--my-font-size, 18px);
+   `
 
-export default Button
-```
+   export default Button
+   ```
 
 2. Headless: these components will be purely logic based, and will let the developer bring their own UI to use. Headless components are especially useful for very complex, logic-heavy components that may require unique UI's per product. A very basic example would be the following component that counts the number of times a button has been clicked:
 
