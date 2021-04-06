@@ -1,0 +1,17 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+>
+  <defs>
+    <circle id="dot-small-a" cx="2" cy="2" r="2" />
+  </defs>
+  <use
+    fill="#222"
+    fill-rule="evenodd"
+    transform="rotate(90 2 8)"
+    xlink:href="#dot-small-a"
+  />
+</svg>

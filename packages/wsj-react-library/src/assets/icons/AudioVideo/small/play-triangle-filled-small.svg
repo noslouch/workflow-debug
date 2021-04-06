@@ -1,0 +1,20 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="16"
+  height="16"
+  viewBox="0 0 16 16"
+>
+  <defs>
+    <polygon
+      id="play-triangle-filled-small-a"
+      points="8.5883085 3.99388412 13.5153751 11.1334361 13.0091168 11.9938841 3.01940428 11.9938841 2.48462493 11.1334361 7.44385171 3.99388412"
+    />
+  </defs>
+  <use
+    fill="#222"
+    fill-rule="evenodd"
+    transform="rotate(90 8 7.993884)"
+    xlink:href="#play-triangle-filled-small-a"
+  />
+</svg>
