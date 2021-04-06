@@ -1,7 +1,4 @@
 export default {
-  sectionSubHed: 'Resources',
-  sectionTitle: 'Coronavirus',
-  slug: 'coronavirus-ribbon',
   tabs: [
     {
       title: 'Latest Updates',
@@ -53,5 +50,4 @@ export default {
       href: 'https://wsj.com/graphics/covid-storm-cases-deaths-testing-coronavirus-trump',
     },
   ],
-  titleUrl: 'https://www.wsj.com/news/collection/coronavirus-6dcf2a21',
 }

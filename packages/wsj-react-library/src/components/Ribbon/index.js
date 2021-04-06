@@ -3,12 +3,15 @@ import styled from 'styled-components'
 import Box from '../Box'
 import PropTypes from 'prop-types'
 import appendQueryParams from '../../urlHelpers/appendQueryParams'
-// import { DotSmall, PlayTriangleFilledSmall, Volume2FilledSmall } from "wsj-svg";
 import DotSmall from '../../assets/icons/Standard/small/dot-small.svg'
 import PlayTriangleFilledSmall from '../../assets/icons/AudioVideo/small/play-triangle-filled-small.svg'
 import Volume2FilledSmall from '../../assets/icons/AudioVideo/small/volume2-filled-small.svg'
 
 const StyledRibbon = styled(Box)`
+  border-bottom: ${({ border }) => (border.includes('bottom') ? '1px solid #cccccc' : '')};
+  border-top: ${({ border }) => (border.includes('top') ? '1px solid #cccccc' : '')};
+  border-right: ${({ border }) => (border.includes('right') ? '1px solid #cccccc' : '')};
+  border-left: ${({ border }) => (border.includes('left') ? '1px solid #cccccc' : '')};
   font-family: 'Retina Narrow', 'Retina', 'Arial Narrow', Arial, Helvetica, sans-serif;
   background-color: ${({ isOpinion }) => (isOpinion ? '#f8f7f5' : '#f4f4f4')};
   @media (max-width: 980px) and (min-width: 0px) {
@@ -20,7 +23,9 @@ const StyledRibbon = styled(Box)`
 `
 
 const RibbonContainer = styled(Box)`
+  display: flex;
   width: 1280px;
+  margin: 0 auto;
   @media (max-width: 1280px) and (min-width: 980px) {
     width: 980px;
   }
@@ -30,7 +35,8 @@ const RibbonContainer = styled(Box)`
 `
 
 const SectionHeading = styled(Box)`
-  float: left;
+  margin-right: 65px;
+  margin-top: 13px;
   @media (max-width: 980px) and (min-width: 0px) {
     margin-left: 10px;
     margin-right: 30px;
@@ -78,7 +84,8 @@ const SectionSubHead = styled.span`
 const LinkContainer = styled(Box)`
   display: flex;
   flex-wrap: wrap;
-
+  padding-top: 18px;
+  padding-bottom: 11px;
   @media (max-width: 980px) and (min-width: 0px) {
     flex-wrap: nowrap;
   }
@@ -155,23 +162,19 @@ const Icon = styled.span`
   `}
 `
 
-const appendMod = (href, page, slug) => {
-  const modCode = `${page ? page + '_' : ''}theme_${slug}`
+const appendMod = (href, modCode) => {
+  if (!modCode) return href
   return appendQueryParams(href, { mod: modCode })
 }
 
-const renderTabs = (tabs, page, slug, isOpinion) => {
+const renderTabs = (tabs, modCode, isOpinion) => {
   return (
-    <LinkContainer paddingTop="18px" paddingBottom="11px" isOpinion={isOpinion}>
-      {tabs.map((tab, idx) => {
+    <LinkContainer isOpinion={isOpinion}>
+      {tabs.map((tab) => {
         const { audio, href, redAndFlashing, title, video } = tab
+        const key = btoa(title)
         return (
-          <StyledLink
-            redAndFlashing={redAndFlashing}
-            isOpinion={isOpinion}
-            href={appendMod(href, page, slug)}
-            key={idx}
-          >
+          <StyledLink redAndFlashing={redAndFlashing} isOpinion={isOpinion} href={appendMod(href, modCode)} key={key}>
             {audio && !redAndFlashing ? (
               <Icon isOpinion={isOpinion}>
                 <Volume2FilledSmall />
@@ -179,7 +182,7 @@ const renderTabs = (tabs, page, slug, isOpinion) => {
             ) : null}
             {redAndFlashing ? (
               <Icon redAndFlashing={redAndFlashing}>
-                <DotSmall></DotSmall>
+                <DotSmall />
               </Icon>
             ) : null}
             {video && !redAndFlashing ? (
@@ -195,47 +198,34 @@ const renderTabs = (tabs, page, slug, isOpinion) => {
   )
 }
 
-const Ribbon = ({ tabs, slug, titleUrl, isOpinion, sectionSubHed, sectionTitle, page, border, showRibbon }) => {
-  if (!showRibbon || !tabs || tabs.length == 0) return null
-  const title = isOpinion ? 'Opinion' : sectionTitle
-
+const Ribbon = ({ tabs, titleUrl, isOpinion, sectionSubHed, sectionTitle, border, modCode }) => {
+  if (!tabs || tabs.length == 0) return null
   return (
-    <StyledRibbon
-      borderBottom={border.includes('bottom') ? '1px solid #cccccc' : ''}
-      borderTop={border.includes('top') ? '1px solid #cccccc' : ''}
-      borderRight={border.includes('right') ? '1px solid #cccccc' : ''}
-      borderLeft={border.includes('left') ? '1px solid #cccccc' : ''}
-      isOpinion={isOpinion}
-    >
-      <RibbonContainer margin="0 auto">
-        <SectionHeading marginRight="65px" marginTop="13px">
+    <StyledRibbon border={border} isOpinion={isOpinion}>
+      <RibbonContainer>
+        <SectionHeading>
           {isOpinion ? (
             <OpinionSectionTitle>
-              <a href={appendMod(titleUrl, page, slug)}>{title}</a>
+              <a href={appendMod(titleUrl, modCode)}>{sectionTitle}</a>
             </OpinionSectionTitle>
           ) : (
             <SectionTitle>
-              <a href={appendMod(titleUrl, page, slug)}>{title}</a>
+              <a href={appendMod(titleUrl, modCode)}>{sectionTitle}</a>
             </SectionTitle>
           )}
           <SectionSubHead isOpinion={isOpinion}>{sectionSubHed}</SectionSubHead>
         </SectionHeading>
-        {renderTabs(tabs, page, slug, isOpinion)}
+        {renderTabs(tabs, modCode, isOpinion)}
       </RibbonContainer>
     </StyledRibbon>
   )
 }
 
 Ribbon.defaultProps = {
-  showRibbon: false,
   border: [],
 }
 
 Ribbon.propTypes = {
-  /**
-   String, to attach to modeCode format page_theme_slug for tracking purposes
-  */
-  page: PropTypes.string,
   /**
    Array to in case border is needed example: ["top", "bottom"]
   */
@@ -253,17 +243,13 @@ Ribbon.propTypes = {
   */
   sectionSubHed: PropTypes.string,
   /**
-   Boolean to show ribbon or no.
-  */
-  showRibbon: PropTypes.bool,
-  /**
-   String, to attach to modeCode format page_theme_slug for tracking purposes
-   */
-  slug: PropTypes.string,
-  /**
    Url for the section title
    */
   titleUrl: PropTypes.string,
+  /**
+   This is the modcode for analytics
+   */
+  modCode: PropTypes.string,
   /**
      Each element displayed in the Ribbon
    */

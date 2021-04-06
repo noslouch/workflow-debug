@@ -2,7 +2,7 @@ import React from 'react'
 import Ribbon from '.'
 import RibbonData from './__mocks__/ribbon.js'
 
-const { slug, tabs, titleUrl, sectionSubHed, sectionTitle } = RibbonData
+const { tabs } = RibbonData
 
 export default {
   title: 'Ribbon',
@@ -18,22 +18,20 @@ export const Regular = Template.bind({})
 Regular.args = {
   isOpinion: false,
   border: ['bottom'],
-  showRibbon: true,
-  sectionSubHed,
-  sectionTitle,
-  slug,
+  modCode: 'hp_theme_coronavirus',
+  sectionTitle: 'The Biden Administration',
+  sectionSubHed: 'Resources',
   tabs,
-  titleUrl,
+  titleUrl: 'https://www.wsj.com/',
 }
 
 export const Opinion = Template.bind({})
 Opinion.args = {
   isOpinion: true,
   border: ['bottom'],
-  showRibbon: true,
+  modCode: 'opinion-sf_theme_opinionmain-ribbon',
   sectionSubHed: 'Resources',
-  sectionTitle: 'Coronavirus',
-  slug,
+  sectionTitle: 'Opinion',
   tabs,
-  titleUrl,
+  titleUrl: 'https://www.wsj.com/',
 }
