@@ -5,6 +5,9 @@ import { babel } from '@rollup/plugin-babel'
 import replace from '@rollup/plugin-replace'
 import json from '@rollup/plugin-json'
 
+// https://github.com/elbywan/wretch/issues/82
+const THIS_IS_UNDEFINED = 'THIS_IS_UNDEFINED'
+
 export default {
   input: 'src/index.js',
   output: [
@@ -35,4 +38,10 @@ export default {
     commonjs(),
     svgr(),
   ],
+
+  onwarn({ loc, code }) {
+    if (code === THIS_IS_UNDEFINED && loc?.file.match('wretch')) {
+      return
+    }
+  },
 }
