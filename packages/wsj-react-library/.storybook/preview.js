@@ -2,15 +2,13 @@ import React from 'react'
 
 import { withDsm } from '@invisionapp/dsm-storybook'
 // TODO: can we theme this?
-import { GlobalStyles as GlobalWSJStyles } from './globals/wsj'
-import { GlobalStyles as GlobalNotedStyles } from './globals/noted'
+import { default as GlobalWSJStyles } from '../src/components/GlobalStyles'
 
 export const decorators = [
   withDsm,
   (story) => (
     <>
       <GlobalWSJStyles />
-      <GlobalNotedStyles />
       {story()}
     </>
   ),

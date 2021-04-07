@@ -1,3 +1,4 @@
-// allow users to import components from the top-level
-// export { default as Button } from './components/Button';
+export { default as GlobalStyles } from './components/GlobalStyles'
+export { default as Headline } from './components/Headline'
+export { default as Summary } from './components/Summary'
 export { default as ArticleCommenting } from './components/ArticleCommenting'
