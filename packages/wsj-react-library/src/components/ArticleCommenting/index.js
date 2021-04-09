@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
 import { getCoralToken, setCoralScript, getEmbedURL, coralTalkRender, getParameterByName } from './enable-coral'
@@ -12,13 +12,12 @@ const Button = styled.button`
   padding: 0 20px;
   border-radius: 2px;
   transition: background-color 125ms ease;
-  margin: 0 0 15px;
   text-transform: uppercase;
   color: #fff;
+  margin-bottom: 15px;
   align-items: center;
   justify-content: center;
   background-color: #0080c3;
-  text-transform: uppercase;
   letter-spacing: 0.5px;
 
   &:hover {
@@ -27,20 +26,14 @@ const Button = styled.button`
   &:focus {
     outline-color: #666;
   }
-
-  & .show-comments {
-    display: inline-block;
-  }
 `
 
 const ShowOrHideCommentsSpan = styled.span`
-  ${Button} & {
-    font-size: 14px;
-    line-height: 18px;
-    font-family: var(--font-sans-serif);
-  }
-
-  font-weight: 500px;
+  font-size: 14px;
+  line-height: 18px;
+  font-family: var(--font-sans-serif);
+  font-weight: 500;
+  display: inline-block;
 `
 
 const ContentDiv = styled.div`
@@ -60,15 +53,19 @@ const CaretSpan = styled.span`
   transform: ${(props) => (props.isCoralDisplayed ? 'rotate(-180deg)' : 'none')};
 `
 
-const ArticleCommenting = ({ id, commentCount, coralCommentsEnabled, shouldCoralLoad, isProd }) => {
-  if (!coralCommentsEnabled) return null
+const BUTTON_LABELS = {
+  SHOW: 'Show Conversation',
+  HIDE: 'Hide Conversation',
+  ERROR: 'Conversation Temporarily Unavailable',
+}
 
+const ArticleCommenting = ({ canComment, commentCount, id }) => {
   const [toggle, setToggle] = useState(false)
   const [coralRendered, setCoralRendered] = useState(false)
-  const [coralAuthRequested, setCoralAuthRequested] = useState(false)
-  const [buttonCoralMessage, setButtonCoralMessage] = useState('Show Conversation')
+  const [buttonCoralMessage, setButtonCoralMessage] = useState(BUTTON_LABELS.SHOW)
+  const refCoralContainer = useRef(null)
 
-  const embedURL = getEmbedURL(isProd)
+  const embedURL = getEmbedURL()
 
   useEffect(() => {
     loadWithSpecificComment()
@@ -79,32 +76,39 @@ const ArticleCommenting = ({ id, commentCount, coralCommentsEnabled, shouldCoral
   }, [])
 
   const setCoralScriptAndLoad = () => {
-    setCoralScript(embedURL).then(() => {
-      renderModule()
-      setToggle(!toggle)
-    })
+    setCoralScript(embedURL)
+      .then(() => {
+        renderModule()
+        setToggle(!toggle)
+      })
+      .catch(() => {
+        setToggle(false)
+        setButtonCoralMessage(BUTTON_LABELS.ERROR)
+      })
   }
 
   const autoLoadCoralModule = () => {
-    if (window.location.hash && window.location.hash === '#comments_sector') {
+    if (window.location.hash === '#comments_sector') {
       setCoralScriptAndLoad()
     }
   }
 
   const loadWithSpecificComment = () => {
     const commentId = getParameterByName('commentId')
-    if (commentId && commentId !== '') {
+    if (commentId) {
       window.location.hash = '#comments_sector'
     }
     autoLoadCoralModule()
   }
 
   const renderModule = async () => {
-    const envPrefix = !isProd ? 's.dev.' : ''
-    // When moderator logs in via okta, cookie is dropped as flag to load admin widget
+    // TODO: revisit when a solution for components that need env. info. is agreed upon.
+    const envPrefix = process.env.NODE_APP !== 'production' ? 's.dev.' : ''
+
+    // When moderator logs in via okta, cookie is dropped as flag to load admin widget,
+    // there's no impact on login.
     const oktaSignedIn = document.cookie.indexOf('coral-okta-signed-in=true') !== -1
     const adminPrefix = oktaSignedIn && !envPrefix ? 'admin.' : ''
-
     let baseURL = `https://${adminPrefix}commenting.${envPrefix}wsj.com`
 
     // This needs further looking into, wasn't able to properly set up Docker to test comments repo
@@ -112,52 +116,38 @@ const ArticleCommenting = ({ id, commentCount, coralCommentsEnabled, shouldCoral
     //   baseURL = 'http://www.local.wsj.com:3000';
     // }
 
-    if (!coralAuthRequested) {
+    if (!coralRendered) {
       try {
-        setCoralAuthRequested(true)
-        await getCoralToken(baseURL, shouldCoralLoad).then((response) => {
-          coralTalkRender(response.token, baseURL, id, isProd)
-          setCoralRendered(true)
-          setButtonCoralMessage('Hide Conversation')
-        })
+        const response = await getCoralToken(baseURL, canComment)
+        coralTalkRender(response.token, baseURL, refCoralContainer, id)
+        setCoralRendered(true)
+        setButtonCoralMessage(BUTTON_LABELS.HIDE)
       } catch {
         setToggle(false)
-        setButtonCoralMessage('Conversation Temporarily Unavailable')
+        setButtonCoralMessage(BUTTON_LABELS.ERROR)
       }
     }
   }
 
   const toggleClickHandler = () => {
+    setToggle(!toggle)
     if (!coralRendered) {
       setCoralScriptAndLoad()
     }
-    if (toggle && coralRendered) {
-      setToggle(false)
-      setButtonCoralMessage('Show Conversation')
-    } else if (!toggle && coralRendered) {
-      setToggle(true)
-      setButtonCoralMessage('Hide Conversation')
-    }
+    setButtonCoralMessage(toggle ? BUTTON_LABELS.SHOW : BUTTON_LABELS.HIDE)
   }
-
-  const showOrHideConversationSpan = toggle ? 'hide' : 'show'
 
   return (
     <div id="comments_sector" role="region" aria-label="Conversation" tabIndex="-1">
-      <Button id={`coral_toggle_${id}`} onClick={toggleClickHandler} data-testid={'coral-toggle-button'}>
-        <ShowOrHideCommentsSpan
-          id={`show-conversation-span`}
-          className={`coral-toggle-text ${showOrHideConversationSpan}-comments`}
-        >
-          {buttonCoralMessage}
-        </ShowOrHideCommentsSpan>
-        {commentCount >= 0 ? <CommentCountSpan id={'comment-count-span'}>({commentCount})</CommentCountSpan> : null}
+      <Button id={`coral_toggle_${id}`} onClick={toggleClickHandler}>
+        <ShowOrHideCommentsSpan>{buttonCoralMessage}</ShowOrHideCommentsSpan>
+        {commentCount >= 0 ? <CommentCountSpan>({commentCount})</CommentCountSpan> : null}
         <CaretSpan isCoralDisplayed={toggle} aria-hidden="true">
           <CommentCaret height={24} width={24} />
         </CaretSpan>
       </Button>
-      <ContentDiv id={`coral_content_${id}`} isCoralDisplayed={toggle}>
-        <div id={`coral_talk_${id}`}></div>
+      <ContentDiv isCoralDisplayed={toggle}>
+        <div id={id} ref={refCoralContainer}></div>
       </ContentDiv>
     </div>
   )
@@ -173,25 +163,15 @@ ArticleCommenting.propTypes = {
   */
   commentCount: PropTypes.number,
   /**
-    Determines if the article should have comments enabled 
+    Determines whether or not the user could comment
   */
-  coralCommentsEnabled: PropTypes.bool,
-  /**
-    Checks for environment in order to set up the proper URLs needed
-  */
-  isProd: PropTypes.bool,
-  /**
-    Determines whether or not the user should have access to their profile
-  */
-  shouldCoralLoad: PropTypes.bool,
+  canComment: PropTypes.bool,
 }
 
 ArticleCommenting.defaultProps = {
   id: '',
-  coralCommentsEnabled: false,
   commentCount: 0,
-  isProd: false,
-  shouldCoralLoad: false,
+  canComment: false,
 }
 
 export default ArticleCommenting

@@ -1,9 +1,8 @@
 /* global Coral */
 import wretch from 'wretch'
 
-// CoralLoad = if user is logged in. Intentionally vague.
-export const getCoralToken = async (baseURL, coralLoad) => {
-  if (coralLoad) {
+export const getCoralToken = async (baseURL, canComment) => {
+  if (canComment) {
     const response = await wretch(`${baseURL}/api/v1/auth/dj/token`)
       .options({
         credentials: 'include',
@@ -20,43 +19,40 @@ export const getCoralToken = async (baseURL, coralLoad) => {
   }
 }
 
-export const getEmbedURL = (isProd) => {
+export const getEmbedURL = () => {
   // This needs further looking into, wasn't able to properly set up Docker to test comments repo
   // if (LOCAL_CORAL_TALK === 'true')
   // return 'http://www.local.wsj.com:3000/static/embed.js';
-
-  const environmentSubdomain = !isProd ? 's.dev.' : ''
-
+  // TODO: revisit when a solution for components that need env. info. is agreed upon.
+  const environmentSubdomain = process.env.NODE_APP !== 'production' ? 's.dev.' : ''
   return `https://commenting.${environmentSubdomain}wsj.com/static/embed.js`
 }
 
 export const setCoralScript = (url) => {
   return new Promise((resolve, reject) => {
-    const embedCoralScript = document.createElement('script')
-    embedCoralScript.type = 'text/javascript'
-    embedCoralScript['data-testid'] = 'coral-script'
-    embedCoralScript.src = url
-    embedCoralScript.onload = () => resolve(true)
-    embedCoralScript.onerror = reject
-    document.body.appendChild(embedCoralScript)
+    // check first if Coral has been set
+    if (!window.Coral) {
+      const embedCoralScript = document.createElement('script')
+      embedCoralScript.type = 'text/javascript'
+      embedCoralScript.src = url
+      embedCoralScript.onload = () => resolve()
+      embedCoralScript.onerror = reject
+      document.body.appendChild(embedCoralScript)
+    } else {
+      resolve()
+    }
   })
 }
 
 const sendTracking = (params) => {
   if (typeof window !== 'undefined' && typeof window.utag !== 'undefined') {
-    if (window.requestIdleCallback) {
-      window.requestIdleCallback(
-        () => {
-          window.utag.link(params)
-        },
-        { timeout: 2000 }
-      )
-    }
+    window.requestIdleCallback?.(() => window.utag?.link(params), { timeout: 200 })
   }
 }
 
-export const coralTalkRender = (token, url, id, isProd) => {
-  const node = document.getElementById('coral_talk_' + id)
+export const coralTalkRender = (token, url, ref, id) => {
+  const node = ref.current
+
   Coral.Talk.render(node, {
     talk: url,
     auth_token: token,
@@ -71,10 +67,11 @@ export const coralTalkRender = (token, url, id, isProd) => {
       */
 
       _events.on('action.SHOW_SIGNIN_DIALOG', () => {
-        const envPrefix = isProd ? '' : 'int.'
+        // TODO: revisit when a solution for components that need env. info. is agreed upon.
+        const envPrefix = process.env.NODE_APP !== 'production' ? '' : 'int.'
         location.href =
           `https://${envPrefix}accounts.wsj.com/login?target=` +
-          encodeURIComponent(location.href + '#coral_toggle_' + id)
+          encodeURIComponent(`${location.href}#coral_toggle_${id}`)
       })
 
       _events.on('mutation.IgnoreUser.success', () => {
@@ -167,14 +164,9 @@ export const coralTalkRender = (token, url, id, isProd) => {
   })
 }
 
+// used to get value of commentId
 export const getParameterByName = (name, url) => {
   if (!url) url = window.location.href
-  // eslint-disable-next-line no-useless-escape
-  name = name.replace(/[\[\]]/g, '\\$&')
-  const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
-  const results = regex.exec(url)
-
-  if (!results) return null
-  if (!results[2]) return ''
-  return decodeURIComponent(results[2].replace(/\+/g, ' '))
+  const params = new URL(url).searchParams
+  return params.get(name)
 }
