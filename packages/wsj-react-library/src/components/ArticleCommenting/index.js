@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react'
-import styled from 'styled-components'
-import PropTypes from 'prop-types'
-import { getCoralToken, setCoralScript, getEmbedURL, coralTalkRender, getParameterByName } from './enable-coral'
-import CommentCaret from './comment-caret.svg'
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import { getCoralToken, setCoralScript, getEmbedURL, coralTalkRender, getParameterByName } from './enable-coral';
+import CommentCaret from './comment-caret.svg';
 
 const Button = styled.button`
   display: flex;
@@ -26,7 +26,7 @@ const Button = styled.button`
   &:focus {
     outline-color: #666;
   }
-`
+`;
 
 const ShowOrHideCommentsSpan = styled.span`
   font-size: 14px;
@@ -34,15 +34,15 @@ const ShowOrHideCommentsSpan = styled.span`
   font-family: var(--font-sans-serif);
   font-weight: 500;
   display: inline-block;
-`
+`;
 
 const ContentDiv = styled.div`
   display: ${(props) => (props.isCoralDisplayed ? 'block' : 'none')};
-`
+`;
 
 const CommentCountSpan = styled.div`
   margin-left: 5px;
-`
+`;
 
 const CaretSpan = styled.span`
   transform: rotate(-180deg);
@@ -51,65 +51,65 @@ const CaretSpan = styled.span`
   transition: transform 600ms ease;
   margin-left: 5px;
   transform: ${(props) => (props.isCoralDisplayed ? 'rotate(-180deg)' : 'none')};
-`
+`;
 
 const BUTTON_LABELS = {
   SHOW: 'Show Conversation',
   HIDE: 'Hide Conversation',
   ERROR: 'Conversation Temporarily Unavailable',
-}
+};
 
 const ArticleCommenting = ({ canComment, commentCount, id }) => {
-  const [toggle, setToggle] = useState(false)
-  const [coralRendered, setCoralRendered] = useState(false)
-  const [buttonCoralMessage, setButtonCoralMessage] = useState(BUTTON_LABELS.SHOW)
-  const refCoralContainer = useRef(null)
+  const [toggle, setToggle] = useState(false);
+  const [coralRendered, setCoralRendered] = useState(false);
+  const [buttonCoralMessage, setButtonCoralMessage] = useState(BUTTON_LABELS.SHOW);
+  const refCoralContainer = useRef(null);
 
-  const embedURL = getEmbedURL()
+  const embedURL = getEmbedURL();
 
   useEffect(() => {
-    loadWithSpecificComment()
-    window.addEventListener('hashchange', autoLoadCoralModule)
+    loadWithSpecificComment();
+    window.addEventListener('hashchange', autoLoadCoralModule);
     return () => {
-      window.removeEventListener('hashchange', autoLoadCoralModule)
-    }
-  }, [])
+      window.removeEventListener('hashchange', autoLoadCoralModule);
+    };
+  }, []);
 
   const setCoralScriptAndLoad = () => {
     setCoralScript(embedURL)
       .then(() => {
-        renderModule()
-        setToggle(!toggle)
+        renderModule();
+        setToggle(!toggle);
       })
       .catch(() => {
-        setToggle(false)
-        setButtonCoralMessage(BUTTON_LABELS.ERROR)
-      })
-  }
+        setToggle(false);
+        setButtonCoralMessage(BUTTON_LABELS.ERROR);
+      });
+  };
 
   const autoLoadCoralModule = () => {
     if (window.location.hash === '#comments_sector') {
-      setCoralScriptAndLoad()
+      setCoralScriptAndLoad();
     }
-  }
+  };
 
   const loadWithSpecificComment = () => {
-    const commentId = getParameterByName('commentId')
+    const commentId = getParameterByName('commentId');
     if (commentId) {
-      window.location.hash = '#comments_sector'
+      window.location.hash = '#comments_sector';
     }
-    autoLoadCoralModule()
-  }
+    autoLoadCoralModule();
+  };
 
   const renderModule = async () => {
     // TODO: revisit when a solution for components that need env. info. is agreed upon.
-    const envPrefix = process.env.NODE_APP !== 'production' ? 's.dev.' : ''
+    const envPrefix = process.env.NODE_APP !== 'production' ? 's.dev.' : '';
 
     // When moderator logs in via okta, cookie is dropped as flag to load admin widget,
     // there's no impact on login.
-    const oktaSignedIn = document.cookie.indexOf('coral-okta-signed-in=true') !== -1
-    const adminPrefix = oktaSignedIn && !envPrefix ? 'admin.' : ''
-    let baseURL = `https://${adminPrefix}commenting.${envPrefix}wsj.com`
+    const oktaSignedIn = document.cookie.indexOf('coral-okta-signed-in=true') !== -1;
+    const adminPrefix = oktaSignedIn && !envPrefix ? 'admin.' : '';
+    let baseURL = `https://${adminPrefix}commenting.${envPrefix}wsj.com`;
 
     // This needs further looking into, wasn't able to properly set up Docker to test comments repo
     // if (window.location.search.indexOf('local_comments=true') !== -1) {
@@ -118,24 +118,24 @@ const ArticleCommenting = ({ canComment, commentCount, id }) => {
 
     if (!coralRendered) {
       try {
-        const response = await getCoralToken(baseURL, canComment)
-        coralTalkRender(response.token, baseURL, refCoralContainer, id)
-        setCoralRendered(true)
-        setButtonCoralMessage(BUTTON_LABELS.HIDE)
+        const response = await getCoralToken(baseURL, canComment);
+        coralTalkRender(response.token, baseURL, refCoralContainer, id);
+        setCoralRendered(true);
+        setButtonCoralMessage(BUTTON_LABELS.HIDE);
       } catch {
-        setToggle(false)
-        setButtonCoralMessage(BUTTON_LABELS.ERROR)
+        setToggle(false);
+        setButtonCoralMessage(BUTTON_LABELS.ERROR);
       }
     }
-  }
+  };
 
   const toggleClickHandler = () => {
-    setToggle(!toggle)
+    setToggle(!toggle);
     if (!coralRendered) {
-      setCoralScriptAndLoad()
+      setCoralScriptAndLoad();
     }
-    setButtonCoralMessage(toggle ? BUTTON_LABELS.SHOW : BUTTON_LABELS.HIDE)
-  }
+    setButtonCoralMessage(toggle ? BUTTON_LABELS.SHOW : BUTTON_LABELS.HIDE);
+  };
 
   return (
     <div id="comments_sector" role="region" aria-label="Conversation" tabIndex="-1">
@@ -150,8 +150,8 @@ const ArticleCommenting = ({ canComment, commentCount, id }) => {
         <div id={id} ref={refCoralContainer}></div>
       </ContentDiv>
     </div>
-  )
-}
+  );
+};
 
 ArticleCommenting.propTypes = {
   /** 
@@ -166,12 +166,12 @@ ArticleCommenting.propTypes = {
     Determines whether or not the user could comment
   */
   canComment: PropTypes.bool,
-}
+};
 
 ArticleCommenting.defaultProps = {
   id: '',
   commentCount: 0,
   canComment: false,
-}
+};
 
-export default ArticleCommenting
+export default ArticleCommenting;

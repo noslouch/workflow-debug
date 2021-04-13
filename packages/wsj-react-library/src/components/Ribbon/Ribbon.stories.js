@@ -1,8 +1,8 @@
-import React from 'react'
-import Ribbon from '.'
-import RibbonData from './__mocks__/ribbon.js'
+import React from 'react';
+import Ribbon from '.';
+import RibbonData from './__mocks__/ribbon.js';
 
-const { tabs } = RibbonData
+const { tabs } = RibbonData;
 
 export default {
   title: 'Ribbon',
@@ -10,11 +10,11 @@ export default {
   parameters: {
     componentSubtitle: 'The ribbon component is found on some pages at the top, just underneath the header.',
   },
-}
+};
 
-const Template = (args) => <Ribbon {...args} />
+const Template = (args) => <Ribbon {...args} />;
 
-export const Regular = Template.bind({})
+export const Regular = Template.bind({});
 Regular.args = {
   isOpinion: false,
   border: ['bottom'],
@@ -23,9 +23,9 @@ Regular.args = {
   sectionSubHed: 'Resources',
   tabs,
   titleUrl: 'https://www.wsj.com/',
-}
+};
 
-export const Opinion = Template.bind({})
+export const Opinion = Template.bind({});
 Opinion.args = {
   isOpinion: true,
   border: ['bottom'],
@@ -34,4 +34,4 @@ Opinion.args = {
   sectionTitle: 'Opinion',
   tabs,
   titleUrl: 'https://www.wsj.com/',
-}
+};

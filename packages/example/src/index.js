@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
 const Button = styled.button`
   cursor: pointer;
@@ -7,10 +7,10 @@ const Button = styled.button`
   background: midnightblue;
   border: 1px solid black;
   padding: 7px 15px;
-`
+`;
 
 export default function Example(props) {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <div>
@@ -18,5 +18,5 @@ export default function Example(props) {
       <pre>the count is: {count}</pre>
       <Button onClick={() => setCount(count + 1)}>increase the count!</Button>
     </div>
-  )
+  );
 }

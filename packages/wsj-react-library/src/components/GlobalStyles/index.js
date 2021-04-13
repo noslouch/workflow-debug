@@ -1,5 +1,5 @@
-import { createGlobalStyle } from 'styled-components'
-import cssTokens from '@newscorp-ghfb/dj-design-tokens/dist/web/wsj/tokens.css'
+import { createGlobalStyle } from 'styled-components';
+import cssTokens from '@newscorp-ghfb/dj-design-tokens/dist/web/wsj/tokens.css';
 
 export default createGlobalStyle`
   // Resets
@@ -188,4 +188,4 @@ export default createGlobalStyle`
     --summary-font-color: var(--color-nickel);
     --summary-bullet-small-font-color: var(--color-jet);
   }
-`
+`;

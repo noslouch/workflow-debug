@@ -14,4 +14,4 @@ module.exports = {
       plugins: ['require-context-hook', '@babel/plugin-proposal-optional-chaining'],
     },
   },
-}
+};

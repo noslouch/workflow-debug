@@ -1,37 +1,37 @@
-import React from 'react'
-import Headline from './index'
-import { render } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
+import React from 'react';
+import Headline from './index';
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 describe('Headlines', () => {
   test('Should render headline text', () => {
-    const { getByText } = render(<Headline>Tech Shares Start Week Higher</Headline>)
-    expect(getByText('Tech Shares Start Week Higher')).toBeInTheDocument()
-  })
+    const { getByText } = render(<Headline>Tech Shares Start Week Higher</Headline>);
+    expect(getByText('Tech Shares Start Week Higher')).toBeInTheDocument();
+  });
 
   test('Should use default type and section heading', () => {
-    const { container } = render(<Headline>Tech Shares Start Week Higher</Headline>)
-    const type = container.querySelector('h1[type="standard"]')
-    expect(type).toBeInTheDocument()
-  })
+    const { container } = render(<Headline>Tech Shares Start Week Higher</Headline>);
+    const type = container.querySelector('h1[type="standard"]');
+    expect(type).toBeInTheDocument();
+  });
 
   test('Should render link', () => {
     const { container } = render(
       <Headline>
         <a href="https://www.wsj.com/">Tech Shares Start Week Higher</a>
       </Headline>
-    )
-    const link = container.querySelector('h1 a')
-    expect(link).toBeInTheDocument()
-  })
+    );
+    const link = container.querySelector('h1 a');
+    expect(link).toBeInTheDocument();
+  });
 
   test('Should pass size and type', () => {
     const { container } = render(
       <Headline size="m" type="features">
         Tech Shares Start Week Higher
       </Headline>
-    )
-    const type = container.querySelector('h4[type="features"]')
-    expect(type).toBeInTheDocument()
-  })
-})
+    );
+    const type = container.querySelector('h4[type="features"]');
+    expect(type).toBeInTheDocument();
+  });
+});

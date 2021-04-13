@@ -4,6 +4,6 @@
   "trailingComma": "es5",
   "endOfLine": "lf",
   "arrowParens": "always",
-  "semi": false,
+  "semi": true,
   "tabWidth": 2
 }

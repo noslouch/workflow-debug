@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import Box from '../Box'
-import PropTypes from 'prop-types'
-import appendQueryParams from '../../urlHelpers/appendQueryParams'
-import DotSmall from '../../assets/icons/Standard/small/dot-small.svg'
-import PlayTriangleFilledSmall from '../../assets/icons/AudioVideo/small/play-triangle-filled-small.svg'
-import Volume2FilledSmall from '../../assets/icons/AudioVideo/small/volume2-filled-small.svg'
+import React from 'react';
+import styled from 'styled-components';
+import Box from '../Box';
+import PropTypes from 'prop-types';
+import appendQueryParams from '../../urlHelpers/appendQueryParams';
+import DotSmall from '../../assets/icons/Standard/small/dot-small.svg';
+import PlayTriangleFilledSmall from '../../assets/icons/AudioVideo/small/play-triangle-filled-small.svg';
+import Volume2FilledSmall from '../../assets/icons/AudioVideo/small/volume2-filled-small.svg';
 
 const StyledRibbon = styled(Box)`
   border-bottom: ${({ border }) => (border.includes('bottom') ? '1px solid #cccccc' : '')};
@@ -20,7 +20,7 @@ const StyledRibbon = styled(Box)`
   @media print {
     display: none;
   }
-`
+`;
 
 const RibbonContainer = styled(Box)`
   display: flex;
@@ -32,7 +32,7 @@ const RibbonContainer = styled(Box)`
   @media (max-width: 980px) and (min-width: 0px) {
     width: 100%;
   }
-`
+`;
 
 const SectionHeading = styled(Box)`
   margin-right: 65px;
@@ -42,7 +42,7 @@ const SectionHeading = styled(Box)`
     margin-right: 30px;
     margin-top: 13px;
   }
-`
+`;
 
 const SectionTitle = styled.span`
   font-size: 17px;
@@ -57,7 +57,7 @@ const SectionTitle = styled.span`
     color: #222222;
     text-decoration: none;
   }
-`
+`;
 
 const OpinionSectionTitle = styled.span`
   font-family: 'Escrow Condensed', Georgia, serif;
@@ -72,14 +72,14 @@ const OpinionSectionTitle = styled.span`
     text-decoration: none;
     display: flex;
   }
-`
+`;
 
 const SectionSubHead = styled.span`
   font-size: 13px;
   line-height: 13px;
   color: ${({ isOpinion }) => (isOpinion ? '#675842' : '#555555')};
   font-weight: 300;
-`
+`;
 
 const LinkContainer = styled(Box)`
   display: flex;
@@ -89,7 +89,7 @@ const LinkContainer = styled(Box)`
   @media (max-width: 980px) and (min-width: 0px) {
     flex-wrap: nowrap;
   }
-`
+`;
 
 const StyledLink = styled.a`
   border: ${({ isOpinion }) => (isOpinion ? '1px solid #867256' : '1px solid #999999')};
@@ -134,7 +134,7 @@ const StyledLink = styled.a`
       opacity: 0.25;
     }
   }
-`
+`;
 
 const Icon = styled.span`
   color: ${({ isOpinion }) => (isOpinion ? '#867256' : '#555555')};
@@ -160,19 +160,19 @@ const Icon = styled.span`
       fill: #ec0404;
     }
   `}
-`
+`;
 
 const appendMod = (href, modCode) => {
-  if (!modCode) return href
-  return appendQueryParams(href, { mod: modCode })
-}
+  if (!modCode) return href;
+  return appendQueryParams(href, { mod: modCode });
+};
 
 const renderTabs = (tabs, modCode, isOpinion) => {
   return (
     <LinkContainer isOpinion={isOpinion}>
       {tabs.map((tab) => {
-        const { audio, href, redAndFlashing, title, video } = tab
-        const key = btoa(title)
+        const { audio, href, redAndFlashing, title, video } = tab;
+        const key = btoa(title);
         return (
           <StyledLink redAndFlashing={redAndFlashing} isOpinion={isOpinion} href={appendMod(href, modCode)} key={key}>
             {audio && !redAndFlashing ? (
@@ -192,14 +192,14 @@ const renderTabs = (tabs, modCode, isOpinion) => {
             ) : null}
             <span>{title}</span>
           </StyledLink>
-        )
+        );
       })}
     </LinkContainer>
-  )
-}
+  );
+};
 
 const Ribbon = ({ tabs, titleUrl, isOpinion, sectionSubHed, sectionTitle, border, modCode }) => {
-  if (!tabs || tabs.length == 0) return null
+  if (!tabs || tabs.length == 0) return null;
   return (
     <StyledRibbon border={border} isOpinion={isOpinion}>
       <RibbonContainer>
@@ -218,12 +218,12 @@ const Ribbon = ({ tabs, titleUrl, isOpinion, sectionSubHed, sectionTitle, border
         {renderTabs(tabs, modCode, isOpinion)}
       </RibbonContainer>
     </StyledRibbon>
-  )
-}
+  );
+};
 
 Ribbon.defaultProps = {
   border: [],
-}
+};
 
 Ribbon.propTypes = {
   /**
@@ -263,6 +263,6 @@ Ribbon.propTypes = {
       href: PropTypes.string,
     })
   ),
-}
+};
 
-export default Ribbon
+export default Ribbon;

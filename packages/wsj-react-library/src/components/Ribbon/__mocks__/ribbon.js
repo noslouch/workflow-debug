@@ -50,4 +50,4 @@ export default {
       href: 'https://wsj.com/graphics/covid-storm-cases-deaths-testing-coronavirus-trump',
     },
   ],
-}
+};
