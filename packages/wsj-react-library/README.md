@@ -48,7 +48,7 @@ yarn start
 ## Usage
 
 ```js
-import { Button } from '@newscorp-ghfb/wsj-react-library'
+import { Button } from '@newscorp-ghfb/wsj-react-library';
 
 export default function Home() {
   return (
@@ -63,7 +63,7 @@ export default function Home() {
         <Button tertiary>Now Go Make Something Tertiary</Button>
       </p>
     </div>
-  )
+  );
 }
 ```
 
@@ -71,7 +71,7 @@ export default function Home() {
 
 ### Theming
 
-`TKTKTK`
+CSS variables are used to theme components when needed. Their values come from [DJ Design Tokens](https://github.com/newscorp-ghfb/dj-design-tokens), which are then used by the [`GlobalStyles`](src/components/GlobalStyles) component. When using a component that has themeable values, you will need to import the `GlobalStyles` component and place it onto the page.
 
 ### Server Side Rendering
 

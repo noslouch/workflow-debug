@@ -10,7 +10,7 @@
   },
   "scripts": {
     "start": "npm run storybook",
-    "test": "echo no tests yet. replace with jest for first component",
+    "test": "jest --coverage",
     "deploy:ghpages": "run-s build:storybook ship:ghpages",
     "deploy:dsm": "dsm-storybook publish",
     "preview:dsm": "dsm-storybook preview",

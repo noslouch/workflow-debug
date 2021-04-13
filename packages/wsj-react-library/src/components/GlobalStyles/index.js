@@ -1,5 +1,20 @@
 import { createGlobalStyle } from 'styled-components';
-import cssTokens from '@newscorp-ghfb/dj-design-tokens/dist/web/wsj/tokens.css';
+import tokens from '@newscorp-ghfb/dj-design-tokens/dist/web/wsj/tokens.json';
+
+export const toVars = (object = {}, prefix = '-') => {
+  const vars = {};
+  for (const [key, value] of Object.entries(object)) {
+    if (typeof value === 'object') {
+      const nestedVars = toVars(value, `${prefix}-${key}`);
+      for (const [nestedKey, nestedValue] of Object.entries(nestedVars)) {
+        vars[nestedKey] = nestedValue;
+      }
+    } else {
+      vars[`${prefix}-${key}`] = value;
+    }
+  }
+  return vars;
+};
 
 export default createGlobalStyle`
   // Resets
@@ -176,8 +191,9 @@ export default createGlobalStyle`
 
   // CSS Variables
   // TODO: split into smaller pieces and stitch together depending on props
-  ${cssTokens}
-
+  :root {
+    ${Object.entries(toVars(tokens)).map(([key, value]) => `${key}: ${value};`)}
+  }
 
   h1, h2, h3, h4, h5, h6 {
     --headline-font-color: var(--color-jet);
