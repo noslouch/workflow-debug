@@ -202,16 +202,6 @@ This is generally discouraged, but in rare cases it is acceptable. If you have P
 
 ![rebase and merge](./docs/images/rebase-and-merge.png)
 
-### Performance benchmarks
-
-#### Bundle size checks
-
-Automated check that analyzes the bundle size when a commit is pushed to a PR. The new stats are compared to the benchmark stats stored in `main` branch and the delta is reported in the PR. This flags any unwanted bundle size increases for PR reviewers.
-
-#### Build time checks
-
-Automated check that analyzes the `yarn install` when a commit is pushed to a PR. This flags any potential increases to PR reviewers so that corrective actions can be taken.
-
 ## Getting Started
 
 ### To install for local development
@@ -263,31 +253,31 @@ Checkout the architecture and detailed guidelines [here](docs/component-design.m
 - **WSJ** Use `dj-design-tokens` in CSS whenever possible via import
 
 ```js
-import { ColorMidnight } from '@newscorp-ghfb/dj-design-tokens/dist/js/wsj/tokens.es6'
+import { ColorMidnight } from '@newscorp-ghfb/dj-design-tokens/dist/js/wsj/tokens.es6';
 ```
 
 - If there are different styles via dark mode and light mode, save those as separate styles:
 
 ```js
-import styled, { css } from 'styled-components'
+import styled, { css } from 'styled-components';
 
 const darkStyles = css`
   background: #000;
   color: #fff;
-`
+`;
 
 const lightStyles = css`
   background: #fff;
   color: #000;
-`
+`;
 
 const StyledNewComponent = styled.div`
   && {
     ${(props) => (props.isDark ? darkStyles : lightStyles)}
   }
-`
+`;
 
-const NewComponent = ({ isDark }) => <StyledNewComponent isDark={isDark}>hello, i am new</StyledNewComponent>
+const NewComponent = ({ isDark }) => <StyledNewComponent isDark={isDark}>hello, i am new</StyledNewComponent>;
 ```
 
 - Set the respective `darkMode` setting within `NewComponent.stories.js`:
@@ -304,17 +294,17 @@ export default {
       id: 'XXXX',
     },
   },
-}
+};
 
-export const LightNewComponent = () => <NewComponent />
+export const LightNewComponent = () => <NewComponent />;
 
-export const DarkNewComponent = () => <NewComponent isDark />
+export const DarkNewComponent = () => <NewComponent isDark />;
 
 DarkNewComponent.parameters = {
   darkMode: {
     current: 'dark',
   },
-}
+};
 ```
 
 ### To build a component
@@ -335,7 +325,7 @@ packages/:package/NewComponent/
 **2. Export the component from `index.js`**
 
 ```js
-export { default as NewComponent } from './packages/:package/NewComponent'
+export { default as NewComponent } from './packages/:package/NewComponent';
 ```
 
 **3. Create a doc for your component at `docs/packages/:package/NewComponent.md`**
@@ -402,8 +392,15 @@ Checkout the package guidelines [here](docs/packages.md).
 - RFC process?
 - Raise a GitHub issue
 
+## Performance Guidelines & Benchmarks
+
+Perhaps the best way we can maintain good performance standards is writing simpler, easier to follow, cleaner code. Code that is easier to refactor is easier to improve should the need arise. Functions are cheap. Use them to label any series of grouped actions. Multiple .map()'ing,' loops in loops, if you .reduce() to sum something strangly—put it in a function that labels what it's doing.
+
+There's a lot of tools React and Dev Tools provide. We also have benchmarks that will run as part of our CI/CD processes.
+
+Checkout the performance guidelines & benchmark information [here](docs/performance-guidelines.md) for more tips and info.
+
 ## Resources
 
 - Read our [CONTRIBUTING](docs/CONTRIBUTING.md) guidelines to get started
 - Reach out on slack channel [gcn-component-library](https://dowjones.slack.com/archives/C01LF5KCX0C)
-- ...
