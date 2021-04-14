@@ -38,7 +38,7 @@ jobs:
 
       - name: bootstrap deps
         run: |
-          yarn --ignore-scripts
+          yarn --ignore-scripts --frozen-lockfile
           lerna bootstrap --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
@@ -181,7 +181,7 @@ jobs:
       
       - name: bootstrap deps
         run: |
-          yarn --ignore-scripts
+          yarn --ignore-scripts --frozen-lockfile
           lerna bootstrap --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
