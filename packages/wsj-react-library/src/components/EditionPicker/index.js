@@ -2,8 +2,8 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { setCookie } from '../../cookies';
-import ChevronDownSmall from '../../assets/icons/Standard/small/chevron-down-small.svg';
-import ChevronUpSmall from '../../assets/icons/Standard/small/chevron-up-small.svg';
+import { ReactComponent as ChevronDownSmall } from '../../assets/icons/Standard/small/chevron-down-small.svg';
+import { ReactComponent as ChevronUpSmall } from '../../assets/icons/Standard/small/chevron-up-small.svg';
 
 const EditionPickerWrapper = styled.div`
   cursor: pointer;

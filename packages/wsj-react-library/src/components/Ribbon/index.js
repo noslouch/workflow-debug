@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import Box from '../Box';
 import PropTypes from 'prop-types';
 import appendQueryParams from '../../urlHelpers/appendQueryParams';
-import DotSmall from '../../assets/icons/Standard/small/dot-small.svg';
-import PlayTriangleFilledSmall from '../../assets/icons/AudioVideo/small/play-triangle-filled-small.svg';
-import Volume2FilledSmall from '../../assets/icons/AudioVideo/small/volume2-filled-small.svg';
+import { ReactComponent as DotSmall } from '../../assets/icons/Standard/small/dot-small.svg';
+import { ReactComponent as PlayTriangleFilledSmall } from '../../assets/icons/AudioVideo/small/play-triangle-filled-small.svg';
+import { ReactComponent as Volume2FilledSmall } from '../../assets/icons/AudioVideo/small/volume2-filled-small.svg';
 
 const StyledRibbon = styled(Box)`
   border-bottom: ${({ border }) => (border.includes('bottom') ? '1px solid #cccccc' : '')};

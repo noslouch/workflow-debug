@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { getCoralToken, setCoralScript, getEmbedURL, coralTalkRender, getParameterByName } from './enable-coral';
-import CommentCaret from './comment-caret.svg';
+import { ReactComponent as CommentCaret } from './comment-caret.svg';
 
 const Button = styled.button`
   display: flex;
@@ -154,7 +154,7 @@ const ArticleCommenting = ({ canComment, commentCount, id }) => {
 };
 
 ArticleCommenting.propTypes = {
-  /** 
+  /**
     The Article's SBID
   */
   id: PropTypes.string,

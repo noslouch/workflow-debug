@@ -7,7 +7,7 @@ import svgr from '@svgr/rollup';
 import { babel } from '@rollup/plugin-babel';
 import replace from '@rollup/plugin-replace';
 import json from '@rollup/plugin-json';
-import postcss from 'rollup-plugin-postcss';
+import url from '@rollup/plugin-url';
 
 // https://github.com/elbywan/wretch/issues/82
 const THIS_IS_UNDEFINED = 'THIS_IS_UNDEFINED';
@@ -60,9 +60,6 @@ export default () => {
     ],
     external: ['react', 'react-dom', 'react-is', 'prop-types', 'styled-components', /@babel\/runtime/],
     plugins: [
-      postcss({
-        plugins: [],
-      }),
       replace(
         {
           'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
@@ -76,6 +73,7 @@ export default () => {
       }),
       json(),
       commonjs(),
+      url(),
       svgr(),
     ],
 
