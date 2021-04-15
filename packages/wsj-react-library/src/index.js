@@ -5,6 +5,7 @@ export { default as GlobalStyles } from './components/GlobalStyles';
 export { default as Headline } from './components/Headline';
 export { default as Summary } from './components/Summary';
 export { default as ArticleCommenting } from './components/ArticleCommenting';
+export { default as OpinionArticleTypeExplainer } from './components/OpinionArticleType';
 export { default as Pullquote } from './components/Pullquote';
 export { default as ArticleBody } from './components/ArticleBody';
 export { default as ArticleByline } from './components/ArticleByline';

@@ -10,6 +10,10 @@
       "minor_revision": true,
       "authors": [
         {
+          "id": "6210",
+          "text": "Sadanand Dhume"
+        },
+        {
           "id": "8783",
           "text": "Joe Wallace"
         },
@@ -19,6 +23,7 @@
         }
       ],
       "availability_flags": ["DISABLEUSERCOMMENTS", "CODES_REVIEWED"],
+      "commment_count": 2,
       "breaking_news": false,
       "body": [
         {
