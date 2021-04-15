@@ -19,7 +19,10 @@ import RichText from './insets/RichText';
  * @param {number|string} index
  * @returns {string}
  */
-export const hashFromObject = (object, index = '') => btoa(encodeURIComponent(index + JSON.stringify(object)));
+export const hashFromObject = (object, index = '') => {
+  const string = encodeURIComponent(index + JSON.stringify(object));
+  return typeof window === 'undefined' ? Buffer.from(string).toString('base64') : btoa(string);
+};
 
 /**
  * @typedef CapiBlock Capi block json

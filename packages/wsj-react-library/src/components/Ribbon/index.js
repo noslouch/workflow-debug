@@ -172,7 +172,7 @@ const renderTabs = (tabs, modCode, isOpinion) => {
     <LinkContainer isOpinion={isOpinion}>
       {tabs.map((tab) => {
         const { audio, href, redAndFlashing, title, video } = tab;
-        const key = btoa(title);
+        const key = new String(title).toLowerCase().split(' ').join('-');
         return (
           <StyledLink redAndFlashing={redAndFlashing} isOpinion={isOpinion} href={appendMod(href, modCode)} key={key}>
             {audio && !redAndFlashing ? (
