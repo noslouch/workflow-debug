@@ -50,7 +50,7 @@
     "@babel/preset-env": "^7.11.0",
     "@babel/preset-react": "^7.11.0",
     "@invisionapp/dsm-storybook": "0.0.137",
-    "@newscorp-ghfb/dj-design-tokens": "0.0.20",
+    "@newscorp-ghfb/dj-design-tokens": "0.0.23",
     "@rollup/plugin-babel": "^5.2.2",
     "@rollup/plugin-commonjs": "^17.0.0",
     "@rollup/plugin-json": "^4.1.0",

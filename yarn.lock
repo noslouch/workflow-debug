@@ -2188,10 +2188,10 @@
     call-me-maybe "^1.0.1"
     glob-to-regexp "^0.3.0"
 
-"@newscorp-ghfb/dj-design-tokens@0.0.20":
-  version "0.0.20"
-  resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-design-tokens/0.0.20/25fe05994868a9932623fe62a961c937ff0ee49b2d6fbb0ae3a0cea2ff7bc11a#6483967a1444506136d9bd574a6c5cfc020499ff"
-  integrity sha512-UIfoaWUiyITdi8jVR4BRCZJOrT4TBqwplvNR6wkUuURHqd1moP6/FNT2KwLzptF3Bh9DJ+CiReX4MZjp22L0sQ==
+"@newscorp-ghfb/dj-design-tokens@0.0.23":
+  version "0.0.23"
+  resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-design-tokens/0.0.23/fb63da0774e2c6014a28038ad9d7e517d584ba6ab90e38141cd87d8b8118f1c6#da662404b3e905f29ce48dfa87f50acd7f10c165"
+  integrity sha512-bSlADddDElCkWDvflonebikXxGpKclL6FGpk1hm5CP1UhsEjVvr+gSQBA0oflVtBb97C7Hb+TYQOKFhs79RlGw==
 
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
