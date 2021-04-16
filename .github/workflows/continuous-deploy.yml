@@ -38,8 +38,8 @@ jobs:
 
       - name: bootstrap deps
         run: |
-          yarn --ignore-scripts --frozen-lockfile
-          lerna bootstrap --ignore-scripts -- --frozen-lockfile
+          yarn --ignore-scripts
+          lerna bootstrap --ignore-scripts
         env:
           NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
 
@@ -94,32 +94,6 @@ jobs:
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-
-      - name: check for previous prereleases
-        env:
-          PREID: beta
-        run: |
-          git config user.email ${{ secrets.BOT_EMAIL }}
-
-          echo "::debug::previous tags for this package: $(git tag --list "${{ matrix.package }}-v*")"
-
-          LAST_TAG=$(git tag --sort -refname --list "${{ matrix.package }}-v*" | head -n1)
-          LAST_REV=$(echo $LAST_TAG | sed -E "s/${{matrix.package}}-v(.*)/\1/")
-
-          # if grep doesn't match, use "|| :;" to prevent the runner from dying
-          IN_PRERELEASE=$(echo $LAST_TAG | { grep -E "-$PREID\.[0-9]+" || :; })
-
-          echo "::debug::last tag: $LAST_TAG"
-          echo "::debug::last rev: $LAST_REV"
-          echo "::debug::in pre: $IN_PRERELEASE"
-
-          if [[ $IN_PRERELEASE ]]; then
-            echo "::debug::setting rev for prerelease bump"
-            cd packages/${{ matrix.package }}
-            npm version $LAST_REV
-            git commit -am 'rev for publishing'
-            cd ../..
-          fi
 
       - uses: google-github-actions/release-please-action@v2
         name: open (or edit) release PR for this package version
@@ -182,7 +156,7 @@ jobs:
       - name: bootstrap deps
         run: |
           yarn --ignore-scripts --frozen-lockfile
-          lerna bootstrap --ignore-scripts
+          lerna bootstrap --ignore-scripts -- --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
 
@@ -200,6 +174,44 @@ jobs:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
       
+      - name: check for previous prereleases
+        env:
+          PREID: beta
+        run: |
+          git config user.email ${{ secrets.BOT_EMAIL }}
+
+          PACKAGES="${{ join(fromJSON(needs.find_changes.outputs.changed_packages), ' ') }}"
+
+          # lerna reads the version in the package file when revving prereleases
+          # but we don't commit prerelease revs on merges to main
+          # look at the tags for each changed package and rev the package file by hand
+          # so that lerna can properly bump the prerelease number
+          for PKG in $PACKAGES; do
+            echo "::debug::previous tags for this package: $(git tag --list "$PKG-v*")"
+
+            pull the most recent tag for the current $PKG
+            LAST_TAG=$(git tag --sort -refname --list "$PKG-v*" | head -n1)
+            # prerelease tags have the format <pkg>-v<rev>-<preid>.<prerev>
+            # pull just the version number from full tag 
+            LAST_REV=$(echo $LAST_TAG | sed -E "s/$PKG-v(.*)/\1/")
+
+            # if the version number contains our prerelease identifier, then this package is currently in prerelease
+            # if grep doesn't match, use "|| :;" to prevent the runner from dying
+            IN_PRERELEASE=$(echo $LAST_TAG | { grep -E "-$PREID\.[0-9]+" || :; })
+
+            echo "::debug::last tag: $LAST_TAG"
+            echo "::debug::last rev: $LAST_REV"
+            echo "::debug::in pre: $IN_PRERELEASE"
+
+            if [[ $IN_PRERELEASE ]]; then
+              echo "::debug::setting rev for prerelease bump"
+              cd packages/$PKG
+              npm version $LAST_REV
+              git commit -am 'rev for publishing'
+              cd ../..
+            fi
+          done
+
       - name: publish prerelease
         env:
           NODE_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
