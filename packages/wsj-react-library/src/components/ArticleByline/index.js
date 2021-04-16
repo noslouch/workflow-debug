@@ -1,5 +1,7 @@
 import { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Author from './Author';
 
 export const AUTHOR_URL = 'https://www.wsj.com/news/author/';
 
@@ -11,17 +13,13 @@ const Container = styled.div`
   font-weight: var(--font-weight-regular);
   line-height: 22px;
 
-  ${(props) =>
-    props.isOpinion &&
+  ${({ isOpinion }) =>
+    isOpinion &&
     `
     font-family: var(--font-family-retina-narrow);
     font-style: normal;
     font-weight: var(--font-weight-light);
   `}
-`;
-
-const Author = styled.a`
-  color: #0080c3;
 `;
 
 const Hedcut = styled.a`
@@ -30,38 +28,49 @@ const Hedcut = styled.a`
 
   amp-img,
   img {
-    border-radius: 100%;
+    border: 1px solid black;
+    box-sizing: border-box;
     display: block;
-    height: 40px;
-    width: 40px;
   }
+
+  ${({ isOpinion }) =>
+    isOpinion &&
+    `
+    amp-img,
+    img {
+      border: 0;
+      border-radius: 100%;
+    }
+  `}
 `;
 
-const ArticleByline = ({ data = [], isAmp = false, isOpinion = false }) => {
+const ArticleByline = ({ data = [], isAmp = false, isOpinion = false, shouldShowHedcut = false }) => {
   if (!data || !Array.isArray(data) || data.length === 0) return null;
   const bylines = data.map((block, index) => {
     const { id, phrase_type: phraseType, text, type } = block || {};
     if (type === 'phrase' && phraseType === 'author') {
-      return (
-        <Author key={id} href={`${AUTHOR_URL}${id}`}>
-          {text}
-        </Author>
-      );
+      return <Author key={id} authorUrl={AUTHOR_URL} data={block} isAmp={isAmp} />;
     }
     return <Fragment key={index}>{text}</Fragment>;
   });
-  // TODO: Look into hedcut options. They can potentially also be used on non opinion articles
-  const { hedcut, id: hedcutId, text: hedcutText } = (isOpinion && data.find((block) => block.hedcut)) || {};
+  // Hedcut is taken from the first author in the data array, provided there is any at all in it
+  const { hedcutImage, id: hedcutId, text: hedcutText } =
+    data.find((block) => {
+      const { type, phrase_type: phraseType } = block || {};
+      return type === 'phrase' && phraseType === 'author';
+    }) || {};
   const imgProps = {
-    src: hedcut,
     alt: `${hedcutText} hedcut`,
+    height: isOpinion ? 40 : 60,
+    src: hedcutImage,
+    width: isOpinion ? 40 : 60,
   };
   return (
     <Container isOpinion={isOpinion}>
-      {hedcut && (
-        <Hedcut href={`${AUTHOR_URL}${hedcutId}`}>
+      {shouldShowHedcut && hedcutImage && (
+        <Hedcut href={`${AUTHOR_URL}${hedcutId}`} isOpinion={isOpinion} aria-label={`Author page for ${hedcutText}`}>
           {isAmp ? (
-            <amp-img {...imgProps} height="40" width="40" layout="responsive">
+            <amp-img {...imgProps} layout="responsive">
               <noscript>
                 <img {...imgProps} />
               </noscript>
@@ -74,6 +83,24 @@ const ArticleByline = ({ data = [], isAmp = false, isOpinion = false }) => {
       {bylines}
     </Container>
   );
+};
+
+ArticleByline.propTypes = {
+  /** Array of author objects */
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      phrase_type: PropTypes.string,
+      text: PropTypes.string,
+      type: PropTypes.string,
+    })
+  ),
+  /** Renders links instead of dropdowns on amp */
+  isAmp: PropTypes.bool,
+  /** Changed styles for opinion pages */
+  isOpinion: PropTypes.bool,
+  /** Shows Hedcut for first author, if available */
+  shouldShowHedcut: PropTypes.bool,
 };
 
 export default ArticleByline;
