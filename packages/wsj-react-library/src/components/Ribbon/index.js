@@ -6,34 +6,27 @@ import { ReactComponent as DotSmall } from '../../assets/icons/Standard/small/do
 import { ReactComponent as PlayTriangleFilledSmall } from '../../assets/icons/AudioVideo/small/play-triangle-filled-small.svg';
 import { ReactComponent as Volume2FilledSmall } from '../../assets/icons/AudioVideo/small/volume2-filled-small.svg';
 
-const StyledRibbon = styled(Box)`
+const RibbonContainer = styled.div`
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  background-color: ${({ isOpinion }) => (isOpinion ? '#f8f7f5' : '#f4f4f4')};
+  font-family: var(--font-font-stack-retina-narrow);
   border-bottom: ${({ border }) => (border.includes('bottom') ? '1px solid #cccccc' : '')};
   border-top: ${({ border }) => (border.includes('top') ? '1px solid #cccccc' : '')};
   border-right: ${({ border }) => (border.includes('right') ? '1px solid #cccccc' : '')};
   border-left: ${({ border }) => (border.includes('left') ? '1px solid #cccccc' : '')};
-  font-family: 'Retina Narrow', 'Retina', 'Arial Narrow', Arial, Helvetica, sans-serif;
-  background-color: ${({ isOpinion }) => (isOpinion ? '#f8f7f5' : '#f4f4f4')};
+
   @media (max-width: 980px) and (min-width: 0px) {
     overflow-x: scroll;
   }
+
   @media print {
     display: none;
   }
 `;
 
-const RibbonContainer = styled(Box)`
-  display: flex;
-  width: 1280px;
-  margin: 0 auto;
-  @media (max-width: 1280px) and (min-width: 980px) {
-    width: 980px;
-  }
-  @media (max-width: 980px) and (min-width: 0px) {
-    width: 100%;
-  }
-`;
-
-const SectionHeading = styled(Box)`
+const SectionHeading = styled.div`
   margin-right: 65px;
   margin-top: 13px;
   @media (max-width: 980px) and (min-width: 0px) {
@@ -52,6 +45,8 @@ const SectionTitle = styled.span`
   padding-bottom: 2px;
   margin-top: 0px;
   margin-bottom: 0px;
+  white-space: nowrap;
+
   & a {
     color: #222222;
     text-decoration: none;
@@ -66,6 +61,8 @@ const OpinionSectionTitle = styled.span`
   line-height: 22px;
   font-size: 20px;
   text-transform: none;
+  white-space: nowrap;
+
   & a {
     color: #222222;
     text-decoration: none;
@@ -138,8 +135,6 @@ const StyledLink = styled.a`
 const Icon = styled.span`
   color: ${({ isOpinion }) => (isOpinion ? '#867256' : '#555555')};
   margin-right: 6px;
-  margin-bottom: 2px;
-  padding-top: 2px;
 
   use {
     fill: ${({ isOpinion }) => (isOpinion ? '#867256' : '#555555')};
@@ -200,23 +195,21 @@ const renderTabs = (tabs, modCode, isOpinion) => {
 const Ribbon = ({ tabs, titleUrl, isOpinion, sectionSubHed, sectionTitle, border, modCode }) => {
   if (!tabs || tabs.length == 0) return null;
   return (
-    <StyledRibbon border={border} isOpinion={isOpinion}>
-      <RibbonContainer>
-        <SectionHeading>
-          {isOpinion ? (
-            <OpinionSectionTitle>
-              <a href={appendMod(titleUrl, modCode)}>{sectionTitle}</a>
-            </OpinionSectionTitle>
-          ) : (
-            <SectionTitle>
-              <a href={appendMod(titleUrl, modCode)}>{sectionTitle}</a>
-            </SectionTitle>
-          )}
-          <SectionSubHead isOpinion={isOpinion}>{sectionSubHed}</SectionSubHead>
-        </SectionHeading>
-        {renderTabs(tabs, modCode, isOpinion)}
-      </RibbonContainer>
-    </StyledRibbon>
+    <RibbonContainer isOpinion={isOpinion} border={border}>
+      <SectionHeading>
+        {isOpinion ? (
+          <OpinionSectionTitle>
+            <a href={appendMod(titleUrl, modCode)}>{sectionTitle}</a>
+          </OpinionSectionTitle>
+        ) : (
+          <SectionTitle>
+            <a href={appendMod(titleUrl, modCode)}>{sectionTitle}</a>
+          </SectionTitle>
+        )}
+        <SectionSubHead isOpinion={isOpinion}>{sectionSubHed}</SectionSubHead>
+      </SectionHeading>
+      {renderTabs(tabs, modCode, isOpinion)}
+    </RibbonContainer>
   );
 };
 
