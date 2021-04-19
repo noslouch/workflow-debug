@@ -50,6 +50,9 @@ jobs:
 
       - name: tests
         run: lerna run test
+      
+      - name: deploy storybooks
+        run: yarn deploy-storybook --packages packages --source-branch=main --ci
 
   find_changes:
     needs: build_and_test

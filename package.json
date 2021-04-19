@@ -11,8 +11,12 @@
     "type": "git",
     "url": "git@github.com:newscorp-ghfb/dj-rendering.git"
   },
+  "scripts": {
+    "deploy-storybook": "storybook-to-ghpages"
+  },
   "devDependencies": {
     "@newscorp-ghfb/eslint-config-wsj": "^0.1.0",
+    "@storybook/storybook-deployer": "^2.8.7",
     "eslint": "^7.24.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
