@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import EditionPicker from './index';
-import mockData from './__mocks__';
+import mockData from '../../../__mocks__/edition-picker.json';
 
 test('edition dropdown should be visible when clicked from the unexpanded state', () => {
   render(<EditionPicker {...mockData['na,us']} />);
@@ -34,7 +34,9 @@ test('Provided editions should be displayed', () => {
   render(<EditionPicker {...mockData['na,us']} />);
   const expandEscaper = screen.queryByTestId('expandEscaper');
   expandEscaper.click();
-  const displayedEditions = screen.queryAllByRole('menuitem').map((m) => m.innerHTML);
+  const displayedEditions = screen
+    .queryAllByRole('menuitem')
+    .map((m) => m.innerHTML);
   mockData['na,us'].homepages
     .map((hp) => hp.label)
     .forEach((label) => {
@@ -46,15 +48,21 @@ test('Only one Chinese edition should display when isChinesePicker is false', ()
   render(<EditionPicker {...mockData['na,us']} isChinesePicker={false} />);
   const expandEscaper = screen.queryByTestId('expandEscaper');
   expandEscaper.click();
-  const displayedEditions = screen.queryAllByRole('menuitem').map((m) => m.innerHTML);
-  expect(displayedEditions.filter((edition) => edition === '中文 (Chinese) ')).toHaveLength(1);
+  const displayedEditions = screen
+    .queryAllByRole('menuitem')
+    .map((m) => m.innerHTML);
+  expect(
+    displayedEditions.filter((edition) => edition === '中文 (Chinese) ')
+  ).toHaveLength(1);
 });
 
 test('Both Chinese editions should display when isChinesePicker is true', () => {
   render(<EditionPicker {...mockData['asia,cn']} isChinesePicker={true} />);
   const expandEscaper = screen.queryByTestId('expandEscaper');
   expandEscaper.click();
-  const displayedEditions = screen.queryAllByRole('menuitem').map((m) => m.innerHTML);
+  const displayedEditions = screen
+    .queryAllByRole('menuitem')
+    .map((m) => m.innerHTML);
   // debugger;
   expect(displayedEditions.indexOf('简体版') !== -1).toBeTruthy();
   expect(displayedEditions.indexOf('繁體版') !== -1).toBeTruthy();

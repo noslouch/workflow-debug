@@ -1,6 +1,6 @@
 import React from 'react';
 import EditionPicker from '.';
-import mockData from './__mocks__';
+import mockData from '../../../__mocks__/edition-picker.json';
 
 export default {
   title: 'WSJ/EditionPicker',
