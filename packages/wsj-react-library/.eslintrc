@@ -1,0 +1,17 @@
+{
+  "extends": "@newscorp-ghfb/wsj/react",
+  "parserOptions": {
+    "ecmaVersion": 2020
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off"
+  },
+  "globals": {
+    "jest": "readonly",
+    "describe": "readonly",
+    "test": "readonly",
+    "expect": "readonly"
+  }
+}

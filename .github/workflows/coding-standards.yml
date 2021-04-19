@@ -28,6 +28,21 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+          scope: '@newscorp-ghfb'
+
+      - name: bootstrap deps
+        run: |
+          yarn --ignore-scripts --frozen-lockfile
+          lerna bootstrap --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+
+      # run scripts without auth token
+      # https://github.com/actions/setup-node
+      - name: run any postinstall scripts
+        run: lerna exec -- npm rebuild
 
       - name: Detects Files Changes
         id: file_changes
@@ -46,7 +61,7 @@ jobs:
       - name: Prettify Code Base
         if: ${{ !contains(toJson(steps.prettify.outputs.files), '[]') }}
         run: |
-          npx prettier --config .config/.prettierrc.json --ignore-path .config/.prettierignore \
+          npx prettier --config .config/prettier.config.js --ignore-path .config/.prettierignore \
             --write ${{ join(fromJSON(steps.prettify.outputs.files), ' ') }}
 
       - name: Import GPG key
