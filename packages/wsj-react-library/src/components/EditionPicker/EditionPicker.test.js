@@ -57,7 +57,7 @@ test('Only one Chinese edition should display when isChinesePicker is false', ()
 });
 
 test('Both Chinese editions should display when isChinesePicker is true', () => {
-  render(<EditionPicker {...mockData['asia,cn']} isChinesePicker={true} />);
+  render(<EditionPicker {...mockData['asia,cn']} isChinesePicker />);
   const expandEscaper = screen.queryByTestId('expandEscaper');
   expandEscaper.click();
   const displayedEditions = screen

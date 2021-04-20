@@ -1,6 +1,6 @@
 import React from 'react';
 import Ribbon from '.';
-import RibbonData from './__mocks__/ribbon.js';
+import RibbonData from '../../../__mocks__/ribbon.json';
 
 const { tabs } = RibbonData;
 
@@ -8,7 +8,8 @@ export default {
   title: 'Ribbon',
   component: Ribbon,
   parameters: {
-    componentSubtitle: 'The ribbon component is found on some pages at the top, just underneath the header.',
+    componentSubtitle:
+      'The ribbon component is found on some pages at the top, just underneath the header.',
   },
 };
 

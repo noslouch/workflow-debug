@@ -3,7 +3,9 @@ import { render, screen } from '@testing-library/react';
 import { queryByTestId } from '@testing-library/dom';
 import renderer from './renderer';
 
-jest.mock('./components/Paragraph', () => ({ children }) => <div data-testid="paragraph">{children}</div>);
+jest.mock('./components/Paragraph', () => ({ children }) => (
+  <div data-testid="paragraph">{children}</div>
+));
 jest.mock('./components/Link', () => () => <div data-testid="link" />);
 jest.mock('./components/List', () => ({
   OrderedList: () => <div data-testid="ordered-list" />,
@@ -50,7 +52,8 @@ describe('ArticleBody renderer', () => {
     render(
       renderer([{ type: 'paragraph', text: 'foo' }], {
         renderBlock: ({ type }, index) => {
-          if (type === 'paragraph') return <div data-testid="foo" key={index} />;
+          if (type === 'paragraph')
+            return <div data-testid="foo" key={index} />;
         },
       })
     );

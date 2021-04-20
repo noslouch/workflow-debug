@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from '@testing-library/react';
 import Ribbon from './index';
-import ribbonMockData from './__mocks__/ribbon';
+import ribbonMockData from '../../../__mocks__/ribbon.json';
 
 const { tabs } = ribbonMockData;
 
@@ -12,7 +12,7 @@ test('Ribbon is not renderd when no tabs are provided', () => {
 
 test('Ribbon renders the correct tabs', () => {
   const tabTitles = ribbonMockData.tabs.map((tab) => tab.title);
-  const { getByText } = render(<Ribbon tabs={tabs}></Ribbon>);
+  const { getByText } = render(<Ribbon tabs={tabs} />);
 
   tabTitles.forEach((title) => {
     expect(getByText(title)).toBeInTheDocument();
@@ -20,21 +20,25 @@ test('Ribbon renders the correct tabs', () => {
 });
 
 test('Ribbon renders the correct section title', () => {
-  const { getByText } = render(<Ribbon sectionTitle="Coronavirus" tabs={tabs}></Ribbon>);
+  const { getByText } = render(
+    <Ribbon sectionTitle="Coronavirus" tabs={tabs} />
+  );
   expect(getByText('Coronavirus')).toBeInTheDocument();
 });
 
 test('Ribbon renders the correct sub hed', () => {
-  const { getByText } = render(<Ribbon sectionSubHed="Resources" tabs={tabs}></Ribbon>);
+  const { getByText } = render(
+    <Ribbon sectionSubHed="Resources" tabs={tabs} />
+  );
   expect(getByText('Resources')).toBeInTheDocument();
 });
 
 test('Ribbon renders the correct background color when isOpinion is false', () => {
-  const { container } = render(<Ribbon isOpinion={false} tabs={tabs}></Ribbon>);
-  expect(container.firstChild).toHaveStyle(`background-color: #f4f4f4`);
+  const { container } = render(<Ribbon isOpinion={false} tabs={tabs} />);
+  expect(container.firstChild).toHaveStyle('background-color: #f4f4f4');
 });
 
 test('Ribbon renders the correct background color when isOpinion is true', () => {
-  const { container } = render(<Ribbon isOpinion={true} tabs={tabs}></Ribbon>);
-  expect(container.firstChild).toHaveStyle(`background-color: #f8f7f5`);
+  const { container } = render(<Ribbon isOpinion tabs={tabs} />);
+  expect(container.firstChild).toHaveStyle('background-color: #f8f7f5');
 });

@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { getCoralToken, setCoralScript, getEmbedURL, coralTalkRender, getParameterByName } from './enable-coral';
+import {
+  getCoralToken,
+  setCoralScript,
+  getEmbedURL,
+  coralTalkRender,
+  getParameterByName,
+} from './enable-coral';
 import { ReactComponent as CommentCaret } from './comment-caret.svg';
 
 const Button = styled.button`
@@ -50,7 +56,8 @@ const CaretSpan = styled.span`
   width: 24px;
   transition: transform 600ms ease;
   margin-left: 5px;
-  transform: ${(props) => (props.isCoralDisplayed ? 'rotate(-180deg)' : 'none')};
+  transform: ${(props) =>
+    props.isCoralDisplayed ? 'rotate(-180deg)' : 'none'};
 `;
 
 const BUTTON_LABELS = {
@@ -62,7 +69,9 @@ const BUTTON_LABELS = {
 const ArticleCommenting = ({ canComment, commentCount, id }) => {
   const [toggle, setToggle] = useState(false);
   const [coralRendered, setCoralRendered] = useState(false);
-  const [buttonCoralMessage, setButtonCoralMessage] = useState(BUTTON_LABELS.SHOW);
+  const [buttonCoralMessage, setButtonCoralMessage] = useState(
+    BUTTON_LABELS.SHOW
+  );
   const refCoralContainer = useRef(null);
 
   const embedURL = getEmbedURL();
@@ -107,9 +116,10 @@ const ArticleCommenting = ({ canComment, commentCount, id }) => {
 
     // When moderator logs in via okta, cookie is dropped as flag to load admin widget,
     // there's no impact on login.
-    const oktaSignedIn = document.cookie.indexOf('coral-okta-signed-in=true') !== -1;
+    const oktaSignedIn =
+      document.cookie.indexOf('coral-okta-signed-in=true') !== -1;
     const adminPrefix = oktaSignedIn && !envPrefix ? 'admin.' : '';
-    let baseURL = `https://${adminPrefix}commenting.${envPrefix}wsj.com`;
+    const baseURL = `https://${adminPrefix}commenting.${envPrefix}wsj.com`;
 
     // This needs further looking into, wasn't able to properly set up Docker to test comments repo
     // if (window.location.search.indexOf('local_comments=true') !== -1) {
@@ -138,16 +148,23 @@ const ArticleCommenting = ({ canComment, commentCount, id }) => {
   };
 
   return (
-    <div id="comments_sector" role="region" aria-label="Conversation" tabIndex="-1">
+    <div
+      id="comments_sector"
+      role="region"
+      aria-label="Conversation"
+      tabIndex="-1"
+    >
       <Button id={`coral_toggle_${id}`} onClick={toggleClickHandler}>
         <ShowOrHideCommentsSpan>{buttonCoralMessage}</ShowOrHideCommentsSpan>
-        {commentCount >= 0 ? <CommentCountSpan>({commentCount})</CommentCountSpan> : null}
+        {commentCount >= 0 ? (
+          <CommentCountSpan>({commentCount})</CommentCountSpan>
+        ) : null}
         <CaretSpan isCoralDisplayed={toggle} aria-hidden="true">
           <CommentCaret height={24} width={24} />
         </CaretSpan>
       </Button>
       <ContentDiv isCoralDisplayed={toggle}>
-        <div id={id} ref={refCoralContainer}></div>
+        <div id={id} ref={refCoralContainer} />
       </ContentDiv>
     </div>
   );

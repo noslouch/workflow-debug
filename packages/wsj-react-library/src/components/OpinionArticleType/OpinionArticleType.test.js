@@ -25,7 +25,8 @@ describe('OpinionArticleTypeExplainer', () => {
     },
   };
 
-  const label = MockArticleData.attributes.type_display_name || MockArticleData.type;
+  const label =
+    MockArticleData.attributes.type_display_name || MockArticleData.type;
   const authorName = MockArticleData.attributes.authors[0].text;
 
   test('Component is rendered when all the props are passed', () => {
@@ -38,14 +39,20 @@ describe('OpinionArticleTypeExplainer', () => {
 
   test('Component passes right links to its children component', () => {
     render(<OpinionArticleTypeExplainer {...defaultProps} />);
-    expect(screen.getByText(label).href).toContain(`/news/types/${defaultProps.articleDataType.seoName}`);
-    expect(screen.getByText(authorName).href).toContain(`/news/author/${defaultProps.authorData.seoname}`);
+    expect(screen.getByText(label).href).toContain(
+      `/news/types/${defaultProps.articleDataType.seoName}`
+    );
+    expect(screen.getByText(authorName).href).toContain(
+      `/news/author/${defaultProps.authorData.seoname}`
+    );
   });
 
   test('Component passes right label to its children component', () => {
     render(<OpinionArticleTypeExplainer {...propsWithNoTypeDisplayName} />);
 
-    expect(screen.getByText(propsWithNoTypeDisplayName.articleData.type)).toBeTruthy();
+    expect(
+      screen.getByText(propsWithNoTypeDisplayName.articleData.type)
+    ).toBeTruthy();
   });
 
   test('Component is not rendered when description is null', () => {

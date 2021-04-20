@@ -36,9 +36,18 @@ const OpinionArticleTypeExplainer = ({
   return (
     <div>
       <ExplainerTitle>About this article</ExplainerTitle>
-      <OpinionArticleTypeContent link={typeLink} header={label} description={description} />
+      <OpinionArticleTypeContent
+        link={typeLink}
+        header={label}
+        description={description}
+      />
       {biography && (
-        <OpinionArticleTypeContent link={bioLink} header={authorName} description={biography} image={hedcutimage} />
+        <OpinionArticleTypeContent
+          link={bioLink}
+          header={authorName}
+          description={biography}
+          image={hedcutimage}
+        />
       )}
     </div>
   );

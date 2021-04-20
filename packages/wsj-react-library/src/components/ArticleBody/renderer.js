@@ -21,7 +21,9 @@ import RichText from './insets/RichText';
  */
 export const hashFromObject = (object, index = '') => {
   const string = encodeURIComponent(index + JSON.stringify(object));
-  return typeof window === 'undefined' ? Buffer.from(string).toString('base64') : btoa(string);
+  return typeof window === 'undefined'
+    ? Buffer.from(string).toString('base64')
+    : btoa(string);
 };
 
 /**
@@ -55,9 +57,11 @@ const renderer = (array = [], options = {}) =>
   array.map((block, index) => {
     const { isAmp, renderBlock } = options;
     // Allows for overrides
-    const renderedComponent = typeof renderBlock === 'function' ? renderBlock(block, index) : undefined;
+    const renderedComponent =
+      typeof renderBlock === 'function' ? renderBlock(block, index) : undefined;
     // If renderBlock renders something or returns null to skip rendering a specific type, return this instead
-    if (renderedComponent || renderedComponent === null) return renderedComponent;
+    if (renderedComponent || renderedComponent === null)
+      return renderedComponent;
 
     // Default rendering
     const {
@@ -97,8 +101,10 @@ const renderer = (array = [], options = {}) =>
         <UnorderedList key={key}>{contents}</UnorderedList>
       );
     if (type === 'listitem') return <ListItem key={key}>{contents}</ListItem>;
-    if (type === 'emphasis' && emphasis === 'BOLD') return <Strong key={key}>{contents}</Strong>;
-    if (type === 'emphasis' && emphasis === 'ITALIC') return <Italic key={key}>{contents}</Italic>;
+    if (type === 'emphasis' && emphasis === 'BOLD')
+      return <Strong key={key}>{contents}</Strong>;
+    if (type === 'emphasis' && emphasis === 'ITALIC')
+      return <Italic key={key}>{contents}</Italic>;
     if (type === 'hed' && hedType === 'subhed')
       return (
         <Subhed key={key} id={targetUri}>
@@ -116,8 +122,10 @@ const renderer = (array = [], options = {}) =>
       );
     if (type === 'Break') return <br key={key} />;
     // Insets
-    if (type === 'inset' && insetType === 'pagebreak') return <Pagebreak key={key} $data={block} />;
-    if (type === 'inset' && insetType === 'richtext') return <RichText key={key} data={block} />;
+    if (type === 'inset' && insetType === 'pagebreak')
+      return <Pagebreak key={key} $data={block} />;
+    if (type === 'inset' && insetType === 'richtext')
+      return <RichText key={key} data={block} />;
     // Plain text
     if (!type && text) return <Fragment key={key}>{text}</Fragment>;
     // If no available type fallback to null

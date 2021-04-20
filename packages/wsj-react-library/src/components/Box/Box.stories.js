@@ -5,7 +5,8 @@ export default {
   title: 'Box',
   component: Box,
   parameters: {
-    componentSubtitle: 'In addition, you can pass any props that https://styled-system.com/table supports',
+    componentSubtitle:
+      'In addition, you can pass any props that https://styled-system.com/table supports',
   },
 };
 const InnerBox = ({ children, ...props }) => <Box {...props}>{children}</Box>;
@@ -18,7 +19,7 @@ InnerBox.defaultProps = {
   justifyContent: 'center',
 };
 
-const Template = (args) => <Box {...args}></Box>;
+const Template = (args) => <Box {...args} />;
 
 export const Regular = Template.bind({});
 Regular.args = {
@@ -73,8 +74,8 @@ Spacing.args = {
   border: '2px solid #222222',
   children: (
     <div style={{ width: '100%', height: '80px', border: '1px solid #222222' }}>
-      Component <strong>width: 100% No spacing</strong> <br /> Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      Aenean rutrum.
+      Component <strong>width: 100% No spacing</strong> <br /> Lorem ipsum dolor
+      sit amet, consectetur adipiscing elit. Aenean rutrum.
     </div>
   ),
 };

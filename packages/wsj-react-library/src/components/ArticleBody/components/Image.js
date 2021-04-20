@@ -33,7 +33,11 @@ const Credit = styled.span`
 `;
 
 const Image = ({ data, isAmp = false }) => {
-  const { caption, credit, properties: { location, responsive: { layout = 'inline' } = {} } = {} } = data || {};
+  const {
+    caption,
+    credit,
+    properties: { location, responsive: { layout = 'inline' } = {} } = {},
+  } = data || {};
   // TODO: handling crops
   const imgProps = {
     src: location,

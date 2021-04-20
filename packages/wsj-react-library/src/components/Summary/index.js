@@ -8,7 +8,11 @@ const StyledSummary = styled.p`
     font-size: var(--typography-summary-font-size-${size});
     line-height: var(--typography-summary-line-height-${size});
     font-family: var(--typography-summary-standard-${size}-font-family);
-    color: ${bullet && size === 's' ? `var(--summary-bullet-small-font-color)` : `var(--summary-font-color)`};
+    color: ${
+      bullet && size === 's'
+        ? 'var(--summary-bullet-small-font-color)'
+        : 'var(--summary-font-color)'
+    };
   `}
 `;
 

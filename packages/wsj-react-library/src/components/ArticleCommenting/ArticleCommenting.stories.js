@@ -5,20 +5,33 @@ export default {
   title: 'ArticleCommenting',
   component: ArticleCommenting,
   parameters: {
-    componentSubtitle: 'The ArticleCommenting component sets the Coral Talk script and platform',
+    componentSubtitle:
+      'The ArticleCommenting component sets the Coral Talk script and platform',
   },
 };
 
 export const ArticleCommentingDefault = () => (
-  <ArticleCommenting commentCount={50} id={'SB00000000000000000000000'} canComment={false} />
+  <ArticleCommenting
+    commentCount={50}
+    id="SB00000000000000000000000"
+    canComment={false}
+  />
 );
 
 export const ZeroComments = () => (
-  <ArticleCommenting commentCount={0} id={'SB00000000000000000000001'} canComment={false} />
+  <ArticleCommenting
+    commentCount={0}
+    id="SB00000000000000000000001"
+    canComment={false}
+  />
 );
 
 export const ErrorMessage = () => (
-  <ArticleCommenting commentCount={0} id={'SB00000000000000000000002'} canComment={true} />
+  <ArticleCommenting
+    commentCount={0}
+    id="SB00000000000000000000002"
+    canComment
+  />
 );
 
 ErrorMessage.parameters = {

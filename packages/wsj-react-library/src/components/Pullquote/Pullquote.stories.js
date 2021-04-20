@@ -17,5 +17,6 @@ PullquoteAndAuthor.args = {
 
 export const PlainPullQuote = Template.bind({});
 PlainPullQuote.args = {
-  content: 'The thing about DNA tests is that they sometimes reveal more than you’d like to know.',
+  content:
+    'The thing about DNA tests is that they sometimes reveal more than you’d like to know.',
 };

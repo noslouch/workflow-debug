@@ -50,13 +50,15 @@ const renderBlock = (block, index) => {
   // TODO: Investigate better/simpler way to generate hashes from objects. Unsure of performance of this method
   const key = hashFromObject(block, index);
   if (type === 'paragraph') return <Paragraph key={key}>{contents}</Paragraph>;
-  if (type === 'hed' && hedType === 'small-hed') return <Subhed key={key}>{contents}</Subhed>;
+  if (type === 'hed' && hedType === 'small-hed')
+    return <Subhed key={key}>{contents}</Subhed>;
   if (type === 'list') return <List key={key}>{contents}</List>;
   if (type === 'listitem') return <ListItem key={key}>{contents}</ListItem>;
 };
 
 const RichText = ({ data }) => {
-  const { content, properties: { responsive: { layout } = {} } = {} } = data || {};
+  const { content, properties: { responsive: { layout } = {} } = {} } =
+    data || {};
   const contents = renderer(content, { renderBlock });
   return (
     <MediaLayout layout={layout}>

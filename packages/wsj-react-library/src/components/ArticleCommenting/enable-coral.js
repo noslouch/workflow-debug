@@ -14,9 +14,8 @@ export const getCoralToken = async (baseURL, canComment) => {
       return { token: null };
     }
     return response.json();
-  } else {
-    return { token: null };
   }
+  return { token: null };
 };
 
 export const getEmbedURL = () => {
@@ -24,7 +23,8 @@ export const getEmbedURL = () => {
   // if (LOCAL_CORAL_TALK === 'true')
   // return 'http://www.local.wsj.com:3000/static/embed.js';
   // TODO: revisit when a solution for components that need env. info. is agreed upon.
-  const environmentSubdomain = process.env.NODE_APP !== 'production' ? 's.dev.' : '';
+  const environmentSubdomain =
+    process.env.NODE_APP !== 'production' ? 's.dev.' : '';
   return `https://commenting.${environmentSubdomain}wsj.com/static/embed.js`;
 };
 
@@ -46,7 +46,9 @@ export const setCoralScript = (url) => {
 
 const sendTracking = (params) => {
   if (typeof window !== 'undefined' && typeof window.utag !== 'undefined') {
-    window.requestIdleCallback?.(() => window.utag?.link(params), { timeout: 200 });
+    window.requestIdleCallback?.(() => window.utag?.link(params), {
+      timeout: 200,
+    });
   }
 };
 
@@ -69,9 +71,9 @@ export const coralTalkRender = (token, url, ref, id) => {
       _events.on('action.SHOW_SIGNIN_DIALOG', () => {
         // TODO: revisit when a solution for components that need env. info. is agreed upon.
         const envPrefix = process.env.NODE_APP !== 'production' ? '' : 'int.';
-        location.href =
-          `https://${envPrefix}accounts.wsj.com/login?target=` +
-          encodeURIComponent(`${location.href}#coral_toggle_${id}`);
+        location.href = `https://${envPrefix}accounts.wsj.com/login?target=${encodeURIComponent(
+          `${location.href}#coral_toggle_${id}`
+        )}`;
       });
 
       _events.on('mutation.IgnoreUser.success', () => {

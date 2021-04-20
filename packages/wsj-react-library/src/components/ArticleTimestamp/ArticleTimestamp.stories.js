@@ -6,7 +6,9 @@ export default {
   component: ArticleTimestamp,
 };
 
-export const Published = () => <ArticleTimestamp published={article.data.attributes.published_datetime} />;
+export const Published = () => (
+  <ArticleTimestamp published={article.data.attributes.published_datetime} />
+);
 
 export const Updated = () => (
   <ArticleTimestamp

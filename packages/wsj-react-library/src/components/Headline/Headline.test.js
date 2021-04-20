@@ -1,16 +1,20 @@
 import React from 'react';
-import Headline from './index';
 import { render } from '@testing-library/react';
+import Headline from './index';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('Headlines', () => {
   test('Should render headline text', () => {
-    const { getByText } = render(<Headline>Tech Shares Start Week Higher</Headline>);
+    const { getByText } = render(
+      <Headline>Tech Shares Start Week Higher</Headline>
+    );
     expect(getByText('Tech Shares Start Week Higher')).toBeInTheDocument();
   });
 
   test('Should use default type and section heading', () => {
-    const { container } = render(<Headline>Tech Shares Start Week Higher</Headline>);
+    const { container } = render(
+      <Headline>Tech Shares Start Week Higher</Headline>
+    );
     const type = container.querySelector('h1[type="standard"]');
     expect(type).toBeInTheDocument();
   });

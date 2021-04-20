@@ -7,7 +7,7 @@ export function setCookie(name, value, options = {}) {
 
   const cookieOptions = { ...defaultOptions, ...options };
 
-  document.cookie = `${name}=${encodeURIComponent(value)};domain=${cookieOptions.domain || '.wsj.com'};path=${
-    cookieOptions.path || '/'
-  };max-age=${cookieOptions.expiresIn}`;
+  document.cookie = `${name}=${encodeURIComponent(value)};domain=${
+    cookieOptions.domain || '.wsj.com'
+  };path=${cookieOptions.path || '/'};max-age=${cookieOptions.expiresIn}`;
 }

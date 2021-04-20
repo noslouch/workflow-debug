@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Box from '../Box';
 import PropTypes from 'prop-types';
+import Box from '../Box';
 import appendQueryParams from '../../urlHelpers/appendQueryParams';
 import { ReactComponent as DotSmall } from '../../assets/icons/Standard/small/dot-small.svg';
 import { ReactComponent as PlayTriangleFilledSmall } from '../../assets/icons/AudioVideo/small/play-triangle-filled-small.svg';
@@ -12,10 +12,14 @@ const RibbonContainer = styled.div`
   margin: 0 auto;
   background-color: ${({ isOpinion }) => (isOpinion ? '#f8f7f5' : '#f4f4f4')};
   font-family: var(--font-font-stack-retina-narrow);
-  border-bottom: ${({ border }) => (border.includes('bottom') ? '1px solid #cccccc' : '')};
-  border-top: ${({ border }) => (border.includes('top') ? '1px solid #cccccc' : '')};
-  border-right: ${({ border }) => (border.includes('right') ? '1px solid #cccccc' : '')};
-  border-left: ${({ border }) => (border.includes('left') ? '1px solid #cccccc' : '')};
+  border-bottom: ${({ border }) =>
+    border.includes('bottom') ? '1px solid #cccccc' : ''};
+  border-top: ${({ border }) =>
+    border.includes('top') ? '1px solid #cccccc' : ''};
+  border-right: ${({ border }) =>
+    border.includes('right') ? '1px solid #cccccc' : ''};
+  border-left: ${({ border }) =>
+    border.includes('left') ? '1px solid #cccccc' : ''};
 
   @media (max-width: 980px) and (min-width: 0px) {
     overflow-x: scroll;
@@ -88,7 +92,8 @@ const LinkContainer = styled(Box)`
 `;
 
 const StyledLink = styled.a`
-  border: ${({ isOpinion }) => (isOpinion ? '1px solid #867256' : '1px solid #999999')};
+  border: ${({ isOpinion }) =>
+    isOpinion ? '1px solid #867256' : '1px solid #999999'};
   border-radius: 2px;
   padding: 6px 10px 4px 10px;
   margin-right: 7px;
@@ -168,7 +173,12 @@ const renderTabs = (tabs, modCode, isOpinion) => {
         const { audio, href, redAndFlashing, title, video } = tab;
         const key = new String(title).toLowerCase().split(' ').join('-');
         return (
-          <StyledLink redAndFlashing={redAndFlashing} isOpinion={isOpinion} href={appendMod(href, modCode)} key={key}>
+          <StyledLink
+            redAndFlashing={redAndFlashing}
+            isOpinion={isOpinion}
+            href={appendMod(href, modCode)}
+            key={key}
+          >
             {audio && !redAndFlashing ? (
               <Icon isOpinion={isOpinion}>
                 <Volume2FilledSmall />
@@ -192,7 +202,15 @@ const renderTabs = (tabs, modCode, isOpinion) => {
   );
 };
 
-const Ribbon = ({ tabs, titleUrl, isOpinion, sectionSubHed, sectionTitle, border, modCode }) => {
+const Ribbon = ({
+  tabs,
+  titleUrl,
+  isOpinion,
+  sectionSubHed,
+  sectionTitle,
+  border,
+  modCode,
+}) => {
   if (!tabs || tabs.length == 0) return null;
   return (
     <RibbonContainer isOpinion={isOpinion} border={border}>

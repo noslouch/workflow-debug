@@ -82,7 +82,10 @@ const Author = ({ authorUrl = '/news/author/', data, isAmp = false }) => {
   if (!text) return null;
   if (isAmp)
     return (
-      <AuthorLink href={`${authorUrl}${id}`} aria-label={`Author page for ${text}`}>
+      <AuthorLink
+        href={`${authorUrl}${id}`}
+        aria-label={`Author page for ${text}`}
+      >
         {text}
       </AuthorLink>
     );
@@ -90,7 +93,8 @@ const Author = ({ authorUrl = '/news/author/', data, isAmp = false }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const onClickHandler = () => setIsDropdownOpen(!isDropdownOpen);
   const onFocusHandler = () => clearTimeout(timeoutId);
-  const onBlurHandler = () => (timeoutId = setTimeout(() => setIsDropdownOpen(false)));
+  const onBlurHandler = () =>
+    (timeoutId = setTimeout(() => setIsDropdownOpen(false)));
   return (
     <AuthorContainer onFocus={onFocusHandler} onBlur={onBlurHandler}>
       <AuthorButton
@@ -115,7 +119,8 @@ const Author = ({ authorUrl = '/news/author/', data, isAmp = false }) => {
                   target="blank"
                   rel="noopener noreferrer"
                 >
-                  <TwitterIcon aria-label="Twitter profile" /> {`@${twitterHandle}`}
+                  <TwitterIcon aria-label="Twitter profile" />{' '}
+                  {`@${twitterHandle}`}
                 </DropdownListItemLink>
               </DropdownListItem>
             )}
@@ -126,7 +131,8 @@ const Author = ({ authorUrl = '/news/author/', data, isAmp = false }) => {
                   target="blank"
                   rel="noopener noreferrer"
                 >
-                  <FacebookIcon aria-label="Facebook profile" /> {facebookAccount}
+                  <FacebookIcon aria-label="Facebook profile" />{' '}
+                  {facebookAccount}
                 </DropdownListItemLink>
               </DropdownListItem>
             )}

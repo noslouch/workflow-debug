@@ -31,7 +31,9 @@ export default {
   ],
 };
 
-export const KitchenSink = () => <ArticleBody data={article.data.attributes.body} />;
+export const KitchenSink = () => (
+  <ArticleBody data={article.data.attributes.body} />
+);
 
 // TODO: Amp story. Need to figure out how to extract amp styles and inject amp scripts for specific story only.
 

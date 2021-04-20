@@ -44,12 +44,19 @@ const Hedcut = styled.a`
   `}
 `;
 
-const ArticleByline = ({ data = [], isAmp = false, isOpinion = false, shouldShowHedcut = false }) => {
+const ArticleByline = ({
+  data = [],
+  isAmp = false,
+  isOpinion = false,
+  shouldShowHedcut = false,
+}) => {
   if (!data || !Array.isArray(data) || data.length === 0) return null;
   const bylines = data.map((block, index) => {
     const { id, phrase_type: phraseType, text, type } = block || {};
     if (type === 'phrase' && phraseType === 'author') {
-      return <Author key={id} authorUrl={AUTHOR_URL} data={block} isAmp={isAmp} />;
+      return (
+        <Author key={id} authorUrl={AUTHOR_URL} data={block} isAmp={isAmp} />
+      );
     }
     return <Fragment key={index}>{text}</Fragment>;
   });
@@ -68,7 +75,11 @@ const ArticleByline = ({ data = [], isAmp = false, isOpinion = false, shouldShow
   return (
     <Container isOpinion={isOpinion}>
       {shouldShowHedcut && hedcutImage && (
-        <Hedcut href={`${AUTHOR_URL}${hedcutId}`} isOpinion={isOpinion} aria-label={`Author page for ${hedcutText}`}>
+        <Hedcut
+          href={`${AUTHOR_URL}${hedcutId}`}
+          isOpinion={isOpinion}
+          aria-label={`Author page for ${hedcutText}`}
+        >
           {isAmp ? (
             <amp-img {...imgProps} layout="responsive">
               <noscript>

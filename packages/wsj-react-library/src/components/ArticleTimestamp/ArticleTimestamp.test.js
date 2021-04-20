@@ -19,11 +19,20 @@ describe('ArticleTimestamp', () => {
 
   test('should show correct formatted published date', () => {
     render(<ArticleTimestamp published={mockPublished.prop} />);
-    expect(screen.getByText(mockPublished.expected, { container: 'time' })).toBeInTheDocument();
+    expect(
+      screen.getByText(mockPublished.expected, { container: 'time' })
+    ).toBeInTheDocument();
   });
 
   test('should show formatted updated when available and valid', () => {
-    render(<ArticleTimestamp published={mockPublished.prop} updated={mockUpdated.prop} />);
-    expect(screen.getByText(mockUpdated.expected, { container: 'time' })).toBeInTheDocument();
+    render(
+      <ArticleTimestamp
+        published={mockPublished.prop}
+        updated={mockUpdated.prop}
+      />
+    );
+    expect(
+      screen.getByText(mockUpdated.expected, { container: 'time' })
+    ).toBeInTheDocument();
   });
 });

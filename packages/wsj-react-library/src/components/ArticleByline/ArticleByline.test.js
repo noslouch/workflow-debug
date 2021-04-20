@@ -8,7 +8,9 @@ describe('ArticleByline', () => {
   });
 
   test('should not break with malformed data', () => {
-    const { container } = render(<ArticleByline data={[null, { text: 'foo bar' }]} />);
+    const { container } = render(
+      <ArticleByline data={[null, { text: 'foo bar' }]} />
+    );
     expect(container.firstChild).not.toBeNull();
     expect(screen.getByText('foo bar')).toBeInTheDocument();
   });
@@ -20,7 +22,12 @@ describe('ArticleByline', () => {
 
   test('should return byline with author', () => {
     render(
-      <ArticleByline data={[{ text: 'By ' }, { type: 'phrase', phrase_type: 'author', id: '1', text: 'foo bar' }]} />
+      <ArticleByline
+        data={[
+          { text: 'By ' },
+          { type: 'phrase', phrase_type: 'author', id: '1', text: 'foo bar' },
+        ]}
+      />
     );
     const author = screen.getByText('foo bar', { selector: 'button' });
     expect(author).toBeInTheDocument();
@@ -29,7 +36,16 @@ describe('ArticleByline', () => {
   test('should show hedcut when available and shouldShowHedcut is set', () => {
     render(
       <ArticleByline
-        data={[{ text: 'by' }, { type: 'phrase', phrase_type: 'author', id: '1', text: 'foo bar', hedcutImage: 'foo' }]}
+        data={[
+          { text: 'by' },
+          {
+            type: 'phrase',
+            phrase_type: 'author',
+            id: '1',
+            text: 'foo bar',
+            hedcutImage: 'foo',
+          },
+        ]}
         shouldShowHedcut
       />
     );
@@ -39,7 +55,16 @@ describe('ArticleByline', () => {
   test('should show amp img for hedcut when isAmp is set', () => {
     const { container } = render(
       <ArticleByline
-        data={[{ text: 'by' }, { type: 'phrase', phrase_type: 'author', id: '1', text: 'foo bar', hedcutImage: 'foo' }]}
+        data={[
+          { text: 'by' },
+          {
+            type: 'phrase',
+            phrase_type: 'author',
+            id: '1',
+            text: 'foo bar',
+            hedcutImage: 'foo',
+          },
+        ]}
         isAmp
         shouldShowHedcut
       />
@@ -50,7 +75,16 @@ describe('ArticleByline', () => {
   test('should use different font styles for isOpinion', () => {
     const { container } = render(
       <ArticleByline
-        data={[{ text: 'by' }, { type: 'phrase', phrase_type: 'author', id: '1', text: 'foo bar', hedcutImage: 'foo' }]}
+        data={[
+          { text: 'by' },
+          {
+            type: 'phrase',
+            phrase_type: 'author',
+            id: '1',
+            text: 'foo bar',
+            hedcutImage: 'foo',
+          },
+        ]}
         isAmp
         isOpinion
         shouldShowHedcut

@@ -2,10 +2,17 @@ import { render, screen } from '@testing-library/react';
 import { queryByTestId } from '@testing-library/dom';
 import ArticleBody from './index';
 
-jest.mock('./renderer', () => (array = [], { isAmp = false, renderBlock } = {}) =>
-  array.map((_, index) => (
-    <div key={index} data-testid={`block${isAmp ? '-isAmp' : ''}${renderBlock ? '-renderBlock' : ''}`} />
-  ))
+jest.mock(
+  './renderer',
+  () => (array = [], { isAmp = false, renderBlock } = {}) =>
+    array.map((_, index) => (
+      <div
+        key={index}
+        data-testid={`block${isAmp ? '-isAmp' : ''}${
+          renderBlock ? '-renderBlock' : ''
+        }`}
+      />
+    ))
 );
 
 describe('ArticleBody', () => {

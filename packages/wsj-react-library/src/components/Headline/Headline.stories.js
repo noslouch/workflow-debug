@@ -6,7 +6,9 @@ export default {
   component: Headline,
 };
 
-export const HeadlineXXL = () => <Headline>Headline Standard News Default XXL</Headline>;
+export const HeadlineXXL = () => (
+  <Headline>Headline Standard News Default XXL</Headline>
+);
 
 export const HeadlineXXLWithLink = () => (
   <Headline>
@@ -14,19 +16,33 @@ export const HeadlineXXLWithLink = () => (
   </Headline>
 );
 
-export const HeadlineXL = () => <Headline size="xl">Headline Standard News XL</Headline>;
+export const HeadlineXL = () => (
+  <Headline size="xl">Headline Standard News XL</Headline>
+);
 
-export const HeadlineL = () => <Headline size="l">Headline Standard News L</Headline>;
+export const HeadlineL = () => (
+  <Headline size="l">Headline Standard News L</Headline>
+);
 
-export const HeadlineM = () => <Headline size="m">Headline Standard News M</Headline>;
+export const HeadlineM = () => (
+  <Headline size="m">Headline Standard News M</Headline>
+);
 
-export const HeadlineS = () => <Headline size="s">Headline Standard News S</Headline>;
+export const HeadlineS = () => (
+  <Headline size="s">Headline Standard News S</Headline>
+);
 
-export const HeadlineXS = () => <Headline size="xs">Headline Standard News XS</Headline>;
+export const HeadlineXS = () => (
+  <Headline size="xs">Headline Standard News XS</Headline>
+);
 
-export const HeadlineXXS = () => <Headline size="xxs">Headline Standard News XXS</Headline>;
+export const HeadlineXXS = () => (
+  <Headline size="xxs">Headline Standard News XXS</Headline>
+);
 
-export const HeadlineOpinionXXL = () => <Headline type="opinion">Headline Opinion XXL</Headline>;
+export const HeadlineOpinionXXL = () => (
+  <Headline type="opinion">Headline Opinion XXL</Headline>
+);
 
 export const HeadlineOpinionXL = () => (
   <Headline size="xl" type="opinion">
@@ -58,7 +74,9 @@ export const HeadlineOpinionXS = () => (
   </Headline>
 );
 
-export const HeadlineFeaturesXXL = () => <Headline type="features">Headline Features XXL</Headline>;
+export const HeadlineFeaturesXXL = () => (
+  <Headline type="features">Headline Features XXL</Headline>
+);
 
 export const HeadlineFeaturesXL = () => (
   <Headline size="xl" type="features">
@@ -90,7 +108,9 @@ export const HeadlineFeaturesXS = () => (
   </Headline>
 );
 
-export const HeadlineMagazineXXL = () => <Headline type="magazine">Headline Magazine XXL</Headline>;
+export const HeadlineMagazineXXL = () => (
+  <Headline type="magazine">Headline Magazine XXL</Headline>
+);
 
 export const HeadlineMagazineXL = () => (
   <Headline size="xl" type="magazine">

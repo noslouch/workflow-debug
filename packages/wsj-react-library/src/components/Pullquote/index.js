@@ -23,8 +23,10 @@ const StyledAuthor = styled.small`
 const Pullquote = ({ content, author }) => {
   // checks if content has outermost quote marks, if so, strip them and pass curly quotes
   const quoteMarks = ['"', "'", '“', '”', '‘', '’'];
-  const renderQuotes = quoteMarks.includes(content[0]) && quoteMarks.includes(content[content.length - 1]);
-  const text = renderQuotes ? '“' + content.slice(1, -1) + '”' : content;
+  const renderQuotes =
+    quoteMarks.includes(content[0]) &&
+    quoteMarks.includes(content[content.length - 1]);
+  const text = renderQuotes ? `“${content.slice(1, -1)}”` : content;
 
   return (
     <StyledPullquote>

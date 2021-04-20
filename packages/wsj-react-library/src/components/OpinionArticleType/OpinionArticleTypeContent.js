@@ -115,7 +115,9 @@ const OpinionArticleTypeContent = ({ link, header, description, image }) => {
 
   const isDescriptionTruncated = description.length > 256;
 
-  const [isShowMoreContent, setIsShowMoreContent] = useState(isDescriptionTruncated);
+  const [isShowMoreContent, setIsShowMoreContent] = useState(
+    isDescriptionTruncated
+  );
 
   return (
     <ContentWrapper>
@@ -130,11 +132,17 @@ const OpinionArticleTypeContent = ({ link, header, description, image }) => {
         </Header>
       </Title>
       <DescriptionWrapper>
-        <Description isTruncated={isShowMoreContent} data-testid="opinion-article-description">
+        <Description
+          isTruncated={isShowMoreContent}
+          data-testid="opinion-article-description"
+        >
           <HTMLContent dangerouslySetInnerHTML={{ __html: description }} />
         </Description>
         {isDescriptionTruncated && (
-          <Button data-section="description" onClick={() => setIsShowMoreContent(!isShowMoreContent)}>
+          <Button
+            data-section="description"
+            onClick={() => setIsShowMoreContent(!isShowMoreContent)}
+          >
             {isShowMoreContent ? '+ Show More' : '- Show Less'}
           </Button>
         )}

@@ -15,14 +15,25 @@ const isValidDate = (timestamp) => {
 
 const ArticleTimestamp = ({ published, updated }) => {
   if (!isValidDate(published)) return null;
-  const shouldShowUpdated = updated && isValidDate(updated) && updated > published;
+  const shouldShowUpdated =
+    updated && isValidDate(updated) && updated > published;
   const timestamp = shouldShowUpdated ? updated : published;
-  const formatOptions = { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: 'numeric' };
+  const formatOptions = {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+  };
   // Replace is used to remove the comma after the year, which is not possible using Intl.DateTimeFormat by itself
   const displayDate = new Intl.DateTimeFormat('en-US', formatOptions)
     .format(new Date(timestamp))
     .replace(/,(?!.*,)/, '');
-  return <Timestamp dateTime={timestamp}>{`${shouldShowUpdated ? 'Updated ' : ''} ${displayDate} ET`}</Timestamp>;
+  return (
+    <Timestamp dateTime={timestamp}>{`${
+      shouldShowUpdated ? 'Updated ' : ''
+    } ${displayDate} ET`}</Timestamp>
+  );
 };
 
 export default ArticleTimestamp;

@@ -1,6 +1,6 @@
 import React from 'react';
-import Pullquote from './index';
 import { render } from '@testing-library/react';
+import Pullquote from './index';
 import '@testing-library/jest-dom/extend-expect';
 
 describe('Pullquotes', () => {
@@ -9,7 +9,9 @@ describe('Pullquotes', () => {
       <Pullquote content="The problem of assigning credit and rewards for success is a big issue in the sociology of science." />
     );
     expect(
-      getByText('The problem of assigning credit and rewards for success is a big issue in the sociology of science.')
+      getByText(
+        'The problem of assigning credit and rewards for success is a big issue in the sociology of science.'
+      )
     ).toBeInTheDocument();
   });
 

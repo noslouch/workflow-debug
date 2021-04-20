@@ -42,7 +42,8 @@ const DropDownIcon = styled.span`
 const SelectedEdition = styled.span`
   padding-top: 5px;
   padding-bottom: 5px;
-  padding-right: ${({ placement }) => (placement === 'footer' ? '25px' : '12px')};
+  padding-right: ${({ placement }) =>
+    placement === 'footer' ? '25px' : '12px'};
   outline: none;
 `;
 
@@ -53,7 +54,8 @@ const ExpandEscaper = styled.div`
   background: transparent;
   width: 100vw;
   height: 100vh;
-  display: ${({ editionPickerExpanded }) => (editionPickerExpanded ? 'block' : 'none')};
+  display: ${({ editionPickerExpanded }) =>
+    editionPickerExpanded ? 'block' : 'none'};
 `;
 
 const EditionPickerUl = styled.ul`
@@ -69,7 +71,8 @@ const EditionPickerUl = styled.ul`
   z-index: 90;
   width: 125px;
   list-style: none;
-  visibility: ${({ editionPickerExpanded }) => (editionPickerExpanded ? null : 'hidden')};
+  visibility: ${({ editionPickerExpanded }) =>
+    editionPickerExpanded ? null : 'hidden'};
 
   a:hover {
     text-decoration: none;
@@ -84,7 +87,8 @@ const EditionPickerUl = styled.ul`
 `;
 
 const EditionItemButton = styled.button`
-  background-color: ${({ highlighted }) => (highlighted ? '#f9f9f9' : '#ffffff')};
+  background-color: ${({ highlighted }) =>
+    highlighted ? '#f9f9f9' : '#ffffff'};
   border: none;
   width: 100%;
   padding: 8px 12px;
@@ -98,7 +102,13 @@ const EditionItemButton = styled.button`
     color: #0080c3;
   }
 `;
-function EditionPicker({ currentEditionLabel, placement, homepages, region, tagName: TagName }) {
+function EditionPicker({
+  currentEditionLabel,
+  placement,
+  homepages,
+  region,
+  tagName: TagName,
+}) {
   const editionPickerRef = useRef(null);
   const [editionPickerExpanded, setEditionPickerExpanded] = useState(false);
 
@@ -135,7 +145,10 @@ function EditionPicker({ currentEditionLabel, placement, homepages, region, tagN
         placement={placement}
         data-testid="expandEscaper"
       >
-        <ExpandEscaper editionPickerExpanded={editionPickerExpanded} onClick={toggleEditionPicker} />
+        <ExpandEscaper
+          editionPickerExpanded={editionPickerExpanded}
+          onClick={toggleEditionPicker}
+        />
         <SelectedEdition
           data-testid="selectedEdition"
           role="button"
@@ -169,7 +182,9 @@ function EditionPicker({ currentEditionLabel, placement, homepages, region, tagN
           </EditionPickerUl>
         </SelectedEdition>
       </EditionDropDown>
-      <DropDownIcon>{editionPickerExpanded ? <ChevronUpSmall /> : <ChevronDownSmall />}</DropDownIcon>
+      <DropDownIcon>
+        {editionPickerExpanded ? <ChevronUpSmall /> : <ChevronDownSmall />}
+      </DropDownIcon>
     </EditionPickerWrapper>
   );
 }

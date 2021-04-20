@@ -13,5 +13,8 @@ export { default as ArticleTimestamp } from './components/ArticleTimestamp';
 export { default as Paragraph } from './components/ArticleBody/components/Paragraph';
 export { default as Subhed } from './components/ArticleBody/components/Subhed';
 export { default as Link } from './components/ArticleBody/components/Link';
-export { OrderedList, UnorderedList } from './components/ArticleBody/components/List';
+export {
+  OrderedList,
+  UnorderedList,
+} from './components/ArticleBody/components/List';
 export { default as ListItem } from './components/ArticleBody/components/ListItem';

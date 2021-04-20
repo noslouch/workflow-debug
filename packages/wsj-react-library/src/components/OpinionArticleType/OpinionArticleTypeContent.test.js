@@ -23,7 +23,9 @@ describe('OpinionArticleTypeContent', () => {
     render(<OpinionArticleTypeContent {...defaultProps} />);
     expect(screen.getByText(defaultProps.header)).toBeTruthy();
     expect(screen.getByText(defaultProps.description)).toBeTruthy();
-    expect(screen.getByText(defaultImageProps.header).href).toContain(defaultImageProps.link);
+    expect(screen.getByText(defaultImageProps.header).href).toContain(
+      defaultImageProps.link
+    );
     expect(screen.queryByRole('img')).toBeFalsy();
   });
 
@@ -38,8 +40,13 @@ describe('OpinionArticleTypeContent', () => {
 
     expect(screen.getByText(defaultImageProps.header)).toBeTruthy();
     expect(screen.getByText(defaultImageProps.description)).toBeTruthy();
-    expect(screen.getByRole('img')).toHaveAttribute('src', defaultImageProps.image);
-    expect(screen.getByText(defaultImageProps.header).href).toContain(defaultImageProps.link);
+    expect(screen.getByRole('img')).toHaveAttribute(
+      'src',
+      defaultImageProps.image
+    );
+    expect(screen.getByText(defaultImageProps.header).href).toContain(
+      defaultImageProps.link
+    );
   });
 
   test('Component does not render show more button if description length is less than 256', () => {
@@ -49,14 +56,24 @@ describe('OpinionArticleTypeContent', () => {
   });
 
   test('Component renders show more button if description length is more than 256', () => {
-    render(<OpinionArticleTypeContent {...defaultProps} description={'Test Description'.repeat(17)} />);
+    render(
+      <OpinionArticleTypeContent
+        {...defaultProps}
+        description={'Test Description'.repeat(17)}
+      />
+    );
 
     expect(screen.queryByText('+ Show More')).toBeTruthy();
     expect(screen.queryByText('- Show Less')).toBeFalsy();
   });
 
   test('Show more button on click renders right button label', () => {
-    render(<OpinionArticleTypeContent {...defaultProps} description={'Test Description'.repeat(17)} />);
+    render(
+      <OpinionArticleTypeContent
+        {...defaultProps}
+        description={'Test Description'.repeat(17)}
+      />
+    );
 
     fireEvent.click(screen.queryByText('+ Show More'));
     expect(screen.queryByText('+ Show More')).toBeFalsy();
@@ -64,7 +81,12 @@ describe('OpinionArticleTypeContent', () => {
   });
 
   test('Show less button on click renders right button label', () => {
-    render(<OpinionArticleTypeContent {...defaultProps} description={'Test Description'.repeat(17)} />);
+    render(
+      <OpinionArticleTypeContent
+        {...defaultProps}
+        description={'Test Description'.repeat(17)}
+      />
+    );
 
     fireEvent.click(screen.queryByText('+ Show More'));
     expect(screen.queryByText('- Show Less')).toBeTruthy();
@@ -76,11 +98,18 @@ describe('OpinionArticleTypeContent', () => {
 
   test('Show more button on click applies right class', () => {
     const { getByTestId } = render(
-      <OpinionArticleTypeContent {...defaultProps} description={'Test Description'.repeat(17)} />
+      <OpinionArticleTypeContent
+        {...defaultProps}
+        description={'Test Description'.repeat(17)}
+      />
     );
 
-    expect(getByTestId('opinion-article-description')).toHaveStyle(truncatedStyles);
+    expect(getByTestId('opinion-article-description')).toHaveStyle(
+      truncatedStyles
+    );
     fireEvent.click(screen.queryByText('+ Show More'));
-    expect(getByTestId('opinion-article-description')).not.toHaveStyle(truncatedStyles);
+    expect(getByTestId('opinion-article-description')).not.toHaveStyle(
+      truncatedStyles
+    );
   });
 });
