@@ -28,8 +28,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: "0"
     
       - uses: actions/setup-node@v2
         with:
@@ -54,7 +52,9 @@ jobs:
         run: lerna run test
       
       - name: deploy storybooks
-        run: yarn deploy-storybook --packages packages --source-branch=main --ci
+        run: yarn deploy-storybook --packages packages --source-branch main --ci
+        env:
+          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
   find_changes:
     needs: build_and_test

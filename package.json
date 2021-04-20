@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@newscorp-ghfb/eslint-config-wsj": "^0.1.0",
-    "@storybook/storybook-deployer": "^2.8.7",
+    "@storybook/storybook-deployer": "newscorp-ghfb/storybook-deployer#v1.0.0-fork.0",
     "eslint": "^7.24.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",

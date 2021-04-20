@@ -3227,10 +3227,9 @@
     prettier "~2.2.1"
     regenerator-runtime "^0.13.7"
 
-"@storybook/storybook-deployer@^2.8.7":
+"@storybook/storybook-deployer@newscorp-ghfb/storybook-deployer#v1.0.0-fork.0":
   version "2.8.7"
-  resolved "https://registry.yarnpkg.com/@storybook/storybook-deployer/-/storybook-deployer-2.8.7.tgz#c1eed33d03bd9267f884c60eea8e03dc3261ec11"
-  integrity sha512-O0hKHV6hg93fPMvKGC5M/sd7KTL473+SzMKm+WZNVEyLEfXXcVU+Ts9/VL1IhmC1P2A8Bg9oBnkcPqAqjAN46w==
+  resolved "https://codeload.github.com/newscorp-ghfb/storybook-deployer/tar.gz/cdafe10113069b9464af6ff0f44d5d0327f0ad67"
   dependencies:
     git-url-parse "^11.1.2"
     glob "^7.1.3"
