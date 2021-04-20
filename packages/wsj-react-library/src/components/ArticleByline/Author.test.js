@@ -1,16 +1,8 @@
-import { act, fireEvent, render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Author from './Author';
 
 describe('ArticleByline Author', () => {
-  beforeAll(() => {
-    jest.useFakeTimers();
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
-  });
-
   test('should render null if no text for author', () => {
     const { container } = render(<Author />);
     expect(container.firstChild).toBeNull();
@@ -65,12 +57,11 @@ describe('ArticleByline Author', () => {
     );
     // Second tab to focus biography link in now open dropdown
     userEvent.tab();
-    // Thid tab to move to next item in tab order, which triggers onBlur event and closes dropdown
-    userEvent.tab();
-    act(() => jest.advanceTimersByTime(100));
+    // Escape closes menu
+    userEvent.keyboard('{Escape}');
+
     expect(
       screen.queryByText('Biography', { selector: 'a' })
     ).not.toBeInTheDocument();
-    expect(true).toBe(true);
   });
 });

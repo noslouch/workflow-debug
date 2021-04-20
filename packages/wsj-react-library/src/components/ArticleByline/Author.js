@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import React from 'react';
+import { Popover } from '@headlessui/react';
 import styled from 'styled-components';
+
 import { ReactComponent as ProfileIcon } from '../../assets/icons/Actionables/medium/profile-stroke-medium.svg';
 import { ReactComponent as TwitterIcon } from '../../assets/icons/Social/twitter-color-medium.svg';
 import { ReactComponent as FacebookIcon } from '../../assets/icons/Social/facebook-color-medium.svg';
@@ -7,7 +9,6 @@ import { ReactComponent as MailIcon } from '../../assets/icons/Actionables/mediu
 
 const AuthorContainer = styled.div`
   display: inline;
-  position: relative;
 `;
 
 const AuthorButton = styled.button`
@@ -31,34 +32,13 @@ const AuthorLink = styled.a`
   color: #0080c3;
 `;
 
-const Dropdown = styled.div`
+const Dropdown = styled.ul`
   background: #fff;
   border: 1px solid var(--color-silver);
   padding: 12px 14px;
-  position: fixed;
-  left: 4px;
-  right: 4px;
-  z-index: 99;
 
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  @media (min-width: 640px) {
-    position: absolute;
-    left: 0;
-    right: unset;
-  }
-`;
-
-const DropdownListItem = styled.li`
-  font-family: var(--font-family-retina-narrow);
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: 32px;
+  list-style: none;
+  margin: 0;
 `;
 
 const DropdownListItemLink = styled.a`
@@ -68,8 +48,19 @@ const DropdownListItemLink = styled.a`
   text-decoration: none;
   text-transform: uppercase;
 
+  font-family: var(--font-family-retina-narrow);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: 32px;
+
   &:hover {
     color: var(--color-jet);
+  }
+
+  :focus {
+    outline: #0080c3 solid 3px;
+    outline-offset: -2px;
   }
 
   svg {
@@ -89,64 +80,55 @@ const Author = ({ authorUrl = '/news/author/', data, isAmp = false }) => {
         {text}
       </AuthorLink>
     );
-  let timeoutId = null;
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const onClickHandler = () => setIsDropdownOpen(!isDropdownOpen);
-  const onFocusHandler = () => clearTimeout(timeoutId);
-  const onBlurHandler = () =>
-    (timeoutId = setTimeout(() => setIsDropdownOpen(false)));
   return (
-    <AuthorContainer onFocus={onFocusHandler} onBlur={onBlurHandler}>
-      <AuthorButton
-        onClick={onClickHandler}
-        aria-expanded={isDropdownOpen}
+    <Popover as={AuthorContainer}>
+      <Popover.Button
+        as={AuthorButton}
         aria-label={`Author information for ${text}`}
       >
         {text}
-      </AuthorButton>
-      {isDropdownOpen && (
-        <Dropdown>
-          <ul>
-            <DropdownListItem>
-              <DropdownListItemLink href={`${authorUrl}${id}`}>
-                <ProfileIcon /> Biography
-              </DropdownListItemLink>
-            </DropdownListItem>
-            {twitterHandle && (
-              <DropdownListItem>
-                <DropdownListItemLink
-                  href={`https://www.twitter.com/${twitterHandle}`}
-                  target="blank"
-                  rel="noopener noreferrer"
-                >
-                  <TwitterIcon aria-label="Twitter profile" />{' '}
-                  {`@${twitterHandle}`}
-                </DropdownListItemLink>
-              </DropdownListItem>
-            )}
-            {facebookAccount && (
-              <DropdownListItem>
-                <DropdownListItemLink
-                  href={`https://www.facebook.com/${facebookAccount}`}
-                  target="blank"
-                  rel="noopener noreferrer"
-                >
-                  <FacebookIcon aria-label="Facebook profile" />{' '}
-                  {facebookAccount}
-                </DropdownListItemLink>
-              </DropdownListItem>
-            )}
-            {emailAddress && (
-              <DropdownListItem>
-                <DropdownListItemLink href={`mailto:${emailAddress}`}>
-                  <MailIcon aria-label="Email" /> {emailAddress}
-                </DropdownListItemLink>
-              </DropdownListItem>
-            )}
-          </ul>
-        </Dropdown>
-      )}
-    </AuthorContainer>
+      </Popover.Button>
+
+      <Popover.Panel as={Dropdown}>
+        <li>
+          <DropdownListItemLink href={`${authorUrl}${id}`}>
+            <ProfileIcon /> Biography
+          </DropdownListItemLink>
+        </li>
+
+        {twitterHandle && (
+          <li>
+            <DropdownListItemLink
+              href={`https://www.twitter.com/${twitterHandle}`}
+              target="blank"
+              rel="noopener noreferrer"
+            >
+              <TwitterIcon aria-label="Twitter profile" /> {`@${twitterHandle}`}
+            </DropdownListItemLink>
+          </li>
+        )}
+
+        {facebookAccount && (
+          <li>
+            <DropdownListItemLink
+              href={`https://www.facebook.com/${facebookAccount}`}
+              target="blank"
+              rel="noopener noreferrer"
+            >
+              <FacebookIcon aria-label="Facebook profile" /> {facebookAccount}
+            </DropdownListItemLink>
+          </li>
+        )}
+
+        {emailAddress && (
+          <li>
+            <DropdownListItemLink href={`mailto:${emailAddress}`}>
+              <MailIcon aria-label="Email" /> {emailAddress}
+            </DropdownListItemLink>
+          </li>
+        )}
+      </Popover.Panel>
+    </Popover>
   );
 };
 
