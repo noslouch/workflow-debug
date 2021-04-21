@@ -6,138 +6,169 @@ export default {
   component: Headline,
 };
 
-export const HeadlineXXL = () => (
-  <Headline>Headline Standard News Default XXL</Headline>
-);
+const Template = (args) => <Headline {...args} />;
 
-export const HeadlineXXLWithLink = () => (
-  <Headline>
-    <a>Linked Headline Standard News XXL</a>
-  </Headline>
-);
+export const HeadlineXXL = Template.bind({});
+HeadlineXXL.args = {
+  children: 'Headline Standard News Default XXL',
+};
 
-export const HeadlineXL = () => (
-  <Headline size="xl">Headline Standard News XL</Headline>
-);
+export const HeadlineXL = Template.bind({});
+HeadlineXL.args = {
+  size: 'xl',
+  children: 'Headline Standard News Default XL',
+};
 
-export const HeadlineL = () => (
-  <Headline size="l">Headline Standard News L</Headline>
-);
+export const HeadlineL = Template.bind({});
+HeadlineL.args = {
+  size: 'l',
+  children: 'Headline Standard News Default L',
+};
 
-export const HeadlineM = () => (
-  <Headline size="m">Headline Standard News M</Headline>
-);
+export const HeadlineM = Template.bind({});
+HeadlineM.args = {
+  size: 'm',
+  children: 'Headline Standard News Default M',
+};
 
-export const HeadlineS = () => (
-  <Headline size="s">Headline Standard News S</Headline>
-);
+export const HeadlineS = Template.bind({});
+HeadlineS.args = {
+  size: 's',
+  children: 'Headline Standard News Default S',
+};
 
-export const HeadlineXS = () => (
-  <Headline size="xs">Headline Standard News XS</Headline>
-);
+export const HeadlineXS = Template.bind({});
+HeadlineXS.args = {
+  size: 'xs',
+  children: 'Headline Standard News Default XS',
+};
 
-export const HeadlineXXS = () => (
-  <Headline size="xxs">Headline Standard News XXS</Headline>
-);
+export const HeadlineXXS = Template.bind({});
+HeadlineXXS.args = {
+  size: 'xxs',
+  children: 'Headline Standard News Default XXS',
+};
 
-export const HeadlineOpinionXXL = () => (
-  <Headline type="opinion">Headline Opinion XXL</Headline>
-);
+export const HeadlineOpinionXXL = Template.bind({});
+HeadlineOpinionXXL.args = {
+  type: 'opinion',
+  children: 'Headline Opinion XXL',
+};
 
-export const HeadlineOpinionXL = () => (
-  <Headline size="xl" type="opinion">
-    Headline Opinion XL
-  </Headline>
-);
+export const HeadlineOpinionXL = Template.bind({});
+HeadlineOpinionXL.args = {
+  type: 'opinion',
+  size: 'xl',
+  children: 'Headline Opinion XL',
+};
 
-export const HeadlineOpinionL = () => (
-  <Headline size="l" type="opinion">
-    Headline Opinion L
-  </Headline>
-);
+export const HeadlineOpinionL = Template.bind({});
+HeadlineOpinionL.args = {
+  type: 'opinion',
+  size: 'l',
+  children: 'Headline Opinion L',
+};
 
-export const HeadlineOpinionM = () => (
-  <Headline size="m" type="opinion">
-    Headline Opinion M
-  </Headline>
-);
+export const HeadlineOpinionM = Template.bind({});
+HeadlineOpinionM.args = {
+  type: 'opinion',
+  size: 'm',
+  children: 'Headline Opinion M',
+};
 
-export const HeadlineOpinionS = () => (
-  <Headline size="s" type="opinion">
-    Headline Opinion S
-  </Headline>
-);
+export const HeadlineOpinionS = Template.bind({});
+HeadlineOpinionS.args = {
+  type: 'opinion',
+  size: 's',
+  children: 'Headline Opinion S',
+};
 
-export const HeadlineOpinionXS = () => (
-  <Headline size="xs" type="opinion">
-    Headline Opinion XS
-  </Headline>
-);
+export const HeadlineOpinionXS = Template.bind({});
+HeadlineOpinionXS.args = {
+  type: 'opinion',
+  size: 'xs',
+  children: 'Headline Opinion XS',
+};
 
-export const HeadlineFeaturesXXL = () => (
-  <Headline type="features">Headline Features XXL</Headline>
-);
+export const HeadlineFeaturesXXL = Template.bind({});
+HeadlineFeaturesXXL.args = {
+  type: 'features',
+  size: 'xxl',
+  children: 'Headline Features XXL',
+};
 
-export const HeadlineFeaturesXL = () => (
-  <Headline size="xl" type="features">
-    Headline Features XL
-  </Headline>
-);
+export const HeadlineFeaturesXL = Template.bind({});
+HeadlineFeaturesXL.args = {
+  type: 'features',
+  size: 'xl',
+  children: 'Headline Features XL',
+};
 
-export const HeadlineFeaturesL = () => (
-  <Headline size="l" type="features">
-    Headline Features L
-  </Headline>
-);
+export const HeadlineFeaturesL = Template.bind({});
+HeadlineFeaturesL.args = {
+  type: 'features',
+  size: 'l',
+  children: 'Headline Features L',
+};
 
-export const HeadlineFeaturesM = () => (
-  <Headline size="m" type="features">
-    Headline Features M
-  </Headline>
-);
+export const HeadlineFeaturesM = Template.bind({});
+HeadlineFeaturesM.args = {
+  type: 'features',
+  size: 'm',
+  children: 'Headline Features m',
+};
 
-export const HeadlineFeaturesS = () => (
-  <Headline size="s" type="features">
-    Headline Features S
-  </Headline>
-);
+export const HeadlineFeaturesS = Template.bind({});
+HeadlineFeaturesS.args = {
+  type: 'features',
+  size: 's',
+  children: 'Headline Features S',
+};
 
-export const HeadlineFeaturesXS = () => (
-  <Headline size="xs" type="features">
-    Headline Features XS
-  </Headline>
-);
+export const HeadlineFeaturesXS = Template.bind({});
+HeadlineFeaturesXS.args = {
+  type: 'features',
+  size: 'xs',
+  children: 'Headline Features XS',
+};
 
-export const HeadlineMagazineXXL = () => (
-  <Headline type="magazine">Headline Magazine XXL</Headline>
-);
+export const HeadlineMagazineXXL = Template.bind({});
+HeadlineMagazineXXL.args = {
+  type: 'magazine',
+  children: 'Headline Magazine XXL',
+};
 
-export const HeadlineMagazineXL = () => (
-  <Headline size="xl" type="magazine">
-    Headline Magazine XL
-  </Headline>
-);
+export const HeadlineMagazineXL = Template.bind({});
+HeadlineMagazineXL.args = {
+  type: 'magazine',
+  size: 'xl',
+  children: 'Headline Magazine XL',
+};
 
-export const HeadlineMagazineL = () => (
-  <Headline size="l" type="magazine">
-    Headline Magazine L
-  </Headline>
-);
+export const HeadlineMagazineL = Template.bind({});
+HeadlineMagazineL.args = {
+  type: 'magazine',
+  size: 'l',
+  children: 'Headline Magazine L',
+};
 
-export const HeadlineMagazineM = () => (
-  <Headline size="m" type="magazine">
-    Headline Magazine M
-  </Headline>
-);
+export const HeadlineMagazineM = Template.bind({});
+HeadlineMagazineM.args = {
+  type: 'magazine',
+  size: 'm',
+  children: 'Headline Magazine M',
+};
 
-export const HeadlineMagazineS = () => (
-  <Headline size="s" type="magazine">
-    Headline Magazine S
-  </Headline>
-);
+export const HeadlineMagazineS = Template.bind({});
+HeadlineMagazineS.args = {
+  type: 'magazine',
+  size: 's',
+  children: 'Headline Magazine S',
+};
 
-export const HeadlineMagazineXS = () => (
-  <Headline size="xs" type="magazine">
-    Headline Magazine XS
-  </Headline>
-);
+export const HeadlineMagazineXS = Template.bind({});
+HeadlineMagazineXS.args = {
+  type: 'magazine',
+  size: 'xs',
+  children: 'Headline Magazine XS',
+};

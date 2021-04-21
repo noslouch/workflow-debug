@@ -6,14 +6,28 @@ export default {
   component: Summary,
 };
 
-export const SummaryM = () => <Summary>Default Summary M</Summary>;
+const Template = (args) => <Summary {...args} />;
 
-export const SummaryMBullet = () => <Summary bullet>Summary M Bullet</Summary>;
+export const SummaryM = Template.bind({});
+SummaryM.args = {
+  children: 'Default Summary M',
+};
 
-export const SummaryS = () => <Summary size="s">Summary S</Summary>;
+export const SummaryMBullet = Template.bind({});
+SummaryMBullet.args = {
+  children: 'Summary M Bullet',
+  bullet: true,
+};
 
-export const SummarySBullet = () => (
-  <Summary size="s" bullet>
-    Summary S Bullet
-  </Summary>
-);
+export const SummaryS = Template.bind({});
+SummaryS.args = {
+  children: 'Summary S',
+  size: 's',
+};
+
+export const SummarySBullet = Template.bind({});
+SummarySBullet.args = {
+  children: 'Summary S Bullet',
+  size: 's',
+  bullet: true,
+};
