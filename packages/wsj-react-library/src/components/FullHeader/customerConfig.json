@@ -1,0 +1,74 @@
+{
+  "na,us": {
+    "customer-center": {
+      "text": "Customer Center",
+      "urlName": "customerCenterUrl"
+    },
+    "wsj-plus": {
+      "text": "WSJ+",
+      "urlName": "wsjPlusUrl"
+    },
+    "wsj-member": {
+      "text": "Member Benefits",
+      "urlName": "wsjMemberUrl"
+    },
+    "saved-articles": {
+      "text": "Saved Articles",
+      "urlName": "savedArticlesUrl"
+    },
+    "comments-profile": {
+      "text": "Responses",
+      "urlName": "commentsProfileUrl"
+    },
+    "watchlist": {
+      "text": "Watchlist",
+      "urlName": "watchlistUrl"
+    },
+    "newsletters": {
+      "text": "Emails And Alerts",
+      "urlName": "alertsUrl"
+    }
+  },
+  "asia,jp": {
+    "wsj-plus": {
+      "text": "WSJ+",
+      "urlName": "wsjPlusUrl"
+    },
+    "saved-articles": {
+      "text": "保存した記事",
+      "urlName": "savedArticlesUrl"
+    },
+    "newsletters": {
+      "text": "ニュースレター",
+      "urlName": "alertsUrl"
+    }
+  },
+  "asia,cn": {
+    "wsj-plus": {
+      "text": "WSJ+",
+      "urlName": "wsjPlusUrl"
+    },
+    "saved-articles": {
+      "text": "保存的文章",
+      "urlName": "savedArticlesUrl"
+    },
+    "newsletters": {
+      "text": "邮件订阅",
+      "urlName": "alertsUrl"
+    }
+  },
+  "asia,cn_hant": {
+    "wsj-plus": {
+      "text": "WSJ+",
+      "urlName": "wsjPlusUrl"
+    },
+    "saved-articles": {
+      "text": "保存的文章",
+      "urlName": "savedArticlesUrl"
+    },
+    "newsletters": {
+      "text": "郵件訂閱",
+      "urlName": "alertsUrl"
+    }
+  }
+}
