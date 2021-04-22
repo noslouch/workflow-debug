@@ -9,6 +9,7 @@ import { ReactComponent as MailIcon } from '../../assets/icons/Actionables/mediu
 
 const AuthorContainer = styled.div`
   display: inline;
+  position: relative;
 `;
 
 const AuthorButton = styled.button`
@@ -33,6 +34,9 @@ const AuthorLink = styled.a`
 `;
 
 const Dropdown = styled.ul`
+  position: absolute;
+  width: 100%;
+
   background: #fff;
   border: 1px solid var(--color-silver);
   padding: 12px 14px;

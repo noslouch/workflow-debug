@@ -8,6 +8,8 @@ import { ReactComponent as ChevronDownSmall } from '../../assets/icons/Standard/
 import { ReactComponent as ChevronUpSmall } from '../../assets/icons/Standard/small/chevron-up-small.svg';
 
 const Wrapper = styled.div`
+  position: relative;
+
   font-family: var(--font-font-stack-retina);
   font-weight: 400;
   font-size: var(--typography-flashline-font-size-m);
@@ -15,6 +17,9 @@ const Wrapper = styled.div`
 `;
 
 const Flyout = styled.ul`
+  position: absolute;
+  width: 100%;
+
   border: 1px solid var(--color-silver);
   background: #fff;
 
