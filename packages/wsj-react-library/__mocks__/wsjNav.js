@@ -3398,7 +3398,7 @@ export default {
       subscribeUrl: 'https://subscribe.wsj.com/default',
       wsjUrl: 'https://www.wsj.com',
     },
-    i8nText: {
+    i18nText: {
       editionText: 'Edition',
       loginText: 'Sign In',
       logoutText: 'Sign Out',
@@ -6817,7 +6817,7 @@ export default {
       subscribeUrl: 'https://subscribe.wsj.com/default',
       wsjUrl: 'https://www.wsj.com',
     },
-    i8nText: {
+    i18nText: {
       editionText: '版本',
       loginText: '登录',
       logoutText: '登出',
@@ -10236,7 +10236,7 @@ export default {
       subscribeUrl: 'https://subscribe.wsj.com/default',
       wsjUrl: 'https://www.wsj.com',
     },
-    i8nText: {
+    i18nText: {
       editionText: '版本',
       loginText: '登錄',
       logoutText: '登出',
@@ -13645,7 +13645,7 @@ export default {
       subscribeUrl: 'https://subscribe.wsj.com/default',
       wsjUrl: 'https://www.wsj.com',
     },
-    i8nText: {
+    i18nText: {
       editionText: 'エディション',
       loginText: 'サインイン',
       logoutText: 'ログアウト',

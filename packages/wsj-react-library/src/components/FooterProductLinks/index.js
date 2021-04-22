@@ -50,7 +50,7 @@ const ProductLink = styled.li`
 
 function ProductLinks({
   productLinks = defaultProductLinks,
-  i8nText: { djProducts },
+  i18nText: { djProducts },
 }) {
   return (
     <ProductLinksSector>
@@ -69,14 +69,14 @@ function ProductLinks({
 }
 
 ProductLinks.defaultProps = {
-  i8nText: {
+  i18nText: {
     djProducts: 'Dow Jones Products',
   },
 };
 
 ProductLinks.propTypes = {
   productLinks: PropTypes.array,
-  i8nText: PropTypes.object,
+  i18nText: PropTypes.object,
 };
 
 export default ProductLinks;
