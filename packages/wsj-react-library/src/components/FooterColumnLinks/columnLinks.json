@@ -1,0 +1,187 @@
+[
+  {
+    "name": "WSJ Membership",
+    "items": [
+      {
+        "label": "WSJ+ Membership Benefits",
+        "url": "https://www.wsjplus.com/?mod=wsjfooter"
+      },
+      {
+        "label": "Digital Subscription",
+        "url": "https://subscribe.wsj.com/digitalpack"
+      },
+      {
+        "label": "Print Subscription",
+        "url": "https://subscribe.wsj.com/printpack"
+      },
+      {
+        "label": "Print and Digital Subscription",
+        "url": "https://subscribe.wsj.com/printanddigitalpack"
+      },
+      {
+        "label": "Why Subscribe?",
+        "url": "https://www.subscription.wsj.com/?mod=wsjfooter"
+      },
+      {
+        "label": "Corporate Subscriptions",
+        "url": "https://www.subscription.wsj.com/corporate/?mod=wsjfooter"
+      },
+      {
+        "label": "Professor Journal",
+        "url": "https://education.wsj.com/?mod=wsjfooter"
+      },
+      {
+        "label": "Student Journal",
+        "url": "https://education.wsj.com/students/?mod=wsjfooter"
+      },
+      {
+        "label": "WSJ High School Program",
+        "url": "https://highschool.wsj.com/?mod=wsjfooter"
+      },
+      {
+        "label": "WSJ Amenity Program",
+        "url": "https://buy.wsj.com/amenitysales/?mod=wsjfooter"
+      }
+    ]
+  },
+  {
+    "name": "Customer Service",
+    "items": [
+      {
+        "label": "Customer Center",
+        "url": "https://customercenter.wsj.com/home"
+      },
+      {
+        "label": "Contact Us",
+        "url": "https://customercenter.wsj.com/contact"
+      },
+      {
+        "label": "Notice to Subscribers",
+        "url": "https://subscribe.wsj.com/notice/CustomerCenterLetter.pdf"
+      }
+    ]
+  },
+  {
+    "name": "Tools & Features",
+    "items": [
+      {
+        "label": "Emails & Alerts",
+        "url": "https://www.wsj.com/newsletters/?mod=wsjfooter",
+        "nofollow": false
+      },
+      {
+        "label": "Guides",
+        "url": "https://www.wsj.com/news/how-to-guides?mod=wsjfooter"
+      },
+      {
+        "label": "My News",
+        "url": "https://www.wsj.com/watchlist/news?mod=wsjfooter"
+      },
+      {
+        "label": "RSS Feeds",
+        "url": "http://www.wsj.com/public/page/rss_news_and_feeds.html"
+      },
+      {
+        "label": "Video Center",
+        "url": "https://www.wsj.com/video?mod=wsjfooter"
+      },
+      {
+        "label": "Watchlist",
+        "url": "https://www.wsj.com/watchlist/?mod=wsjfooter"
+      },
+      {
+        "label": "Podcasts",
+        "url": "https://www.wsj.com/podcasts?mod=wsjfooter"
+      }
+    ]
+  },
+  {
+    "name": "Ads",
+    "items": [
+      {
+        "label": "Advertise",
+        "url": "https://www.wsjmediakit.com",
+        "nofollow": false
+      },
+      {
+        "label": "Commercial Real Estate Ads",
+        "url": "https://classifieds.wsj.com/advertise/real-estate-commercial/",
+        "nofollow": false
+      },
+      {
+        "label": "Place a Classified Ad",
+        "url": "https://classifieds.wsj.com",
+        "nofollow": false
+      },
+      {
+        "label": "Sell Your Business",
+        "url": "https://classifieds.wsj.com/ad/Business-For-Sale-Ads",
+        "nofollow": false
+      },
+      {
+        "label": "Sell Your Home",
+        "url": "https://classifieds.wsj.com/advertise/real-estate-residential/",
+        "nofollow": false
+      },
+      {
+        "label": "Recruitment & Career Ads",
+        "url": "https://classifieds.wsj.com/advertise/careers/",
+        "nofollow": false
+      },
+      {
+        "label": "Coupons",
+        "url": "https://www.wsj.com/coupons",
+        "nofollow": false
+      }
+    ]
+  },
+  {
+    "name": "More",
+    "items": [
+      {
+        "label": "About the Newsroom",
+        "url": "https://www.wsj.com/articles/about-the-newsroom-1539110913?mod=wsjfooter",
+        "nofollow": false
+      },
+      {
+        "label": "Content Partnerships",
+        "url": "https://wsj.com/partner",
+        "nofollow": false
+      },
+      {
+        "label": "Corrections",
+        "url": "https://www.wsj.com/news/column/corrections?mod=wsjfooter",
+        "nofollow": false
+      },
+      {
+        "label": "Jobs at WSJ",
+        "url": "https://wsj.jobs",
+        "nofollow": false
+      },
+      {
+        "label": "Masthead",
+        "url": "https://www.wsj.com/masthead?mod=wsjfooter",
+        "nofollow": false
+      },
+      {
+        "label": "News Archive",
+        "url": "http://www.wsj.com/public/page/archive.html"
+      },
+      {
+        "label": "Register for Free",
+        "url": "https://customercenter.wsj.com/register",
+        "nofollow": false
+      },
+      {
+        "label": "Reprints",
+        "url": "https://www.djreprints.com",
+        "nofollow": false
+      },
+      {
+        "label": "Buy Issues",
+        "url": "https://wsjshop.com/?mod=wsjfooter",
+        "nofollow": false
+      }
+    ]
+  }
+]
