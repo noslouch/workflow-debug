@@ -36,6 +36,7 @@ node_modules/
 
 # use your own settings
 .vscode/settings.json
+.vscode/launch.json
 
 # local linking with yalc
 yalc.lock
