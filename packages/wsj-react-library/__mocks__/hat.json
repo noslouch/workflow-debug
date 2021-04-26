@@ -1,0 +1,139 @@
+[
+  {
+    "ncLinks": [
+      { "title": "Avail", "url": "https://www.avail.co/", "nofollow": "false" },
+      {
+        "title": "Business Spectator",
+        "url": "https://www.theaustralian.com.au/business",
+        "nofollow": "true"
+      },
+      {
+        "title": "HarperCollins Publishers",
+        "url": "https://www.harpercollins.com/",
+        "nofollow": "true"
+      },
+      { "title": "Housing", "url": "https://housing.com/", "nofollow": "true" },
+      { "title": "Knewz.com", "url": "https://knewz.com/", "nofollow": "true" },
+      {
+        "title": "Makaan",
+        "url": "https://www.makaan.com/",
+        "nofollow": "true"
+      },
+      {
+        "title": "New York Post",
+        "url": "https://nypost.com/",
+        "nofollow": "true"
+      },
+      {
+        "title": "PropTiger",
+        "url": "https://www.proptiger.com",
+        "nofollow": "true"
+      },
+      {
+        "title": "REA",
+        "url": "https://www.rea-group.com/",
+        "nofollow": "true"
+      },
+      {
+        "title": "realtor.com",
+        "url": "https://www.realtor.com",
+        "nofollow": "false"
+      },
+      {
+        "title": "Storyful",
+        "url": "https://storyful.com/",
+        "nofollow": "true"
+      },
+      {
+        "title": "The Australian",
+        "url": "https://www.theaustralian.com.au",
+        "nofollow": "true"
+      },
+      {
+        "title": "The Sun",
+        "url": "https://www.thesun.co.uk/",
+        "nofollow": "true"
+      },
+      {
+        "title": "The Times",
+        "url": "https://www.thetimes.co.uk",
+        "nofollow": "true"
+      }
+    ]
+  },
+  {
+    "djLinks": [
+      {
+        "title": "Barron's",
+        "url": "https://www.barrons.com",
+        "nofollow": "false"
+      },
+      {
+        "title": "BigCharts",
+        "url": "http://bigcharts.marketwatch.com",
+        "nofollow": "false"
+      },
+      {
+        "title": "Dow Jones Businesses",
+        "url": "https://newscorp.com/business/dow-jones/",
+        "nofollow": "false"
+      },
+      {
+        "title": "Dow Jones Newswires",
+        "url": "https://www.dowjones.com/",
+        "nofollow": "false"
+      },
+      {
+        "title": "Factiva",
+        "url": "https://global.factiva.com/factivalogin/login.asp?productname=global",
+        "nofollow": "false"
+      },
+      {
+        "title": "Financial News",
+        "url": "https://www.fnlondon.com/",
+        "nofollow": "false"
+      },
+      {
+        "title": "Mansion Global",
+        "url": "https://www.mansionglobal.com/",
+        "nofollow": "false"
+      },
+      {
+        "title": "MarketWatch",
+        "url": "https://www.marketwatch.com",
+        "nofollow": "false"
+      },
+      {
+        "title": "Newsmart",
+        "url": "https://www.getnewsmart.com/",
+        "nofollow": "false"
+      },
+      {
+        "title": "NewsPlus",
+        "url": "https://newsplus.wsj.com",
+        "nofollow": "false"
+      },
+      {
+        "title": "Risk & Compliance",
+        "url": "https://djlogin.dowjones.com/login.asp?productname=rnc",
+        "nofollow": "false"
+      },
+      {
+        "title": "WSJ Live",
+        "url": "https://conferences.wsj.com/",
+        "nofollow": "false"
+      },
+      {
+        "title": "WSJ Pro",
+        "url": "https://www.wsj.com/pro/centralbanking",
+        "nofollow": "false"
+      },
+      {
+        "title": "WSJ Video",
+        "url": "https://www.wsj.com/video/",
+        "nofollow": "false"
+      },
+      { "title": "WSJ.com", "url": "https://www.wsj.com", "nofollow": "false" }
+    ]
+  }
+]
