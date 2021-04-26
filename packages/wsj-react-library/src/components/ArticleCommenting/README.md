@@ -6,16 +6,23 @@ The ArticleCommenting components renders the comment section utilizing the [Cora
 
 ## Expected User Behaviors
 
-1. Once a user clicks on the button, the module is render via the embedded script, and the commment section appears. The button text will change from "SHOW CONVERSATION (comment count)" to "HIDE CONVERSATION (comment count)".
+1. Once a user clicks on the button, the module is rendered via the embedded script, and the commment section appears. The button text will change from "SHOW CONVERSATION (comment count)" to "HIDE CONVERSATION (comment count)".
 2. If the user arrives to the article via a permalink created for a specific comment, the module will automatically render and the window will scroll down to said comment.
-3. If an error occur, then the "SHOW/HIDE CONVERSATION" text should be replaced with "CONVERSATION TEMPORARILY UNAVAILABLE (comment count)".
+3. If an error occurs, then the "SHOW/HIDE CONVERSATION" text should be replaced with "CONVERSATION TEMPORARILY UNAVAILABLE (comment count)".
 
-## Props - Description and Default Value
+## Third-Party Script
 
-| Prop         | Description                                                                     | Type    | Default |
-| ------------ | ------------------------------------------------------------------------------- | ------- | ------- |
-| id           | The article's SBID                                                              | String  | None    |
-| commentCount | Number of comments                                                              | Number  | 0       |
-| canComment\* | Determines whether or not the user can comment and have access to their profile | Boolean | False   |
+This component wraps the [Coral](https://coralproject.net/) commenting library. It loads a JS library from and makes calls to a third-party endpoint.
 
-\* An instance where this could be false and the comments are accessible is if they are reaching the The Wall Street Journal Community Rules & FAQs, the article is free, or a developer is using override.
+The JS lib is requested from `${coralURL}/static/embed.js` and the API calls are made against `${coralURL}/api/v1/auth/dj/token`. Moderators who have been authenticated via Okta will have a cookie set (`coral-okta-signed-in=true`). Enable admin controls for these users by passing the `isAdmin` prop.
+
+### Config
+
+`coralURL` and `loginURL` have environment-specific values you can pass in based on your application's environment.
+
+| Prop       | Env         | Value                                |
+| ---------- | ----------- | ------------------------------------ |
+| `coralURL` | nonprod/dev | `https://commenting.s.dev.wsj.com`   |
+| `coralURL` | prod        | `https://commenting.wsj.com`         |
+| `loginURL` | nonprod/dev | `https://int.accounts.wsj.com/login` |
+| `loginURL` | prod        | `https://accounts.wsj.com/login`     |

@@ -1,13 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+/* global window */
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import {
-  getCoralToken,
-  setCoralScript,
-  getEmbedURL,
-  coralTalkRender,
-  getParameterByName,
-} from './enable-coral';
+import { initCoral, getParameterByName } from './coral-lib';
 import { ReactComponent as CommentCaret } from './comment-caret.svg';
 
 const Button = styled.button`
@@ -39,7 +34,6 @@ const ShowOrHideCommentsSpan = styled.span`
   line-height: 18px;
   font-family: var(--font-sans-serif);
   font-weight: 500;
-  display: inline-block;
 `;
 
 const ContentDiv = styled.div`
@@ -66,7 +60,14 @@ const BUTTON_LABELS = {
   ERROR: 'Conversation Temporarily Unavailable',
 };
 
-const ArticleCommenting = ({ canComment, commentCount, id }) => {
+const ArticleCommenting = ({
+  canComment,
+  commentCount,
+  coralURL,
+  loginURL,
+  isAdmin,
+  id,
+}) => {
   const [toggle, setToggle] = useState(false);
   const [coralRendered, setCoralRendered] = useState(false);
   const [buttonCoralMessage, setButtonCoralMessage] = useState(
@@ -74,78 +75,54 @@ const ArticleCommenting = ({ canComment, commentCount, id }) => {
   );
   const refCoralContainer = useRef(null);
 
-  const embedURL = getEmbedURL();
+  const coralSetup = useCallback(async () => {
+    if (coralRendered) {
+      return;
+    }
+    const CORAL_OPS = {
+      node: refCoralContainer.current,
+      baseURL: coralURL,
+      articleId: id,
+      isAdmin,
+      canComment,
+      loginURL,
+    };
+
+    try {
+      await initCoral(CORAL_OPS);
+      setCoralRendered(true);
+    } catch (e) {
+      setToggle(false);
+      setButtonCoralMessage(BUTTON_LABELS.ERROR);
+    }
+  }, [canComment, coralRendered, coralURL, id, isAdmin, loginURL]);
+
+  const toggleClickHandler = () => {
+    coralSetup();
+    setToggle(!toggle);
+    setButtonCoralMessage(toggle ? BUTTON_LABELS.SHOW : BUTTON_LABELS.HIDE);
+  };
 
   useEffect(() => {
-    loadWithSpecificComment();
-    window.addEventListener('hashchange', autoLoadCoralModule);
-    return () => {
-      window.removeEventListener('hashchange', autoLoadCoralModule);
+    const loadCoral = () => {
+      if (window.location.hash === '#comments_sector') {
+        coralSetup();
+        setToggle(true);
+        setButtonCoralMessage(BUTTON_LABELS.HIDE);
+      }
     };
-  }, []);
 
-  const setCoralScriptAndLoad = () => {
-    setCoralScript(embedURL)
-      .then(() => {
-        renderModule();
-        setToggle(!toggle);
-      })
-      .catch(() => {
-        setToggle(false);
-        setButtonCoralMessage(BUTTON_LABELS.ERROR);
-      });
-  };
+    window.addEventListener('hashchange', loadCoral);
 
-  const autoLoadCoralModule = () => {
-    if (window.location.hash === '#comments_sector') {
-      setCoralScriptAndLoad();
-    }
-  };
-
-  const loadWithSpecificComment = () => {
     const commentId = getParameterByName('commentId');
     if (commentId) {
       window.location.hash = '#comments_sector';
     }
-    autoLoadCoralModule();
-  };
 
-  const renderModule = async () => {
-    // TODO: revisit when a solution for components that need env. info. is agreed upon.
-    const envPrefix = process.env.NODE_APP !== 'production' ? 's.dev.' : '';
-
-    // When moderator logs in via okta, cookie is dropped as flag to load admin widget,
-    // there's no impact on login.
-    const oktaSignedIn =
-      document.cookie.indexOf('coral-okta-signed-in=true') !== -1;
-    const adminPrefix = oktaSignedIn && !envPrefix ? 'admin.' : '';
-    const baseURL = `https://${adminPrefix}commenting.${envPrefix}wsj.com`;
-
-    // This needs further looking into, wasn't able to properly set up Docker to test comments repo
-    // if (window.location.search.indexOf('local_comments=true') !== -1) {
-    //   baseURL = 'http://www.local.wsj.com:3000';
-    // }
-
-    if (!coralRendered) {
-      try {
-        const response = await getCoralToken(baseURL, canComment);
-        coralTalkRender(response.token, baseURL, refCoralContainer, id);
-        setCoralRendered(true);
-        setButtonCoralMessage(BUTTON_LABELS.HIDE);
-      } catch {
-        setToggle(false);
-        setButtonCoralMessage(BUTTON_LABELS.ERROR);
-      }
-    }
-  };
-
-  const toggleClickHandler = () => {
-    setToggle(!toggle);
-    if (!coralRendered) {
-      setCoralScriptAndLoad();
-    }
-    setButtonCoralMessage(toggle ? BUTTON_LABELS.SHOW : BUTTON_LABELS.HIDE);
-  };
+    return () => {
+      window.removeEventListener('hashchange', loadCoral);
+    };
+  }, [coralSetup]);
 
   return (
     <div
@@ -163,9 +140,8 @@ const ArticleCommenting = ({ canComment, commentCount, id }) => {
           <CommentCaret height={24} width={24} />
         </CaretSpan>
       </Button>
-      <ContentDiv isCoralDisplayed={toggle}>
-        <div id={id} ref={refCoralContainer} />
-      </ContentDiv>
+
+      <ContentDiv isCoralDisplayed={toggle} id={id} ref={refCoralContainer} />
     </div>
   );
 };
@@ -183,12 +159,27 @@ ArticleCommenting.propTypes = {
     Determines whether or not the user could comment
   */
   canComment: PropTypes.bool,
+  /**
+    Base URL to use for calls to third-party library and API calls.
+  */
+  coralURL: PropTypes.string,
+  /**
+    URL to redirect unauthenticated users
+  */
+  loginURL: PropTypes.string,
+  /**
+    Specify if the user is an admin. Adjusts domain aginst which API calls are made.
+  */
+  isAdmin: PropTypes.bool,
 };
 
 ArticleCommenting.defaultProps = {
   id: '',
   commentCount: 0,
   canComment: false,
+  isAdmin: false,
+  coralURL: 'https://commenting.s.dev.wsj.com',
+  loginURL: 'https://int.accounts.wsj.com/login',
 };
 
 export default ArticleCommenting;
