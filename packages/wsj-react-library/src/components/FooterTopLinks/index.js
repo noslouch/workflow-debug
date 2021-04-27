@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ReactComponent as WSJLogoBigBlack } from '../../assets/branding/wsj-logo-big-black.svg';
+import EditionPicker from '../EditionPicker';
 
 const TopLinksWrapper = styled.div`
   font-family: var(--font-family-retina);
@@ -58,6 +59,12 @@ const WSJLogoWrapper = styled.li`
     white-space: nowrap;
     overflow: hidden;
   }
+`;
+
+const EditionPickerWrapper = styled.div`
+  width: 150px;
+  padding: 15px 0;
+  margin-right: auto;
 `;
 
 const ChildrenWrapper = styled.li`
@@ -159,12 +166,13 @@ function scroll2Top() {
   }, 100);
 }
 function FooterTopLinks({
-  children,
-  i18nText,
-  urls,
-  title,
-  isLoggedIn,
+  currentEditionLabel,
   disableLogin,
+  homepages,
+  isLoggedIn,
+  i18nText,
+  title,
+  urls,
 }) {
   return (
     <TopLinksWrapper>
@@ -176,7 +184,12 @@ function FooterTopLinks({
               {title}
             </a>
           </WSJLogoWrapper>
-          <ChildrenWrapper>{children}</ChildrenWrapper>
+          <EditionPickerWrapper>
+            <EditionPicker
+              homepages={homepages}
+              currentEditionLabel={currentEditionLabel}
+            />
+          </EditionPickerWrapper>
           {!disableLogin && (
             <MemberLinksWrapper>
               {memberLinks(isLoggedIn, i18nText, urls)}

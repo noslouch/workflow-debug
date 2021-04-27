@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import defaultColumnLinks from './columnLinks.json';
 import styled from 'styled-components';
+import defaultColumnLinks from './columnLinks.json';
 
 const ColumnLinksWrapper = styled.div`
   font-family: var(--font-family-retina);
@@ -75,7 +75,7 @@ function FooterColumnLinks({ columnLinks: links = defaultColumnLinks }) {
   return (
     <ColumnLinksWrapper aria-label="Column Links">
       {links.map((column) => (
-        <LinkCol key={column}>
+        <LinkCol key={`${column.name}_${column.rank}`}>
           <ColumnName
             id={`footer-${columnNameId(column.name)}`}
             aria-label="Column Name"
@@ -86,7 +86,7 @@ function FooterColumnLinks({ columnLinks: links = defaultColumnLinks }) {
           <LinksMenu aria-labelledby={`footer-${columnNameId(column.name)}`}>
             {column.items &&
               column.items.map((item) => (
-                <LinkItem key={item}>
+                <LinkItem key={`${item.label}_${item.rank}`}>
                   <a href={item.url} rel={item.nofollow ? 'nofollow' : null}>
                     {item.label}
                   </a>
@@ -99,14 +99,20 @@ function FooterColumnLinks({ columnLinks: links = defaultColumnLinks }) {
   );
 }
 
-FooterColumnLinks.defaultProps = {
-  isLoggedIn: false,
-};
-
 FooterColumnLinks.propTypes = {
-  columnLinks: PropTypes.array,
-  isLoggedIn: PropTypes.bool,
-  socialLinks: PropTypes.array,
+  columnLinks: PropTypes.arrayOf(
+    PropTypes.shape({
+      rank: PropTypes.number,
+      name: PropTypes.string,
+      items: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          url: PropTypes.string,
+          rank: PropTypes.number,
+        })
+      ),
+    })
+  ).isRequired,
 };
 
 export default FooterColumnLinks;

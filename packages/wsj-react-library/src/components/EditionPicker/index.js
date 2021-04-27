@@ -103,6 +103,7 @@ export default function EditionPicker({
 }
 
 EditionPicker.propTypes = {
+  className: PropTypes.string,
   currentEditionLabel: PropTypes.string,
   homepages: PropTypes.arrayOf(
     PropTypes.shape({
@@ -112,12 +113,10 @@ EditionPicker.propTypes = {
       url: PropTypes.string,
     })
   ),
-  placement: PropTypes.oneOf(['header', 'footer']),
-  region: PropTypes.oneOf(['na,us', 'asia,cn', 'asia,jp', 'asia,cn_hant']),
-  tagName: PropTypes.string,
 };
 
 EditionPicker.defaultProps = {
+  className: '',
   currentEditionLabel: 'English Edition',
   homepages: [
     {
@@ -126,7 +125,4 @@ EditionPicker.defaultProps = {
       url: 'https://www.wsj.com',
     },
   ],
-  placement: 'footer',
-  region: 'na,us',
-  tagName: 'div',
 };
