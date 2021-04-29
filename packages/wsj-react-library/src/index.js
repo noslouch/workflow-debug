@@ -7,6 +7,7 @@ export { default as Headline } from './components/Headline';
 export { default as Summary } from './components/Summary';
 export { default as ArticleCommenting } from './components/ArticleCommenting';
 export { default as OpinionArticleTypeExplainer } from './components/OpinionArticleType';
+export { default as PrintButton } from './components/PrintButton';
 export { default as Pullquote } from './components/Pullquote';
 export { default as Skip } from './components/Skip';
 export { default as ArticleBody } from './components/ArticleBody';
