@@ -34,15 +34,21 @@ const AuthorLink = styled.a`
 `;
 
 const Dropdown = styled.ul`
-  position: absolute;
-  width: 100%;
-
   background: #fff;
   border: 1px solid var(--color-silver);
-  padding: 12px 14px;
-
+  left: 8px;
   list-style: none;
   margin: 0;
+  padding: 12px 14px;
+  position: fixed;
+  right: 8px;
+  z-index: 99;
+
+  @media (min-width: 768px) {
+    left: 0;
+    position: absolute;
+    right: unset;
+  }
 `;
 
 const DropdownListItemLink = styled.a`
@@ -72,7 +78,7 @@ const DropdownListItemLink = styled.a`
   }
 `;
 
-const Author = ({ authorUrl = '/news/author/', data, isAmp = false }) => {
+const Author = ({ authorUrl = '/news/author/', data, isAmp }) => {
   const { id, emailAddress, facebookAccount, text, twitterHandle } = data || {};
   if (!text) return null;
   if (isAmp)
