@@ -1,4 +1,4 @@
-/* global window */
+/* global window, document */
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ReactComponent as PrintStrokeMedium } from '../../assets/icons/Standard/medium/print-stroke-medium.svg';
@@ -16,11 +16,12 @@ const StyledPrintButton = styled.button`
   color: var(--color-nickel);
   text-transform: var(--font-case-uppercase);
 
-  :focus-visible {
-    outline: var(--color-blue) solid 3px;
-  }
   :focus:not(:focus-visible) {
     outline: none;
+  }
+
+  :focus-visible {
+    outline: var(--color-blue) solid 3px;
   }
 `;
 
@@ -42,17 +43,27 @@ const SVGWrapper = styled.div`
 const PrintButton = ({ label, printURL }) => {
   const renderPrint = (url) => {
     if (url?.length > 0) {
-      const newWindow = window.open(url);
-      newWindow.print();
-    } else {
-      window.print();
+      // the url should open in a new window for the user to either manually download or print
+      window.open(url);
+    }
+    // to address cross-browser issues with their respective print dialog
+    else {
+      try {
+        if (!document?.execCommand('print', false, null)) {
+          throw new Error(
+            'document.execCommand(print) is deprecated in this browser.'
+          );
+        }
+      } catch (e) {
+        window.print();
+      }
     }
   };
 
   return (
     <StyledPrintButton
       onClick={() => renderPrint(printURL)}
-      aria-haspopup="dialog"
+      aria-haspopup="true"
     >
       <SVGWrapper>
         <PrintStrokeMediumIcon />

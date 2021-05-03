@@ -1,20 +1,23 @@
-/* global window */
+/* global window, document */
 import { fireEvent, render, screen } from '@testing-library/react';
 import PrintButton from '.';
 
 describe('Print Button', () => {
-  test('should display browser print modal after clicking', () => {
-    jest.spyOn(window, 'print').mockImplementation();
+  const execCommandRef = document.execCommand;
 
-    render(<PrintButton />);
-    fireEvent.click(screen.getByRole('button'));
-
-    expect(window.print).toHaveBeenCalled();
+  beforeAll(() => {
+    document.execCommand = jest.fn();
   });
 
-  test('should open a new window with document and display browser print modal', () => {
-    jest.spyOn(window, 'open').mockImplementation(() => window);
-    jest.spyOn(window, 'print').mockImplementation();
+  afterAll(() => {
+    // restore document to prevent leaking unto other potential tests
+    document.execCommand = execCommandRef;
+    jest.clearAllMocks();
+    jest.restoreAllMocks();
+  });
+
+  test('should open a new window with downloadable document', () => {
+    jest.spyOn(window, 'open').mockImplementation();
 
     render(
       <PrintButton printURL="https://www.example.com/this-is-a-mock.pdf" />
@@ -22,6 +25,27 @@ describe('Print Button', () => {
     fireEvent.click(screen.getByRole('button'));
 
     expect(window.open).toHaveBeenCalled();
+  });
+
+  test('should display browser print dialog with document.execCommand(print), such as Safari', () => {
+    document.execCommand.mockImplementation(() => true);
+    jest.spyOn(window, 'print').mockImplementation();
+
+    render(<PrintButton />);
+    fireEvent.click(screen.getByRole('button'));
+
+    expect(document.execCommand).toHaveBeenCalledWith('print', false, null);
+    expect(window.print).not.toHaveBeenCalled();
+  });
+
+  test('should display browser print dialog with window.print(), such as FireFox', () => {
+    document.execCommand.mockImplementation(() => false);
+    jest.spyOn(window, 'print').mockImplementation();
+
+    render(<PrintButton />);
+    fireEvent.click(screen.getByRole('button'));
+
+    expect(document.execCommand).toHaveBeenCalledWith('print', false, null);
     expect(window.print).toHaveBeenCalled();
   });
 });

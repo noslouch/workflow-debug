@@ -8,10 +8,12 @@ export default {
 
 const Template = (args) => <PrintButton {...args} />;
 
-export const PrintButtonStandard = Template.bind({});
+export const Standard = Template.bind({});
 
-export const PrintButtonDownload = Template.bind({});
+export const DownloadablePDF = Template.bind({});
 
-PrintButtonDownload.args = {
+DownloadablePDF.args = {
   label: 'download pdf',
+  printURL:
+    'https://s3.amazonaws.com/djcs-dev/public/blogs/puzzles/crossword/20210126/37655/crossword-20210126-37655.pdf',
 };
