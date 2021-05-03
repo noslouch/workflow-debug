@@ -13,7 +13,7 @@ const DropdownContainer = styled.div`
   background-color: var(--color-white);
   padding: 0;
   position: relative;
-  font-family: var(--font-family-retina);
+  font-family: var(--font-font-stack-retina);
 `;
 
 const DropdownButton = styled.button`
@@ -59,7 +59,7 @@ const DropdownListItem = styled.li`
   box-sizing: border-box;
   display: inline-block;
   font-size: 12px;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   padding: 5px 10px;
   overflow: hidden;
   text-overflow: ellipsis;

@@ -25,14 +25,14 @@ const SkipContainer = styled.div`
 `;
 
 const SkipMainButton = styled.button`
+  font-family: var(--font-font-stack-retina);
   width: 100%;
   display: inline-block;
   padding: 15px 10px;
-  font-family: var(--font-family-retina);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0.5px;
-  text-transform: uppercase;
+  text-transform: var(--font-case-uppercase);
   text-align: center;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -47,14 +47,14 @@ const SkipMainButton = styled.button`
 `;
 
 const SkipSearchButton = styled.button`
+  font-family: var(--font-font-stack-retina);
   width: 100%;
   display: block;
   padding: 15px 10px;
-  font-family: var(--font-family-retina);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: var(--font-weight-medium);
   letter-spacing: 0.5px;
-  text-transform: uppercase;
+  text-transform: var(--font-case-uppercase);
   text-align: center;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -62,16 +62,16 @@ const SkipSearchButton = styled.button`
   color: var(--color-nickel);
 
   &:focus {
-    outline: #0080c3 solid 3px;
+    outline: var(--color-blue) solid 3px;
     outline-offset: 1px;
   }
 `;
 
 const SkipLabel = styled.label`
+  font-family: var(--font-font-stack-retina);
   display: block;
-  font-family: var(--font-family-retina);
   font-size: 12px;
-  font-weight: 300;
+  font-weight: var(--font-weight-light);
   margin: 10px 2px;
 `;
 
