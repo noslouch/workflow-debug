@@ -5,9 +5,17 @@ import styled from 'styled-components';
 
 import MastHead from './MastHead';
 import MastHeadStrap from './MastHeadStrap';
+import CustomerNav from './CustomerNav';
+import UserMenu from './UserMenu';
+import UserLogin from './UserLogin';
 import EditionPicker from '../EditionPicker';
 import headerConfigurations from './config.json';
 import chineseTypes from './chineseTypes.json';
+
+const EditionPickerWrapper = styled.div`
+  width: 140px;
+  text-align: left;
+`;
 
 const MainHeader = styled.header`
   width: 100%;
@@ -54,26 +62,31 @@ const SlimHeader = styled.div`
   z-index: 70;
   background-color: var(--color-white);
   transition: 0.5s cubic-bezier(0.2, 1, 0.3, 1);
-  visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-  transform: ${({ isVisible }) =>
-    isVisible ? 'translateY(0)' : 'translateY(-69px)'};
+  visibility: hidden;
+  transform: translateY(-69px);
+  ${({ isVisible }) =>
+    isVisible &&
+    `
+      visibility: visible;
+      transform: translateY(0);
+    `};
 `;
 
-function FullHeader(props) {
+const FullHeader = (props) => {
   const {
     articleId,
-    // customerNav,
-    // cxense,
+    customerNav,
+    cxense,
     displayDate,
-    // disableLogin,
+    disableLogin,
     // hideSearch,
     hideHeader,
     homepages,
     isArticle,
     isFixedScroll,
-    // loginUrl,
-    // logoutUrl,
-    navigation, // content.navData
+    loginUrl,
+    logoutUrl,
+    navigation,
     // navigationOptions,
     path,
     region,
@@ -86,29 +99,37 @@ function FullHeader(props) {
 
   // Flag to fully remove WSJ Header needs to be handled by the layout context instead
 
-  const [scrolled, _setScrolled] = useState(false);
-  const scrolledRef = useRef(scrolled);
+  const [isScrolled, _setIsScrolled] = useState(false);
+  const scrolledRef = useRef(isScrolled);
 
-  const setScrolled = (data) => {
+  const setIsScrolled = (data) => {
     scrolledRef.current = data;
-    _setScrolled(data);
+    _setIsScrolled(data);
   };
 
   const headerConfig =
     headerConfigurations[region] || headerConfigurations['na,us'];
+  const { loginText, logoutText, subscribeText } = headerConfig || {};
+  const { urls = {} } = customerNav || {};
+  const {
+    loginUrl: signinUrl,
+    logoutUrl: signoutUrl,
+    headerSubscribeUrl,
+  } = urls;
 
-  function renderEditionPicker(altHomepages, isChinesePicker = false) {
+  const renderEditionPicker = (altHomepages, isChinesePicker = false) => {
     return (
-      <EditionPicker
-        placement="header"
-        homepages={altHomepages || homepages}
-        region={region}
-        isChinesePicker={isChinesePicker}
-      />
+      <EditionPickerWrapper>
+        <EditionPicker
+          homepages={altHomepages || homepages}
+          region={region}
+          isChinesePicker={isChinesePicker}
+        />
+      </EditionPickerWrapper>
     );
-  }
+  };
 
-  function renderChinesePicker() {
+  const renderChinesePicker = () => {
     // articleId, isArticle, path
     const regionalPath = ['/zh-hans', '/zh-hant'];
     const redirectArticleId = [
@@ -125,7 +146,7 @@ function FullHeader(props) {
     });
 
     return renderEditionPicker(chineseTypesOptions, true);
-  }
+  };
 
   useEffect(() => {
     const scrollHandler = () => {
@@ -134,11 +155,11 @@ function FullHeader(props) {
 
       const scrollAdjust = 105;
 
-      // Set the scrolled state
+      // Set the isScrolled state
       if (scroll >= scrollAdjust && !scrolledRef.current) {
-        setScrolled(true);
+        setIsScrolled(true);
       } else if (scroll < scrollAdjust && scrolledRef.current) {
-        setScrolled(false);
+        setIsScrolled(false);
       }
     };
 
@@ -162,6 +183,31 @@ function FullHeader(props) {
     useH1,
   };
 
+  const customerContent = ({ isLoggedIn, isSlim }) => {
+    if (disableLogin) return null;
+    if (isLoggedIn) {
+      return (
+        <UserMenu
+          cxense={cxense}
+          isSlim={isSlim}
+          logoutText={logoutText}
+          region={region}
+          urls={urls}
+          logoutUrl={signoutUrl || logoutUrl}
+        />
+      );
+    }
+    return (
+      <UserLogin
+        cxensePopup={cxense.popup}
+        headerSubscribeUrl={headerSubscribeUrl}
+        loginText={loginText}
+        subscribeText={subscribeText}
+        loginUrl={signinUrl || loginUrl}
+      />
+    );
+  };
+
   return (
     <MainHeader
       isFixedScroll={isFixedScroll}
@@ -169,6 +215,7 @@ function FullHeader(props) {
       aria-label="Primary"
     >
       <MastHead {...mastHeadProps} isSlim={false}>
+        <CustomerNav isSlim={false}>{customerContent}</CustomerNav>
         {showMastheadStrap && (
           <MastHeadStrap
             region={region}
@@ -179,12 +226,14 @@ function FullHeader(props) {
           />
         )}
       </MastHead>
-      <SlimHeader isVisible={scrolled}>
-        <MastHead {...mastHeadProps} isSlim />
+      <SlimHeader isVisible={isScrolled}>
+        <MastHead {...mastHeadProps} isSlim>
+          <CustomerNav isSlim>{customerContent}</CustomerNav>
+        </MastHead>
       </SlimHeader>
     </MainHeader>
   );
-}
+};
 
 FullHeader.propTypes = {
   hideSearch: PropTypes.bool,
@@ -280,7 +329,7 @@ FullHeader.defaultProps = {
   loginUrl: '',
   logoutUrl: '',
   path: '',
-  customerNav: null,
+  customerNav: {},
   homepages: [],
   articleId: '',
   section: '',
@@ -296,7 +345,14 @@ FullHeader.defaultProps = {
   showMastheadStrap: true,
   showSectionLogo: false,
   useH1: false,
-  cxense: null,
+  cxense: {
+    popup: {
+      divID: 'cx-popup',
+    },
+    notificationCallOut: {
+      divID: 'cx-notification-callout',
+    },
+  },
 };
 
 export default FullHeader;

@@ -2,73 +2,89 @@
   "na,us": {
     "customer-center": {
       "text": "Customer Center",
-      "urlName": "customerCenterUrl"
+      "urlName": "customerCenterUrl",
+      "icon": "PeopleFilledSmall"
     },
     "wsj-plus": {
       "text": "WSJ+",
-      "urlName": "wsjPlusUrl"
+      "urlName": "wsjPlusUrl",
+      "icon": "PlusCircleStrokeSmall"
     },
     "wsj-member": {
       "text": "Member Benefits",
-      "urlName": "wsjMemberUrl"
+      "urlName": "wsjMemberUrl",
+      "icon": "MemberFilledSmall"
     },
     "saved-articles": {
-      "text": "Saved Articles",
-      "urlName": "savedArticlesUrl"
+      "text": "Saved Content",
+      "urlName": "savedArticlesUrl",
+      "icon": "BookmarkFilledSmall"
     },
     "comments-profile": {
       "text": "Responses",
-      "urlName": "commentsProfileUrl"
+      "urlName": "commentsProfileUrl",
+      "icon": "CommentFilledSmall"
     },
     "watchlist": {
       "text": "Watchlist",
-      "urlName": "watchlistUrl"
+      "urlName": "watchlistUrl",
+      "icon": "WatchlistFilledSmall"
     },
     "newsletters": {
       "text": "Emails And Alerts",
-      "urlName": "alertsUrl"
+      "urlName": "alertsUrl",
+      "icon": "MailFilledSmall"
     }
   },
   "asia,jp": {
     "wsj-plus": {
       "text": "WSJ+",
-      "urlName": "wsjPlusUrl"
+      "urlName": "wsjPlusUrl",
+      "icon": "PlusCircleStrokeSmall"
     },
     "saved-articles": {
       "text": "保存した記事",
-      "urlName": "savedArticlesUrl"
+      "urlName": "savedArticlesUrl",
+      "icon": "BookmarkFilledSmall"
     },
     "newsletters": {
       "text": "ニュースレター",
-      "urlName": "alertsUrl"
+      "urlName": "alertsUrl",
+      "icon": "MailFilledSmall"
     }
   },
   "asia,cn": {
     "wsj-plus": {
       "text": "WSJ+",
-      "urlName": "wsjPlusUrl"
+      "urlName": "wsjPlusUrl",
+      "icon": "PlusCircleStrokeSmall"
     },
     "saved-articles": {
       "text": "保存的文章",
-      "urlName": "savedArticlesUrl"
+      "urlName": "savedArticlesUrl",
+      "icon": "BookmarkFilledSmall"
     },
     "newsletters": {
       "text": "邮件订阅",
-      "urlName": "alertsUrl"
+      "urlName": "alertsUrl",
+      "icon": "MailFilledSmall"
     }
   },
   "asia,cn_hant": {
     "wsj-plus": {
       "text": "WSJ+",
-      "urlName": "wsjPlusUrl"
+      "urlName": "wsjPlusUrl",
+      "icon": "PlusCircleStrokeSmall"
     },
     "saved-articles": {
       "text": "保存的文章",
-      "urlName": "savedArticlesUrl"
+      "urlName": "savedArticlesUrl",
+      "icon": "BookmarkFilledSmall"
     },
     "newsletters": {
       "text": "郵件訂閱",
-      "urlName": "alertsUrl"
+      "urlName": "alertsUrl",
+      "icon": "MailFilledSmall"
     }
   }
 }
