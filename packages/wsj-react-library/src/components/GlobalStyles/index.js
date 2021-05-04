@@ -18,6 +18,9 @@ export const toVars = (object = {}, prefix = '-') => {
 
 export default createGlobalStyle`
   // Resets
+  html {
+    font-size: 106.25%; // 17px
+  }
   body {
     margin: 0;
     padding: 0;
@@ -193,6 +196,16 @@ export default createGlobalStyle`
   // TODO: split into smaller pieces and stitch together depending on props
   :root {
     ${Object.entries(toVars(tokens)).map(([key, value]) => `${key}: ${value};`)}
+
+    // Computed CSS Variables
+    --article-background-color-primary: var(--color-white);
+    --article-caption-font-family: var(--font-font-stack-retina);
+    --article-font-family: var(--font-font-stack-exchange);
+    --article-font-weight: var(--font-weight-regular);
+    --article-subhed-font-family: var(--font-font-stack-escrow-condensed);
+    --article-text-color-primary: var(--color-coal);
+    --article-text-color-secondary: var(--color-nickel);
+    --article-text-size-scale: 1;
   }
 
   h1, h2, h3, h4, h5, h6 {

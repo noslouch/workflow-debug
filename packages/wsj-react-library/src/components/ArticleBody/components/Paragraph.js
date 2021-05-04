@@ -1,13 +1,12 @@
 import styled from 'styled-components';
 
-// TODO: both p font sizes and drop cap font sizes will need to account for text size changes eventually
 const Paragraph = styled.p`
-  color: var(--color-coal);
-  font-family: var(--typography-body-serif-m-font-family);
-  font-size: var(--typography-body-serif-m-font-size);
-  font-weight: var(--typography-body-serif-m-font-weight);
-  line-height: var(--typography-body-serif-m-line-height);
-  margin: 0 0 16px 0;
+  color: var(--article-text-color-primary);
+  font-family: var(--article-font-family);
+  font-size: calc(1rem * var(--article-text-size-scale)); // 17px
+  font-weight: var(--article-font-weight);
+  line-height: 1.6;
+  margin: 0 0 1em 0;
   word-wrap: break-word;
 
   ${(props) =>
@@ -15,7 +14,7 @@ const Paragraph = styled.p`
     `
     &:first-letter {
       float: left;
-      font-family: var(--font-family-escrow-condensed);
+      font-family: var(--font-font-stack-escrow-condensed);
       font-size: 5.2em;
       font-weight: var(--font-weight-bold);
       line-height: .92em;

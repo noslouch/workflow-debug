@@ -59,7 +59,6 @@ describe('ArticleByline Author', () => {
     userEvent.tab();
     // Escape closes menu
     userEvent.keyboard('{Escape}');
-
     expect(
       screen.queryByText('Biography', { selector: 'a' })
     ).not.toBeInTheDocument();

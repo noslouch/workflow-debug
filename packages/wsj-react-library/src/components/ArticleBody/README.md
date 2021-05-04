@@ -1,6 +1,6 @@
 # Article Body
 
-The article body component renders a full article body when provided with the body property from an article's capi. It uses a mix of content platform flags, like amp, and a render prop to allow for full customization depending on the rendering context.
+The article body component renders a full article body when provided with the body array from an article's capi. It uses a mix of content platform flags, like amp, and a render prop to allow for full customization depending on the rendering context.
 
 | Prop        | Description                                                                                                                                                                                                                                                                                                                                                | Type     | Default   |
 | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | --------- |
@@ -10,10 +10,10 @@ The article body component renders a full article body when provided with the bo
 
 ## Components
 
-Components make up the different blocks that can exist in an article body. They are plain React components with no extra or special props. However, they can be divided into two categories:
+Components make up the different blocks that can exist in an article body. They are plain React components with no extra or special props. They can be divided into two categories:
 
-1. Native: These components are basically a 1:1 representation of a native DOM element but styled according to our design system. Most times these directly export a styled component so there really is no value to share or export these outside the body. (Example: Paragraph, Link, List, etc.);
-2. Story Components: These are more dynamic and engaging components that usually require more complex logic and might take different props to change their behavior. Most times they will also need altered versions of themselves to work correctly across different platforms, like AMP. (Example: Table of Contents, Dynamic Insets, etc.)
+1. Native: These components are basically a 1:1 representation of a native DOM element but styled according to our design system. (Example: Paragraph, Link, List, etc.);
+2. Story Components: These are more dynamic and engaging components that usually require more complex logic and might take different props to change their behavior. Most times they will also need altered versions of themselves to work correctly across different platforms, like amp. (Example: Table of Contents, Dynamic Insets, etc.)
 
 ## Renderer
 
@@ -43,7 +43,7 @@ if (type === 'image') return <Image key={key} data={element} />;
 ...
 ```
 
-If the current element has no type, but has a text property we will render plain text. If there are no type or text properties, we just render `null`:
+If the current element has no type, but has a text property it returns plain text. If there are no type or text properties, it returns `null`:
 
 ```js
 if (!type && text) return <Fragment key={key}>{text}</Fragment>;
@@ -52,7 +52,7 @@ return null;
 
 ## `renderBlock` render prop
 
-The Article Body component by itself will usually have everything you need to fully render an article's body, however there may be cases when you need to customize parts of it, either by adding a nonexistent component, overriding an existing component for one that fits your needs, or simply skip a component from rendering. To do this you can use the `renderBlock` prop to pass a function to evaluate blocks and render a custom component, it will override existing types and if no type matches it will let the renderer work normally. To skip a component from rendering completely return `null` when checking for its type. `renderBlock` render functions take two arguments: `block` which is the full capi json for the current iterated block, and `index` which is the current index in the loop, and return jsx. Example:
+The Article Body component by itself will usually have everything you need to fully render an article's body, however there may be cases when you need to customize parts of it, either by adding a nonexistent component, overriding an existing component for one that fits your needs, or simply skip a component from rendering. To do this you can use the `renderBlock` prop to pass a function to evaluate blocks and return a custom component, it will override existing types and if no type matches it will let the renderer work normally. To skip a component from rendering completely return `null` when checking for its type. `renderBlock` render functions take two arguments: `block` which is the full capi json for the current iterated block, and `index` which is the current index in the loop, and return jsx. Example:
 
 ```js
 <ArticleBody
@@ -90,4 +90,16 @@ export default ArticlePage = (body) => {
     />
   );
 };
+```
+
+## Text Sizing
+
+Text from components inside the article body should have the ability to change depending on the user system's font size and/or some of our text resizing tools (Like the Text Resize Article Tool).
+To achieve this, you must make sure that the base font size for our html document is set to a percentage. In our case, since our base font size is 17px, and the default browser font size is 16px, we'd need to set it to 106.25%.
+Knowing that our base font size is 17px, every component that has readable text can use this to set its font size in `rem` units, a unit whose value is relative to the font-size of the root element. (Example: If your base font size is 17px, 1 rem = 17px)
+
+Additionally, we have set a text size scale css variable `--article-text-size-scale` that you can use along with rems to provide an alternative way of resizing text without having to go into the browsers settings. To do so, you can use the `calc` css function to multiply your base component text's font size times the scale variable:
+
+```css
+font-size: calc(1rem * var(--article-text-size-scale));
 ```

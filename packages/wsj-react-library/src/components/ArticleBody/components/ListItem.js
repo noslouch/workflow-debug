@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
 const ListItem = styled.li`
-  color: var(--color-coal);
-  font-family: var(--typography-body-serif-m-font-family);
-  font-size: var(--typography-body-serif-m-font-size);
-  font-weight: var(--typography-body-serif-m-font-weight);
-  line-height: var(--typography-body-serif-m-line-height);
+  color: var(--article-text-color-primary);
+  font-family: var(--article-font-family);
+  font-size: calc(1rem * var(--article-text-size-scale)); // 17px
+  font-weight: var(--article-font-weigh);
+  line-height: 1.6;
   margin-bottom: 12px;
 `;
 

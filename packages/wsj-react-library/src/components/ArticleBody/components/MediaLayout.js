@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 const MediaLayout = styled.div`
+  clear: both;
+
   ${({ layout }) =>
     layout === 'inline' &&
     `

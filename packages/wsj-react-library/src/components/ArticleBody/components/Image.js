@@ -13,22 +13,22 @@ const Figure = styled.figure`
 `;
 
 const Figcaption = styled.figcaption`
-  color: #666;
-  font-family: Retina;
-  font-weight: 300;
+  color: var(--article-text-color-secondary);
+  font-family: var(--article-caption-font-family);
+  font-weight: var(--font-weight-light);
 `;
 
 const Caption = styled.span`
   display: block;
-  font-size: 16px;
-  line-height: 22px;
+  font-size: calc((16 / 17) * var(--article-text-size-scale) * 1rem); // 16px
+  line-height: 1.375;
   margin-bottom: 4px;
 `;
 
 const Credit = styled.span`
   display: block;
-  font-size: 14px;
-  line-height: 20px;
+  font-size: calc((14 / 17) * var(--article-text-size-scale)) * 1rem; // 14px
+  line-height: 1.5;
   text-transform: uppercase;
 `;
 
