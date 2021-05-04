@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import path from 'path';
 import { readdirSync as readdir } from 'fs';
 
@@ -15,7 +16,7 @@ const THIS_IS_UNDEFINED = 'THIS_IS_UNDEFINED';
 // every component gets its own top level export
 // required for tree shaking
 const COMPONENTS = path.join('.', 'src', 'components');
-const NOT_COMPONENTS = [];
+const NOT_COMPONENTS = ['__mocks__'];
 
 /**
  * Given a directory, recurse through sub-trees to find directories that contain an index.js file
@@ -58,11 +59,20 @@ export default () => {
         dir: 'dist/es',
       },
     ],
-    external: ['react', 'react-dom', 'react-is', 'prop-types', 'styled-components', /@babel\/runtime/],
+    external: [
+      'react',
+      'react-dom',
+      'react-is',
+      'prop-types',
+      'styled-components',
+      /@babel\/runtime/,
+    ],
     plugins: [
       replace(
         {
-          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+          'process.env.NODE_ENV': JSON.stringify(
+            process.env.NODE_ENV || 'development'
+          ),
         },
         { preventAssignment: true }
       ),
@@ -79,6 +89,7 @@ export default () => {
 
     onwarn({ loc, code }) {
       if (code === THIS_IS_UNDEFINED && loc?.file.match('wretch')) {
+        // eslint-disable-next-line no-useless-return
         return;
       }
     },
