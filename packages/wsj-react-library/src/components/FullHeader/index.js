@@ -3,6 +3,7 @@ import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
+import HeaderNav from './HeaderNav';
 import MastHead from './MastHead';
 import MastHeadStrap from './MastHeadStrap';
 import CustomerNav from './CustomerNav';
@@ -84,9 +85,10 @@ const FullHeader = (props) => {
     homepages,
     isArticle,
     isFixedScroll,
+    navigation, // content.navData
     loginUrl,
     logoutUrl,
-    navigation,
+    // navigation,
     // navigationOptions,
     path,
     region,
@@ -226,10 +228,12 @@ const FullHeader = (props) => {
           />
         )}
       </MastHead>
+      <HeaderNav navItems={navigation} section={section} />
       <SlimHeader isVisible={isScrolled}>
         <MastHead {...mastHeadProps} isSlim>
           <CustomerNav isSlim>{customerContent}</CustomerNav>
         </MastHead>
+        <HeaderNav navItems={navigation} section={section} />
       </SlimHeader>
     </MainHeader>
   );
