@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Hat from './index';
 import hatData from '../../../__mocks__/hat.json';
 
@@ -20,6 +21,18 @@ describe('Hat', () => {
     })),
   });
 
+  test('Should not render if no hat Data is provided', () => {
+    const { container } = render(<Hat showAboutWsj />);
+
+    expect(container.firstChild).toBeNull();
+  });
+
+  test('Should not render if hatData is empty', () => {
+    const { container } = render(<Hat hatData={[]} showAboutWsj />);
+
+    expect(container.firstChild).toBeNull();
+  });
+
   test('Should render About WSJ', () => {
     const { getByText } = render(<Hat hatData={hatData} showAboutWsj />);
 
@@ -31,6 +44,36 @@ describe('Hat', () => {
     const aboutWsj = screen.queryByText('About WSJ');
 
     expect(aboutWsj).toBeNull;
+  });
+
+  test('Should not render about wsj when "Dow Jones, a News Corp company" span is clicked', async () => {
+    const { getByText } = render(<Hat hatData={hatData} showAboutWsj />);
+    const button = getByText('Dow Jones, a News Corp company');
+    await fireEvent.click(button);
+
+    const aboutWsj = screen.queryByText('About WSJ');
+
+    expect(aboutWsj).toBeNull;
+  });
+
+  test('Dropdown should close if user press escape with dropdown opened.', async () => {
+    const { getByText } = render(<Hat hatData={hatData} showAboutWsj />);
+    const button = getByText('Dow Jones, a News Corp company');
+    await fireEvent.click(button);
+    userEvent.keyboard('{Escape}');
+    expect(screen.queryByRole('menu')).toBeNull();
+  });
+
+  test('Dropdown should close if user presses the x button.', async () => {
+    const { getByText, queryByLabelText } = render(
+      <Hat hatData={hatData} showAboutWsj />
+    );
+    const button = getByText('Dow Jones, a News Corp company');
+    await fireEvent.click(button);
+    const xButton = queryByLabelText('Close menu');
+
+    await fireEvent.click(xButton);
+    expect(screen.queryByRole('menu')).toBeNull();
   });
 
   test('Should render the correct hat bio', () => {

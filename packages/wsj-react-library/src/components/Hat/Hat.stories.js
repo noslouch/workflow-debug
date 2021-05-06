@@ -1,4 +1,3 @@
-/* global window */
 import Hat from './index';
 import mockHatData from '../../../__mocks__/hat.json';
 
