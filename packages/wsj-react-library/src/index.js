@@ -1,5 +1,6 @@
 // allow users to import components from the top-level
 // export { default as Button } from './components/Button';
+export { default as BreakingNews } from './components/BreakingNews';
 export { default as EditionPicker } from './components/EditionPicker';
 export { default as FooterFull } from './components/FooterFull';
 export { default as GlobalStyles } from './components/GlobalStyles';
