@@ -1,0 +1,139 @@
+{
+  "error": null,
+  "originalQuery": "john",
+  "people": [],
+  "privateCompanies": [],
+  "suggestedTerms": [],
+  "symbols": [
+    {
+      "chartingSymbol": "STOCK/US/XNYS/JNJ",
+      "company": "Johnson \u0026 Johnson",
+      "country": "US",
+      "djnSymbol": "JNJ",
+      "exchange": "U.S.: NYSE",
+      "exchangeIsoCode": "XNYS",
+      "isFuture": false,
+      "factivaCode": "JONJON",
+      "ticker": "JNJ",
+      "type": "Stock",
+      "score": 1
+    },
+    {
+      "chartingSymbol": "STOCK/US/XNYS/JCI",
+      "company": "Johnson Controls International PLC",
+      "country": "US",
+      "djnSymbol": "JCI",
+      "exchange": "U.S.: NYSE",
+      "exchangeIsoCode": "XNYS",
+      "isFuture": false,
+      "factivaCode": "HWLY",
+      "ticker": "JCI",
+      "type": "Stock",
+      "score": 0.9562392
+    },
+    {
+      "chartingSymbol": "STOCK/US/XNYS/JBT",
+      "company": "John Bean Technologies Corp.",
+      "country": "US",
+      "djnSymbol": "JBT",
+      "exchange": "U.S.: NYSE",
+      "exchangeIsoCode": "XNYS",
+      "isFuture": false,
+      "factivaCode": "JOBETC",
+      "ticker": "JBT",
+      "type": "Stock",
+      "score": 0.9057437
+    },
+    {
+      "chartingSymbol": "STOCK/US/XNAS/PZZA",
+      "company": "Papa John\u0027s International Inc.",
+      "country": "US",
+      "djnSymbol": "PZZA",
+      "exchange": "U.S.: Nasdaq",
+      "exchangeIsoCode": "XNAS",
+      "isFuture": false,
+      "factivaCode": "PAPJHN",
+      "ticker": "PZZA",
+      "type": "Stock",
+      "score": 0.9014056
+    },
+    {
+      "chartingSymbol": "STOCK/US/XNYS/JW.A",
+      "company": "John Wiley \u0026 Sons Inc. Cl A",
+      "country": "US",
+      "djnSymbol": "JWA",
+      "exchange": "U.S.: NYSE",
+      "exchangeIsoCode": "XNYS",
+      "isFuture": false,
+      "factivaCode": "WILY",
+      "ticker": "JW.A",
+      "type": "Stock",
+      "score": 0.900906563
+    }
+  ],
+  "topics": [
+    {
+      "code": "1269",
+      "name": "John Brecher",
+      "type": "person",
+      "fcode": null,
+      "score": 1
+    },
+    {
+      "code": "1282",
+      "name": "John Carreyrou",
+      "type": "person",
+      "fcode": null,
+      "score": 1
+    },
+    {
+      "code": "1328",
+      "name": "John R. Emshwiller",
+      "type": "person",
+      "fcode": null,
+      "score": 1
+    },
+    {
+      "code": "1446",
+      "name": "John W. Miller",
+      "type": "person",
+      "fcode": null,
+      "score": 1
+    },
+    {
+      "code": "4337",
+      "name": "John Jannarone",
+      "type": "person",
+      "fcode": null,
+      "score": 1
+    }
+  ],
+  "keywords": [
+    {
+      "keyword": "ron johnson",
+      "score": 1
+    },
+    {
+      "keyword": "john jurgensen",
+      "score": 0.974658132
+    },
+    {
+      "keyword": "paul johnson",
+      "score": 0.970451
+    },
+    {
+      "keyword": "johnson and johnson",
+      "score": 0.9673335
+    },
+    {
+      "keyword": "john h cochrane",
+      "score": 0.9666983
+    }
+  ],
+  "newsCodes": null,
+  "schools": null,
+  "mwSearchLinks": null,
+  "mwTopics": null,
+  "organizations": null,
+  "mlSymbols": null
+}

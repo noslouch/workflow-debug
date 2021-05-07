@@ -60,12 +60,13 @@ HeaderLink.propTypes = {
   linkConfig: PropTypes.shape({
     link: PropTypes.string,
     text: PropTypes.string,
-  }).isRequired,
+  }),
 };
 
 HeaderLink.defaultProps = {
   showLink: false,
   isHighlight: false,
+  linkConfig: null,
 };
 
 const DateTime = styled.div`

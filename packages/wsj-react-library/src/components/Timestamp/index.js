@@ -163,7 +163,7 @@ Timestamp.propTypes = {
 
 Timestamp.defaultProps = {
   format: 'MMMM D, YYYY',
-  hardcodeTimeZone: [],
+  hardcodeTimeZone: null,
   showRelativeTime: false,
   relativeThresholdInHours: 24,
   hideAfterThreshold: true,

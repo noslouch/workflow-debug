@@ -1,4 +1,4 @@
-/* global document, window */
+/* global window, IntersectionObserver */
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -9,9 +9,19 @@ import MastHeadStrap from './MastHeadStrap';
 import CustomerNav from './CustomerNav';
 import UserMenu from './UserMenu';
 import UserLogin from './UserLogin';
+import SearchButton from './SearchButton';
+import SearchDialog from './SearchDialog';
 import EditionPicker from '../EditionPicker';
+import debounce from '../../functionHelpers/debounce';
 import headerConfigurations from './config.json';
 import chineseTypes from './chineseTypes.json';
+import {
+  Autocomplete,
+  SEARCH_URL_PREFIX,
+} from '../../searchHelpers/autocomplete';
+import getSearchURL from '../../searchHelpers/getSearchURL';
+
+const autocomplete = new Autocomplete();
 
 const EditionPickerWrapper = styled.div`
   width: 140px;
@@ -21,7 +31,7 @@ const EditionPickerWrapper = styled.div`
 const MainHeader = styled.header`
   width: 100%;
   border-bottom: 1px solid #ccc;
-  font-family: var(--font-family-retina);
+  font-family: var(--font-font-stack-retina);
   text-align: center;
   text-rendering: optimizeLegibility;
 
@@ -47,8 +57,8 @@ const MainHeader = styled.header`
     color: var(--color-jet);
   }
 
-  ${({ isFixedScroll }) =>
-    !isFixedScroll &&
+  ${({ disableScroll }) =>
+    disableScroll &&
     `
       position: relative;
       top: 0;
@@ -73,6 +83,25 @@ const SlimHeader = styled.div`
     `};
 `;
 
+const SearchSector = styled.div`
+  margin: 0 auto;
+  width: 1280px;
+  position: relative;
+  z-index: 50;
+
+  @media only screen and (min-width: 980px) and (max-width: 1280px) {
+    width: 980px;
+    position: relative;
+  }
+`;
+
+const debouncedSearch = debounce((searchTerm, setInput, setData) => {
+  setInput(searchTerm);
+  autocomplete.displayOnHeader(searchTerm, (results) =>
+    setData({ ...results })
+  );
+}, 500);
+
 const FullHeader = (props) => {
   const {
     articleId,
@@ -80,38 +109,44 @@ const FullHeader = (props) => {
     cxense,
     displayDate,
     disableLogin,
-    // hideSearch,
-    hideHeader,
+    hideSearch,
     homepages,
     isArticle,
-    isFixedScroll,
-    navigation, // content.navData
     loginUrl,
     logoutUrl,
-    // navigation,
-    // navigationOptions,
+    navigation,
     path,
     region,
     section,
-    // showSearchText,
+    showSearchText,
     showSectionLogo,
     showMastheadStrap,
     useH1,
+    disableScroll,
   } = props;
 
-  // Flag to fully remove WSJ Header needs to be handled by the layout context instead
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isShowingSearchResults, setIsShowingSearchResults] = useState(false);
+  const [searchInput, setSearchInput] = useState('');
+  const [searchResultData, setSearchResultData] = useState({});
+  const intersectionRef = useRef(null);
+  const slimSearchButtonRef = useRef(null);
+  const searchButtonRef = useRef(null);
 
-  const [isScrolled, _setIsScrolled] = useState(false);
-  const scrolledRef = useRef(isScrolled);
+  const currentSearchButtonRef = isScrolled
+    ? slimSearchButtonRef
+    : searchButtonRef;
 
-  const setIsScrolled = (data) => {
-    scrolledRef.current = data;
-    _setIsScrolled(data);
-  };
-
-  const headerConfig =
-    headerConfigurations[region] || headerConfigurations['na,us'];
-  const { loginText, logoutText, subscribeText } = headerConfig || {};
+  const headerConfig = headerConfigurations[region];
+  const {
+    loginText,
+    logoutText,
+    subscribeText,
+    searchText,
+    autocomplete: autocompleteConfig,
+    searchPlaceholder,
+  } = headerConfig || {};
   const { urls = {} } = customerNav || {};
   const {
     loginUrl: signinUrl,
@@ -119,13 +154,44 @@ const FullHeader = (props) => {
     headerSubscribeUrl,
   } = urls;
 
-  const renderEditionPicker = (altHomepages, isChinesePicker = false) => {
+  const handleSearchBtn = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
+  const clearSearchInput = () => {
+    setSearchInput('');
+    setIsShowingSearchResults(false);
+  };
+
+  const handleSearchInput = (e) => {
+    const searchTerm = e.target.value.trim();
+
+    if (searchTerm === '' && isShowingSearchResults) {
+      clearSearchInput();
+    } else {
+      debouncedSearch(searchTerm, setSearchInput, setSearchResultData);
+      if (!isShowingSearchResults) {
+        setIsShowingSearchResults(true);
+      }
+    }
+  };
+
+  function searchSubmit() {
+    const domain = window.location.hostname;
+    window.location.href = getSearchURL(region, domain, searchInput);
+  }
+
+  const renderEditionPicker = (altHomepages) => {
+    const pages = altHomepages || homepages;
+    const { label: currentEditionLabel } =
+      pages.find(({ region: reg }) => reg === region) || {};
+
     return (
       <EditionPickerWrapper>
         <EditionPicker
-          homepages={altHomepages || homepages}
+          homepages={pages}
           region={region}
-          isChinesePicker={isChinesePicker}
+          currentEditionLabel={currentEditionLabel}
         />
       </EditionPickerWrapper>
     );
@@ -139,7 +205,7 @@ const FullHeader = (props) => {
       articleId.replace(/^CN/, 'CT'),
     ];
 
-    const chineseTypesOptions = chineseTypes.map((item, i) => {
+    const chineseHomepages = chineseTypes.map((item, i) => {
       const url =
         isArticle && articleId
           ? `/articles/${redirectArticleId[i]}`
@@ -147,34 +213,32 @@ const FullHeader = (props) => {
       return { ...item, url };
     });
 
-    return renderEditionPicker(chineseTypesOptions, true);
+    return renderEditionPicker(chineseHomepages);
   };
 
   useEffect(() => {
-    const scrollHandler = () => {
-      const scroll =
-        document.documentElement.scrollTop || document.body.scrollTop;
+    const intersectionHandler = ([entry = {}]) => {
+      const { isIntersecting } = entry;
 
-      const scrollAdjust = 105;
-
-      // Set the isScrolled state
-      if (scroll >= scrollAdjust && !scrolledRef.current) {
-        setIsScrolled(true);
-      } else if (scroll < scrollAdjust && scrolledRef.current) {
-        setIsScrolled(false);
+      if (disableScroll) return null;
+      if (isIntersecting) {
+        return setIsScrolled(false);
       }
+      return setIsScrolled(true);
     };
 
-    if (isFixedScroll && !hideHeader) {
-      window.addEventListener('scroll', scrollHandler);
-    }
+    const observer = new IntersectionObserver(intersectionHandler, {
+      rootMargin: '0px',
+      threshold: 0.1,
+    });
+
+    observer.observe(intersectionRef.current);
 
     return () => {
-      if (isFixedScroll && !hideHeader) {
-        window.removeEventListener('scroll', scrollHandler);
-      }
+      observer.disconnect();
     };
-  }, [hideHeader, isFixedScroll]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const mastHeadProps = {
     headerConfig,
@@ -183,6 +247,23 @@ const FullHeader = (props) => {
     showMastheadStrap,
     showSectionLogo,
     useH1,
+  };
+
+  const searchProps = {
+    clearSearchInput,
+    closeSearchDialog: handleSearchBtn,
+    handleSearchInput,
+    searchText,
+    autocompleteConfig,
+    searchPlaceholder,
+    isShowingSearchResults,
+    searchInput,
+    searchPath: SEARCH_URL_PREFIX.default,
+    searchResultData,
+    isSearchOpen,
+    searchSubmit,
+    showSearchText,
+    currentSearchButtonRef,
   };
 
   const customerContent = ({ isLoggedIn, isSlim }) => {
@@ -212,12 +293,13 @@ const FullHeader = (props) => {
 
   return (
     <MainHeader
-      isFixedScroll={isFixedScroll}
+      disableScroll={disableScroll}
       role="banner"
       aria-label="Primary"
+      ref={intersectionRef}
     >
-      <MastHead {...mastHeadProps} isSlim={false}>
-        <CustomerNav isSlim={false}>{customerContent}</CustomerNav>
+      <MastHead {...mastHeadProps}>
+        <CustomerNav>{customerContent}</CustomerNav>
         {showMastheadStrap && (
           <MastHeadStrap
             region={region}
@@ -229,11 +311,28 @@ const FullHeader = (props) => {
         )}
       </MastHead>
       <HeaderNav navItems={navigation} section={section} />
+      <SearchSector>
+        <SearchButton
+          handleSearchBtn={handleSearchBtn}
+          searchText={searchText}
+          showSearchText={showSearchText}
+          ref={searchButtonRef}
+        />
+        {!hideSearch && <SearchDialog {...searchProps} />}
+      </SearchSector>
       <SlimHeader isVisible={isScrolled}>
         <MastHead {...mastHeadProps} isSlim>
           <CustomerNav isSlim>{customerContent}</CustomerNav>
         </MastHead>
         <HeaderNav navItems={navigation} section={section} />
+        <SearchSector>
+          <SearchButton
+            handleSearchBtn={handleSearchBtn}
+            searchText={searchText}
+            showSearchText={showSearchText}
+            ref={slimSearchButtonRef}
+          />
+        </SearchSector>
       </SlimHeader>
     </MainHeader>
   );
@@ -262,7 +361,6 @@ FullHeader.propTypes = {
   }),
   disableLogin: PropTypes.bool,
   displayDate: PropTypes.string,
-  hideHeader: PropTypes.bool,
   homepages: PropTypes.arrayOf(
     PropTypes.shape({
       index: PropTypes.number,
@@ -271,7 +369,6 @@ FullHeader.propTypes = {
       url: PropTypes.string /* format: 'uri' */,
     })
   ),
-  isFixedScroll: PropTypes.bool,
   navigation: PropTypes.arrayOf(
     PropTypes.shape({
       label: PropTypes.string,
@@ -317,6 +414,7 @@ FullHeader.propTypes = {
   showSearchText: PropTypes.bool,
   showSectionLogo: PropTypes.bool,
   useH1: PropTypes.bool,
+  disableScroll: PropTypes.bool,
   cxense: PropTypes.shape({
     popup: PropTypes.shape({
       divID: PropTypes.string,
@@ -338,17 +436,16 @@ FullHeader.defaultProps = {
   articleId: '',
   section: '',
   disableLogin: false,
-  hideHeader: false,
   hideSearch: false,
   displayDate: '',
   navigation: [],
   isArticle: false,
-  isFixedScroll: true,
   region: 'na,us',
   showSearchText: false,
   showMastheadStrap: true,
   showSectionLogo: false,
   useH1: false,
+  disableScroll: false,
   cxense: {
     popup: {
       divID: 'cx-popup',

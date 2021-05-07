@@ -1,3 +1,4 @@
+/* global document */
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 
@@ -33,6 +34,11 @@ const customRender = (ui, { providerProps, ...renderOptions }) => {
   );
 };
 
+global.IntersectionObserver = jest.fn(() => ({
+  observe: () => {},
+  disconnect: () => {},
+}));
+
 describe('<FullHeader>', () => {
   test('should be fixed by default', () => {
     customRender(<FullHeader />, {});
@@ -41,8 +47,8 @@ describe('<FullHeader>', () => {
     expect(main).not.toHaveStyle('position: relative; top: 0;');
   });
 
-  test('should not be fixed when set isFixedScroll as false', () => {
-    customRender(<FullHeader isFixedScroll={false} />, {});
+  test('should not be fixed when set disableScroll', () => {
+    customRender(<FullHeader disableScroll />, {});
 
     const main = screen.getByRole('banner');
     expect(main).toHaveStyle('position: relative; top: 0;');
@@ -149,5 +155,81 @@ describe('<FullHeader>', () => {
     expect(videoLink).toBeNull();
     expect(printEditionLink).toBeNull();
     expect(podcastLink).toBeNull();
+  });
+
+  test('should invoke search button handler', () => {
+    customRender(<FullHeader />, {});
+
+    const searchButton = screen.getByRole('button', {
+      name: 'Open Search',
+    });
+
+    fireEvent.click(searchButton);
+
+    const openedSearchDialog = screen.getByRole('dialog', {
+      name: 'Search',
+    });
+    expect(openedSearchDialog).toHaveStyle(
+      'top: 0; height: 100vh; width: 100vw;'
+    );
+  });
+
+  test('should close search dialog when clicking close button', () => {
+    customRender(<FullHeader />, {});
+
+    const searchButton = screen.getByRole('button', {
+      name: 'Open Search',
+    });
+
+    fireEvent.click(searchButton);
+
+    const openedSearchDialog = screen.getByRole('dialog', {
+      name: 'Search',
+    });
+
+    expect(openedSearchDialog).toHaveStyle(
+      'top: 0; height: 100vh; width: 100vw;'
+    );
+
+    const closeButton = screen.getByRole('button', {
+      name: 'Close Search',
+    });
+
+    fireEvent.click(closeButton);
+
+    const searchDialog = screen.queryByRole('dialog', {
+      name: 'Search',
+    });
+
+    expect(searchDialog).toBeNull();
+  });
+
+  test('should close search dialog on escape key pressed', () => {
+    customRender(<FullHeader />, {});
+
+    const searchButton = screen.getByRole('button', {
+      name: 'Open Search',
+    });
+
+    fireEvent.click(searchButton);
+
+    const openedSearchDialog = screen.getByRole('dialog', {
+      name: 'Search',
+    });
+
+    expect(openedSearchDialog).toHaveStyle(
+      'top: 0; height: 100vh; width: 100vw;'
+    );
+
+    fireEvent.keyDown(document.activeElement, {
+      key: 'Escape',
+      code: 'Escape',
+    });
+
+    const searchDialog = screen.queryByRole('dialog', {
+      name: 'Search',
+    });
+
+    expect(searchDialog).toBeNull();
   });
 });

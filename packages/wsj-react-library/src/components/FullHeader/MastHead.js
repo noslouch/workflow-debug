@@ -220,7 +220,7 @@ MastHead.propTypes = {
   ),
   section: PropTypes.string,
   showSectionLogo: PropTypes.bool,
-  isSlim: PropTypes.bool.isRequired,
+  isSlim: PropTypes.bool,
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
@@ -230,6 +230,7 @@ MastHead.propTypes = {
 MastHead.defaultProps = {
   navigation: [],
   section: '',
+  isSlim: false,
   showSectionLogo: false,
   children: '',
 };

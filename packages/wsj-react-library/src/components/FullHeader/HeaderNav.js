@@ -55,9 +55,9 @@ HeaderNav.propTypes = {
           label: PropTypes.string,
           subsections: PropTypes.arrayOf(
             PropTypes.shape({
-              category: { type: 'string' },
-              url: { type: 'string', format: 'uri' },
-              label: { type: 'string' },
+              category: PropTypes.string,
+              url: PropTypes.string,
+              label: PropTypes.string,
             })
           ),
         })

@@ -38,7 +38,7 @@ const ContentWrapper = styled.div`
   transform-origin: top right;
   transition-property: transform, opacity;
   transition-duration: 0.2s;
-  ${({ isSlim }) => isSlim && 'z-index: 100;'}
+  ${({ isSlim }) => `z-index: ${isSlim ? '100' : '60'};`}
   ${({ isOpen }) =>
     isOpen &&
     `
