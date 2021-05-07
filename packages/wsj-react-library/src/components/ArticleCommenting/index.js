@@ -14,26 +14,26 @@ const Button = styled.button`
   border-radius: 2px;
   transition: background-color 125ms ease;
   text-transform: uppercase;
-  color: #fff;
+  color: var(--color-white);
   margin-bottom: 15px;
   align-items: center;
   justify-content: center;
-  background-color: #0080c3;
+  background-color: var(--color-blue);
   letter-spacing: 0.5px;
 
   &:hover {
-    background-color: #015483;
+    background-color: var(--color-dark-blue);
   }
   &:focus {
-    outline-color: #666;
+    outline-color: var(--color-nickel);
   }
 `;
 
 const ShowOrHideCommentsSpan = styled.span`
   font-size: 14px;
   line-height: 18px;
-  font-family: var(--font-sans-serif);
-  font-weight: 500;
+  font-family: var(--font-family-sans-serif);
+  font-weight: var(--font-weight-medium);
 `;
 
 const ContentDiv = styled.div`
