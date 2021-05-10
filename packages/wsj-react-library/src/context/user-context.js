@@ -58,4 +58,9 @@ UserProvider.propTypes = {
   }),
 };
 
+UserProvider.defaultProps = {
+  children: '',
+  user: null,
+};
+
 export { useUserContext, UserProvider };

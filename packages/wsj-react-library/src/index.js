@@ -27,3 +27,5 @@ export { default as BreadCrumbs } from './components/Breadcrumbs';
 export { default as Hat } from './components/Hat';
 export { default as MarketDataStrip } from './components/MarketDataStrip';
 export { default as Ribbon } from './components/Ribbon';
+export { default as FullHeader } from './components/FullHeader';
+export { UserProvider, useUserContext } from './context/user-context';
