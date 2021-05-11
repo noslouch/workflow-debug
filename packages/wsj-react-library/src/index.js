@@ -30,3 +30,4 @@ export { default as MarketDataStrip } from './components/MarketDataStrip';
 export { default as Ribbon } from './components/Ribbon';
 export { default as FullHeader } from './components/FullHeader';
 export { UserProvider, useUserContext } from './context/user-context';
+export { default as MostPopular } from './components/MostPopular';
