@@ -195,14 +195,15 @@ jobs:
             echo "::debug::previous tags for this package: $(git tag --list "$PKG-v*")"
 
             # pull the most recent tag for the current $PKG
-            LAST_TAG=$(git tag --sort -refname --list "$PKG-v*" | head -n1)
+            LAST_TAG=$(git describe --tags --abbrev=0 --match "$PKG-v*")
+
             # prerelease tags have the format <pkg>-v<rev>-<preid>.<prerev>
             # pull just the version number from full tag 
-            LAST_REV=$(echo $LAST_TAG | sed -E "s/$PKG-v(.*)/\1/")
+            LAST_REV=$(sed -E "s/$PKG-v(.*)/\1/" <<< $LAST_TAG)
 
             # if the version number contains our prerelease identifier, then this package is currently in prerelease
             # if grep doesn't match, use "|| :;" to prevent the runner from dying
-            IN_PRERELEASE=$(echo $LAST_TAG | { grep -E "-$PREID\.[0-9]+" || :; })
+            IN_PRERELEASE=$({ grep -E "-$PREID\.[0-9]+" || :; } <<< $LAST_TAG)
 
             echo "::debug::last tag: $LAST_TAG"
             echo "::debug::last rev: $LAST_REV"
