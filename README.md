@@ -10,9 +10,11 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
 
 ### Brief guide to repo structure 🗺
 
+- `.config/` contains linting/formatting configs. **Note:** our eslint config is provided by [`@newscorp-ghfb/eslint-config-wsj`](https://github.com/newscorp-ghfb/eslint-config-wsj)
+- `.github/` contains github action workflows
 - `docs/` contains assets, components, and guides
 - `packages/` contains the source code, storybook data and tests of all components
-  - `/packages/:package` Contains groups of components that are logical to separate. This can be grouped by brand - like WSJ, Barrons etc or by application. For example
+  - `/packages/:package` Contains groups of components that are logical to separate. This can be grouped by brand - like WSJ, Barrons etc or by application. For example:
 
 ```bash
 .
@@ -22,7 +24,7 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
     │   ├── index.js # entry point
     │   ├── readme.md # README for each component
     │   └── ...
-    └── wsj
+    └── wsj-react-library
         ├── header
         │   ├── index.js
         │   └── ...
@@ -30,6 +32,8 @@ This is repo for documenting common standards & guidelines for DJ Rendering UI l
             ├── index.js
             └── ...
 ```
+
+Be mindful when adding new packages that they _must_ include the `@newscorp-ghfb` scope in their `package.json` `name` field, e.g. `@newscorp-ghfb/wsj-react-library`. The directory name under `packages` should not have the scope, as shown above.
 
 ### Storybook
 
@@ -41,15 +45,15 @@ The library's NPM modules should be maintained like an open-source project. As s
 
 **Unit tests** should be a fundamental part of each component added to the library. Their goal is to test the component output, given props and to ensure smooth refactoring is possible with high trust in the end result.
 
-The library is using `Jest` as a test runner and `React Testing Library` for API and a test helper when working with components
+The library is using `Jest` as a test runner and `React Testing Library` for API and a test helper when working with components.
 
 When designing tests, follow industry standards described here: [React Testing](https://reactjs.org/docs/testing-recipes.html) and [React Testing Library helpers](https://testing-library.com/docs/react-testing-library/api)
 
 **Integration tests** can be achieved by using visual rendering tools such as Storybook. There, we should expect to visualise and preview components. More in the Storybook section above.
 
-**Page Browser tests** is the domain of each team and not part of this library. They would be responsible for creating end-to-end testing suite to test their web pages as desired. Some tools to use could be:
+**Page Browser tests** is the domain of each team and not part of this library. They would be responsible for creating an end-to-end test suite for their web pages as desired. Some tools to use could be:
 
-- New Relic Syntetics
+- New Relic Synthetics
 - Selenium Web Driver / Mocha
 - Nightwatch / Cucumber
 
@@ -57,10 +61,10 @@ When designing tests, follow industry standards described here: [React Testing](
 
 1. Each component should contain tests that cover **all** real-use cases as well as edge-cases
 2. Don't test child components; they should have their own tests. Consider using mocks if necessary.
-3. Dependencies, even built-in one like setTimeOut should be mocked
+3. Dependencies, even built-in one like setTimeout should be mocked
 4. API calls should be stubbed/mocked
 5. When refactoring components, failed tests should not be ignored. This might indicate app will fail with the newer version of the library.
-6. Difficult to test component might indicate badly written one - consider refactoring it to reduce effects/dependancies
+6. A difficult to test component might indicate it is poorly written - consider refactoring it to reduce effects/dependencies
 
 #### Snapshot tests
 
@@ -86,6 +90,14 @@ The following minimums would be set:
     "statements": 90
   },
 ```
+
+#### Mocks
+
+Tests should not rely on network access or third-party libraries. Write your tests using mocks and stub out the desired behavior and return values to force the expected code pathways. Include bad responses, "unexpected" values and errors thrown by these external dependencies when writing your tests.
+
+Jest provides a [few](https://jestjs.io/docs/mock-functions) [different](https://jestjs.io/docs/timer-mocks) [ways](https://jestjs.io/docs/manual-mocks) [to mock](https://jestjs.io/docs/es6-class-mocks) things, so please take some time to review and use the appropriate methods in your tests.
+
+For some examples check out [these](https://github.com/newscorp-ghfb/dj-rendering/pull/281/files#diff-480953b9f9844ad2165fd38e1d87fd4aec0074d3d57f03348e62a81b0353fdbb) [PRs](https://github.com/newscorp-ghfb/dj-rendering/pull/256/files#diff-2fca5d5f0ab0c7fe74a2dbd6f773bed7f1e62ebe4fdb60ab8e01f473ee5985d1).
 
 ### Customizable (themes, styles)
 
@@ -277,7 +289,9 @@ const StyledNewComponent = styled.div`
   }
 `;
 
-const NewComponent = ({ isDark }) => <StyledNewComponent isDark={isDark}>hello, i am new</StyledNewComponent>;
+const NewComponent = ({ isDark }) => (
+  <StyledNewComponent isDark={isDark}>hello, i am new</StyledNewComponent>
+);
 ```
 
 - Set the respective `darkMode` setting within `NewComponent.stories.js`:
@@ -306,6 +320,21 @@ DarkNewComponent.parameters = {
   },
 };
 ```
+
+### Dealing with different environments
+
+Components should be environment-agnostic. That means they should be built in such a way so they are totally unaware as to whether they're in a local dev setup, running on production, on a staging server, etc.
+
+If you have a component that requires environment-specific values, such as an API endpoint, that value should be passed in as a prop, leaving it for the run-time context to determine what the proper value is for the current environment.
+
+#### Anti-Patterns
+
+If you see a component with any of the following traits, or find yourself considering something along these lines, _please reconsider_.
+
+- Props that look like `isProd`, `isDev`, etc.
+- Using `process.env.NODE_ENV` in the component source
+- Hard-coded, fully-qualified API endpoints, e.g. `const url = https://www.wsj.com/api/endpoint;`
+  - The exception to this would be if you are declaring a prop's default value
 
 ### To build a component
 
