@@ -1,4 +1,4 @@
-/* global window, IntersectionObserver */
+/* global IntersectionObserver */
 import React, { useRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -26,6 +26,7 @@ const autocomplete = new Autocomplete();
 const EditionPickerWrapper = styled.div`
   width: 140px;
   text-align: left;
+  z-index: 50;
 `;
 
 const MainHeader = styled.header`
