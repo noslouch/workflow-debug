@@ -23,6 +23,9 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+          scope: '@newscorp-ghfb'
 
       - name: install lerna locally
         run: yarn --ignore-scripts
