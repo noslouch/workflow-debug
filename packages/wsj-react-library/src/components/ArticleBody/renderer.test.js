@@ -19,6 +19,7 @@ jest.mock('./components/Emphasis', () => ({
 jest.mock('./components/Subhed', () => () => <div data-testid="subhed" />);
 jest.mock('./components/Tagline', () => () => <div data-testid="tagline" />);
 jest.mock('./components/Image', () => () => <div data-testid="image" />);
+jest.mock('./components/Video', () => () => <div data-testid="video" />);
 jest.mock('./insets/Pagebreak', () => () => <div data-testid="pagebreak" />);
 jest.mock('./insets/RichText', () => () => <div data-testid="rich-text" />);
 
@@ -57,7 +58,7 @@ describe('ArticleBody renderer', () => {
         },
       })
     );
-    expect(screen.getByTestId('foo')).toBeTruthy();
+    expect(screen.getByTestId('foo')).toBeInTheDocument();
   });
 
   test('should not override if type mismatch', () => {
@@ -135,6 +136,11 @@ describe('ArticleBody renderer', () => {
   test('should return image component if matching type', () => {
     render(renderer([{ type: 'image' }]));
     expect(screen.getByTestId('image')).toBeInTheDocument();
+  });
+
+  test('should return video component if matching type', () => {
+    render(renderer([{ type: 'video' }]));
+    expect(screen.getByTestId('video')).toBeInTheDocument();
   });
 
   test('should return pagebreak inset if matching type', () => {

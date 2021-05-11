@@ -1,0 +1,14 @@
+{
+  "type": "video",
+  "api": "http://www.wsj.com/api-video/get_video_info.asp",
+  "media_type": "VIDEO",
+  "slug": "video-801C951A-630D-4BAC-83B4-18B59D7A74DD",
+  "name": "801C951A-630D-4BAC-83B4-18B59D7A74DD",
+  "caption": "Marches following the killing of George Floyd continued in cities across the U.S. and remained mostly peaceful, although some protests ran past curfews. In Minnesota, Gov. Tim Walz announced a civil-rights investigation into the Minneapolis police department and the mother of George Floyd&rsquo;s 6-year-old daughter gave an emotional press conference. Photo: Scott Heins/Getty Images",
+  "properties": {
+    "responsive": {
+      "layout": "header"
+    }
+  },
+  "id": "media-1"
+}

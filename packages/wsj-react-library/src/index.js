@@ -11,6 +11,7 @@ export { default as OpinionArticleTypeExplainer } from './components/OpinionArti
 export { default as PrintButton } from './components/PrintButton';
 export { default as Pullquote } from './components/Pullquote';
 export { default as Skip } from './components/Skip';
+export { default as ArticleHero } from './components/ArticleHero';
 export { default as ArticleBody } from './components/ArticleBody';
 export { default as ArticleByline } from './components/ArticleByline';
 export { default as ArticleTimestamp } from './components/ArticleTimestamp';

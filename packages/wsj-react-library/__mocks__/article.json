@@ -240,7 +240,18 @@
         },
         {
           "type": "video",
-          "ref": "media-2"
+          "ref": "media-2",
+          "api": "http://www.wsj.com/api-video/get_video_info.asp",
+          "media_type": "VIDEO",
+          "slug": "video-15558895-097B-4848-9DEB-BDE09C8A15DC",
+          "name": "15558895-097B-4848-9DEB-BDE09C8A15DC",
+          "caption": "Consumers are looking for more interactive experiences with their TVs. Here's what investors should know.",
+          "properties": {
+            "responsive": {
+              "layout": "inline"
+            }
+          },
+          "id": "media-2"
         },
         {
           "type": "paragraph",
@@ -262,7 +273,18 @@
         },
         {
           "type": "video",
-          "ref": "media-3"
+          "ref": "media-3",
+          "api": "http://www.wsj.com/api-video/get_video_info.asp",
+          "media_type": "VIDEO",
+          "slug": "video-801C951A-630D-4BAC-83B4-18B59D7A74DD",
+          "name": "801C951A-630D-4BAC-83B4-18B59D7A74DD",
+          "caption": "Marches following the killing of George Floyd continued in cities across the U.S. and remained mostly peaceful, although some protests ran past curfews. In Minnesota, Gov. Tim Walz announced a civil-rights investigation into the Minneapolis police department and the mother of George Floyd&rsquo;s 6-year-old daughter gave an emotional press conference. Photo: Scott Heins/Getty Images",
+          "properties": {
+            "responsive": {
+              "layout": "header"
+            }
+          },
+          "id": "media-3"
         },
         {
           "type": "paragraph",
@@ -284,7 +306,18 @@
         },
         {
           "type": "video",
-          "ref": "media-4"
+          "ref": "media-4",
+          "api": "http://www.wsj.com/api-video/get_video_info.asp",
+          "media_type": "VIDEO",
+          "slug": "video-FE09B5E7-1A8D-4818-8FCC-F2A956743597",
+          "name": "FE09B5E7-1A8D-4818-8FCC-F2A956743597",
+          "caption": "As the coronavirus continues to spread around the globe, companies and academic labs are racing to develop a vaccine that would help society get back to normal. But there could also be costs to moving too quickly. WSJ&rsquo;s Daniela Hernandez explains. Photo illustration: Laura Kammermann",
+          "properties": {
+            "responsive": {
+              "layout": "edgetoedge"
+            }
+          },
+          "id": "media-4"
         },
         {
           "type": "paragraph",
@@ -336,7 +369,18 @@
         },
         {
           "type": "video",
-          "ref": "media-5"
+          "ref": "media-5",
+          "api": "http://www.wsj.com/api-video/get_video_info.asp",
+          "media_type": "VIDEO",
+          "slug": "video-2226427D-3053-4A3C-900A-AB877F472195",
+          "name": "2226427D-3053-4A3C-900A-AB877F472195",
+          "caption": "Protesters staged marches in cities around the country after a night of arrests and destruction; President Trump was criticized over his visit to a church; George Floyd&rsquo;s death was ruled a homicide. Watch the key developments. Photo: Richard Vogel/Associated Press",
+          "properties": {
+            "responsive": {
+              "layout": "bleed"
+            }
+          },
+          "id": "media-5"
         },
         {
           "type": "paragraph",
@@ -358,7 +402,18 @@
         },
         {
           "type": "video",
-          "ref": "media-6"
+          "ref": "media-6",
+          "api": "http://www.wsj.com/api-video/get_video_info.asp",
+          "media_type": "VIDEO",
+          "slug": "video-B6B0329C-DA35-4356-B338-69B255A2EA7C",
+          "name": "B6B0329C-DA35-4356-B338-69B255A2EA7C",
+          "caption": "President Trump threatened to deploy the U.S. military onto the streets to quell protesters and protect law and order. WSJ&rsquo;s Gerald F. Seib explains why this move puts military commanders in a tough position. Photo: Jonathan Ernst/Reuters",
+          "properties": {
+            "responsive": {
+              "layout": "margin"
+            }
+          },
+          "id": "media-6"
         },
         {
           "type": "paragraph",

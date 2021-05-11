@@ -25,10 +25,6 @@ export default createGlobalStyle`
     margin: 0;
     padding: 0;
   }
-  * {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
   // Fonts
   @font-face {
     font-family: Retina;
@@ -203,7 +199,7 @@ export default createGlobalStyle`
     --article-font-family: var(--font-font-stack-exchange);
     --article-font-weight: var(--font-weight-regular);
     --article-subhed-font-family: var(--font-font-stack-escrow-condensed);
-    --article-text-color-primary: var(--color-coal);
+    --article-text-color-primary: var(--color-jet);
     --article-text-color-secondary: var(--color-nickel);
     --article-text-size-scale: 1;
   }

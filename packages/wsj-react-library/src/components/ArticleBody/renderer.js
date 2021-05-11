@@ -9,6 +9,7 @@ import { Strong, Italic } from './components/Emphasis';
 import Subhed from './components/Subhed';
 import Tagline from './components/Tagline';
 import Image from './components/Image';
+import Video from './components/Video';
 // Insets
 import Pagebreak from './insets/Pagebreak';
 import RichText from './insets/RichText';
@@ -113,6 +114,7 @@ const renderer = (array = [], options = {}) =>
       );
     if (type === 'tagline') return <Tagline key={key}>{contents}</Tagline>;
     if (type === 'image') return <Image key={key} data={block} isAmp={isAmp} />;
+    if (type === 'video') return <Video key={key} data={block} isAmp={isAmp} />;
     // TODO: Phrase component with correct implementation
     if (type === 'phrase')
       return (

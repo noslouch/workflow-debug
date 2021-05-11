@@ -24,6 +24,19 @@
     "text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce pharetra tellus orci, a feugiat sem rhoncus id. Suspendisse congue porttitor vulputate. Integer interdum lacus ut erat ultrices gravida. Donec sagittis enim tincidunt nunc auctor, vitae lacinia lacus venenatis. Ut accumsan imperdiet tempus. Pellentesque eget mollis metus, gravida vestibulum massa. Nunc ac massa eu leo venenatis vehicula. Vestibulum suscipit elit in gravida posuere."
   },
   {
+    "type": "video",
+    "api": "http://www.wsj.com/api-video/get_video_info.asp",
+    "media_type": "VIDEO",
+    "slug": "video-15558895-097B-4848-9DEB-BDE09C8A15DC",
+    "name": "15558895-097B-4848-9DEB-BDE09C8A15DC",
+    "caption": "Consumers are looking for more interactive experiences with their TVs. Here's what investors should know.",
+    "properties": {
+      "responsive": {
+        "layout": "wrap"
+      }
+    }
+  },
+  {
     "type": "list",
     "ordered": false,
     "content": [

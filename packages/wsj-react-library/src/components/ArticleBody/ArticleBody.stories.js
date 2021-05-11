@@ -11,6 +11,7 @@ const Container = styled.article`
   }
 
   @media (min-width: 980px) {
+    margin-left: 180px;
     width: 560px;
   }
 
@@ -20,7 +21,7 @@ const Container = styled.article`
 `;
 
 export default {
-  title: 'Article Body',
+  title: 'Article/Body',
   component: ArticleBody,
   decorators: [
     (Story) => (

@@ -54,6 +54,27 @@ const MediaLayout = styled.div`
       width: 1260px;
     }
   `}
+
+  ${({ layout }) =>
+    layout === 'margin' &&
+    `
+    @media (min-width: 640px) {
+      float: left;
+      margin-left: 0;
+      margin-right: 30px;
+      width: 300px;
+    }
+
+    @media (min-width: 980px) {
+      float: right;
+      margin-right: -320px;
+      margin-left: 30px;
+    }
+
+    @media (min-width: 1300px) {
+      margin-right: -400px;
+    }
+  `}
 `;
 
 export default MediaLayout;
