@@ -213,7 +213,12 @@ SearchDialog.propTypes = {
   searchSubmit: PropTypes.func,
   currentSearchButtonRef: PropTypes.oneOfType([
     PropTypes.func,
-    PropTypes.shape({ current: PropTypes.instanceOf(Element) }),
+    PropTypes.shape({
+      current:
+        typeof Element === 'undefined'
+          ? PropTypes.elementType
+          : PropTypes.instanceOf(Element),
+    }),
   ]),
 };
 
