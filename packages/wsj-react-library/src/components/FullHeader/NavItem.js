@@ -1,4 +1,3 @@
-/* global document */
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -290,14 +289,18 @@ function NavItem({ categories = [], children: label, url, id, section }) {
   };
 
   return (
-    <Item ref={navRef} role="none" onBlur={onBlurHandler}>
+    <Item
+      ref={navRef}
+      role="none"
+      onBlur={onBlurHandler}
+      onMouseEnter={onMouseEnterHandler}
+      onMouseLeave={() => setIsExpanded(false)}
+      onKeyDown={onKeyDownHandler}
+    >
       <SectionLink
         isActive={isActive}
         href={url}
         role="menuitem"
-        onMouseLeave={() => setIsExpanded(false)}
-        onMouseEnter={onMouseEnterHandler}
-        onKeyDown={onKeyDownHandler}
         aria-haspopup={categories && categories.length > 0}
         aria-expanded={isExpanded}
         aria-current={
