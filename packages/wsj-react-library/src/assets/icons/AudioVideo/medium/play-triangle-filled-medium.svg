@@ -1,0 +1,21 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+>
+<title>play triangle filled medium</title>
+          <defs>
+                    <polygon
+      id="play-triangle-filled-medium-a"
+      points="12.967437 5.96407124 20.8168436 16.6733992 20.0068303 17.9640712 4.03880335 17.9640712 3.18315639 16.6733992 11.1363061 5.96407124"
+    />
+          </defs>
+          <use
+    fill="#222"
+    fill-rule="evenodd"
+    transform="rotate(90 12 11.964071)"
+    xlink:href="#play-triangle-filled-medium-a"
+  />
+</svg>
