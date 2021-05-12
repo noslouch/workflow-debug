@@ -1,11 +1,10 @@
-// allow users to import components from the top-level
-// export { default as Button } from './components/Button';
 export { default as BreakingNews } from './components/BreakingNews';
 export { default as EditionPicker } from './components/EditionPicker';
 export { default as FooterFull } from './components/FooterFull';
 export { default as GlobalStyles } from './components/GlobalStyles';
 export { default as Headline } from './components/Headline';
 export { default as Summary } from './components/Summary';
+export { default as SaveButton } from './components/SaveButton';
 export { default as ArticleCommenting } from './components/ArticleCommenting';
 export { default as OpinionArticleTypeExplainer } from './components/OpinionArticleType';
 export { default as PrintButton } from './components/PrintButton';

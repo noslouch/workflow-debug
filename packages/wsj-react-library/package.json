@@ -11,7 +11,7 @@
   },
   "scripts": {
     "pre-commit": "lint-staged",
-    "start": "npm run storybook",
+    "start": "npm run storybook --",
     "lint": "eslint src",
     "test": "jest --coverage",
     "clean": "rm -rf dist .out",

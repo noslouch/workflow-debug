@@ -1,13 +1,10 @@
 # `@newscorp-ghfb/wsj-react-library`
 
-Library of functional React components (built as [Styled Components](https://styled-components.com/docs)) that implements the _WSJ_ and _Noted._ design systems. FKA `dj-milford`, it's now part of the `dj-rendering` monorepo.
-
-To see `wsj` components side-by-side with their design specs, please visit the [WSJ Design System](https://dowjones.invisionapp.com/dsm/dow-jones/wsj).
+Library of functional React components (built as [Styled Components](https://styled-components.com/docs)) that implements the _WSJ_ design system. FKA `dj-milford`.
 
 ## Important Links
 
-- See [Contributing Guidelines]('./docs/CONTRIBUTING.md) and [code philosphy](./docs/STANDARDS.md).
-- See `TKTKTK` for component documentation.
+- See [`dj-rendering README`](https://github.com/newscorp-ghfb/dj-rendering#dj-rendering)
 
 ## Setup
 
@@ -18,6 +15,22 @@ To see `wsj` components side-by-side with their design specs, please visit the [
   - Make sure `Enable SSO` is turned ON, click on authorize (You will need to do this even if you are updating the scope of an existing Token).
 - [Log in to npm using the Token you generated](https://docs.github.com/en/free-pro-team@latest/packages/using-github-packages-with-your-projects-ecosystem/configuring-npm-for-use-with-github-packages#authenticating-with-a-personal-access-token)
 - Add this to your `~/.npmrc` file: `@newscorp-ghfb:registry=https://npm.pkg.github.com`
+
+### Running locally
+
+Once you're in `dj-rendering/packages/wsj-react-library`:
+
+```bash
+yarn start
+```
+
+### To enable SSL & make external network calls (required for some components, such as the `<SaveButton />`) ✅
+
+- Ensure you have HTTPS set up locally [(instructions here)](https://github.dowjones.net/responsive/local-consumer-ssl-certs) and your `hosts` file contains `127.0.0.1 www.local.wsj.com`
+- Global Protect VPN must be on
+- Be logged in to www.s.dev.wsj.com in the same session to leverage the `djcs_session` cookie in the requests
+- run `yarn start --https --ssl-cert=$HOME/.consumer-certs/consumer.crt --ssl-key=$HOME/.consumer-certs/consumer.key`
+  - `$HOME` is an envvar for bash and other \*nix systems. Use [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10) on Windows.
 
 ### Install
 
@@ -37,12 +50,6 @@ You must also install `styled-components`, `react`, and `react-dom` in your app.
 
 ```bash
 yarn add styled-components react react-dom
-```
-
-### Running locally
-
-```bash
-yarn start
 ```
 
 ## Usage
@@ -68,10 +75,6 @@ export default function Home() {
 ```
 
 ![image](./docs/assets/example.png)
-
-### Theming
-
-CSS variables are used to theme components when needed. Their values come from [DJ Design Tokens](https://github.com/newscorp-ghfb/dj-design-tokens), which are then used by the [`GlobalStyles`](src/components/GlobalStyles) component. When using a component that has themeable values, you will need to import the `GlobalStyles` component and place it onto the page.
 
 ### Server Side Rendering
 

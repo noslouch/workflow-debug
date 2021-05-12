@@ -48,3 +48,6 @@ pull_request.json
 
 # we're a yarn house, no package-locks allowed
 package-lock.json
+
+# SSl certificate
+.consumer-certs
