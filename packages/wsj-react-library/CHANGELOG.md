@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.1.0...wsj-react-library-v0.2.0) (2021-05-13)
+
+### Features
+
+- Most Popular News / Opinion / Videos ([#286](https://www.github.com/newscorp-ghfb/dj-rendering/issues/286)) ([2db3e86](https://www.github.com/newscorp-ghfb/dj-rendering/commit/2db3e8645745fa21c067c7d7f51759824ea5201f))
+- save button ([#260](https://www.github.com/newscorp-ghfb/dj-rendering/issues/260)) ([0bf16f9](https://www.github.com/newscorp-ghfb/dj-rendering/commit/0bf16f97e9667fcf1984b6ac1f1b7f93a1428ff5))
+
+### Bug Fixes
+
+- adjusting editionpicker wrapper zindex in fullheader ([#295](https://www.github.com/newscorp-ghfb/dj-rendering/issues/295)) ([f1f4802](https://www.github.com/newscorp-ghfb/dj-rendering/commit/f1f4802d3f2b116eea4261cde7384dee0ecca064))
+
 ## 0.1.0 (2021-05-11)
 
 ### Features
