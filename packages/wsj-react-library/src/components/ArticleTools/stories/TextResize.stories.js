@@ -1,6 +1,6 @@
-import TextResize from './TextResize';
-import ArticleBody from '../ArticleBody';
-import mockArticleBody from './__mocks__/articleBody.json';
+import TextResize from '../TextResize';
+import ArticleBody from '../../ArticleBody';
+import mockArticleBody from '../__mocks__/articleBody.json';
 
 export default {
   title: 'Article/Tools/TextResize',

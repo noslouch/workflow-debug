@@ -1,6 +1,6 @@
 /* global window, document */
 import { fireEvent, render, screen } from '@testing-library/react';
-import PrintButton from '.';
+import PrintButton from '../PrintButton';
 
 describe('Print Button', () => {
   const execCommandRef = document.execCommand;

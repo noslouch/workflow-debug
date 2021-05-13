@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import SaveButton from './index';
+import SaveButton from '../SaveButton';
 
 const mockSaveResponse = {
   contentId: 'SB12140738439335043595204587449112906534498',

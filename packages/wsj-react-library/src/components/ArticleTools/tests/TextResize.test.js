@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import TextResize from './TextResize';
+import TextResize from '../TextResize';
 
 describe('Article Tools Text Resize', () => {
   test('should have correct resize options', () => {

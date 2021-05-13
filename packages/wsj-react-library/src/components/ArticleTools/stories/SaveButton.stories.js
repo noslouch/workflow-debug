@@ -1,8 +1,8 @@
 import React from 'react';
-import SaveButton from './index';
+import SaveButton from '../SaveButton';
 
 export default {
-  title: 'Save Button',
+  title: 'Article/Tools/SaveButton',
   component: SaveButton,
 };
 
