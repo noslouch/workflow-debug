@@ -70,7 +70,7 @@ const PopoverPanel = styled.div`
   background-color: var(--article-background-color-primary);
   border: 1px solid var(--color-silver);
   display: inline-flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   margin: 12px 0 0 0;
   padding: 10px;
