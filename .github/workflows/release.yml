@@ -156,5 +156,5 @@ jobs:
             %(body)")
 
             git tag -sfm "$MSG" $TAG HEAD
-            gp origin $TAG --force
+            git push origin $TAG --force
           done <<< $NEW_TAGS
