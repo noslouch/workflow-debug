@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import MediaLayout from './MediaLayout';
 import VideoPlayer from '../../VideoPlayer';
 
@@ -16,8 +17,10 @@ const Figcaption = styled.figcaption`
   color: var(--article-text-color-secondary);
   font-family: var(--article-caption-font-family);
   font-weight: var(--font-weight-light);
-  font-size: calc((14 / 17) * var(--article-text-size-scale) * 1rem); // 14px
-  line-height: 1.4;
+  font-size: calc(
+    (14 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
+  ); // 14px
+  line-height: calc(20 / 14);
 `;
 
 const Strap = styled.div`
@@ -28,9 +31,11 @@ const Strap = styled.div`
 const Title = styled.h4`
   color: var(--article-text-color-primary);
   font-family: var(--article-caption-font-family);
-  font-size: calc((16 / 17) * var(--article-text-size-scale) * 1rem); // 16px
+  font-size: calc(
+    (16 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
+  ); // 16px
   font-weight: var(--font-weight-regular);
-  line-height: 1.25;
+  line-height: calc(20 / 16);
   margin: 8px 0 0 0;
 `;
 
@@ -56,6 +61,24 @@ const Video = ({ data, isAmp }) => {
       </Figure>
     </MediaLayout>
   );
+};
+
+Video.propTypes = {
+  data: PropTypes.shape({
+    caption: PropTypes.string,
+    name: PropTypes.string,
+    properties: PropTypes.shape({
+      responsive: PropTypes.shape({
+        layout: PropTypes.string,
+      }),
+    }),
+    title: PropTypes.string,
+  }).isRequired,
+  isAmp: PropTypes.bool,
+};
+
+Video.defaultProps = {
+  isAmp: false,
 };
 
 export default Video;

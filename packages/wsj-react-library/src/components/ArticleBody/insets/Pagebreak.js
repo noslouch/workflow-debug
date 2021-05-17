@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Pagebreak = styled.hr`
-  background-color: #dbdbdb;
+  background-color: var(--color-silver);
   border: 0;
   clear: both;
   height: 1px;

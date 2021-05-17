@@ -2,7 +2,7 @@ import ArticleTimestamp from './index';
 import article from '../../../__mocks__/article.json';
 
 export default {
-  title: 'Article Timestamp',
+  title: 'Article/Timestamp',
   component: ArticleTimestamp,
 };
 

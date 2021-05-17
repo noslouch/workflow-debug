@@ -1,7 +1,6 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import { Popover } from '@headlessui/react';
 import styled from 'styled-components';
-
 import { ReactComponent as ProfileIcon } from '../../assets/icons/Actionables/medium/profile-stroke-medium.svg';
 import { ReactComponent as TwitterIcon } from '../../assets/icons/Social/twitter-color-medium.svg';
 import { ReactComponent as FacebookIcon } from '../../assets/icons/Social/facebook-color-medium.svg';
@@ -78,7 +77,7 @@ const DropdownListItemLink = styled.a`
   }
 `;
 
-const Author = ({ authorUrl = '/news/author/', data, isAmp }) => {
+const Author = ({ authorUrl, data, isAmp }) => {
   const { id, emailAddress, facebookAccount, text, twitterHandle } = data || {};
   if (!text) return null;
   if (isAmp)
@@ -140,6 +139,24 @@ const Author = ({ authorUrl = '/news/author/', data, isAmp }) => {
       </Popover.Panel>
     </Popover>
   );
+};
+
+Author.propTypes = {
+  authorUrl: PropTypes.string,
+  data: PropTypes.shape({
+    id: PropTypes.string,
+    emailAddress: PropTypes.string,
+    facebookAccount: PropTypes.string,
+    text: PropTypes.string,
+    twitterHandle: PropTypes.string,
+  }),
+  isAmp: PropTypes.bool,
+};
+
+Author.defaultProps = {
+  authorUrl: '',
+  data: undefined,
+  isAmp: false,
 };
 
 export default Author;

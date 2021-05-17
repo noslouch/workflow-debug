@@ -1,17 +1,14 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import isValidDate from '../../helpers/date/isValidDate';
 
 const Timestamp = styled.time`
   color: var(--color-nickel);
-  font-family: var(--font-family-retina);
+  font-family: var(--font-font-stack-retina);
   font-size: var(--typography-timestamp-font-size-m);
   font-weight: var(--font-weight-light);
   line-height: 22px;
 `;
-
-const isValidDate = (timestamp) => {
-  const date = new Date(timestamp);
-  return date instanceof Date && !isNaN(date.valueOf());
-};
 
 const ArticleTimestamp = ({ published, updated }) => {
   if (!isValidDate(published)) return null;
@@ -34,6 +31,15 @@ const ArticleTimestamp = ({ published, updated }) => {
       shouldShowUpdated ? 'Updated ' : ''
     } ${displayDate} ET`}</Timestamp>
   );
+};
+
+ArticleTimestamp.propTypes = {
+  published: PropTypes.string.isRequired,
+  updated: PropTypes.string,
+};
+
+ArticleTimestamp.defaultProps = {
+  updated: undefined,
 };
 
 export default ArticleTimestamp;

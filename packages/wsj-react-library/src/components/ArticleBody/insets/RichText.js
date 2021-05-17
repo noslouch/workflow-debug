@@ -9,10 +9,12 @@ const Container = styled.div`
 `;
 
 const Paragraph = styled.p`
-  font-size: calc((16 / 17) * var(--article-text-size-scale) * 1rem); // 16px
-  font-weight: var(--font-weight-light);
+  font-size: calc(
+    (15 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
+  ); // 15px
+  font-weight: var(--font-weight-regular);
   font-family: var(--font-font-stack-retina);
-  line-height: 1.375;
+  line-height: calc(24 / 15);
   margin-bottom: 1em;
   word-wrap: break-word;
 `;
@@ -20,14 +22,17 @@ const Paragraph = styled.p`
 const Subhed = styled.h4`
   border-top: 1px solid #dadada;
   border-bottom: 1px solid #dadada;
-  color: var(--color-jet);
-  font-family: var(--font-font-stack-retina);
-  font-size: calc((14 / 17) * var(--article-text-size-scale) * 1rem); // 14px
-  font-weight: var(--font-weight-regular);
-  line-height: 1.3;
+  color: var(--article-text-color-primary);
+  font-family: var(--font-font-stack-retina-narrow);
+  font-size: calc(
+    (13 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
+  ); // 13px
+  font-weight: var(--font-weight-medium);
+  line-height: calc(16 / 13);
   margin: 0 0 12px 0;
-  padding: 12px 0 12px 4px;
+  padding: 12px 0;
   text-transform: uppercase;
+  letter-spacing: calc(0.8 * var(--article-text-size-scale) * 1px); // 0.8px
 `;
 
 const List = styled.ul`
@@ -37,11 +42,11 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-  font-size: calc((16 / 17) * var(--article-text-size-scale) * 1rem); // 16px
+  font-size: calc(1rem * var(--article-text-size-scale)); // 17px
   font-family: var(--font-family-exchange);
   font-weight: var(--font-weight-regular);
-  line-height: 1.6;
-  margin-bottom: 12px;
+  line-height: calc(27 / 17);
+  margin-bottom: 1em;
 `;
 
 const renderBlock = (block, index) => {

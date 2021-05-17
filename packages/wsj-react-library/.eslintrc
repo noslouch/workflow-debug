@@ -16,6 +16,7 @@
     "beforeAll": "readonly",
     "afterAll": "readonly",
     "window": "readonly",
-    "document": "readonly"
+    "document": "readonly",
+    "btoa": "readonly",
   }
 }

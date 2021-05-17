@@ -103,3 +103,21 @@ Additionally, we have set a text size scale css variable `--article-text-size-sc
 ```css
 font-size: calc(1rem * var(--article-text-size-scale));
 ```
+
+If you're unsure of what your font size's value should be relative to the root value, instead of setting a very long decimal value you should use the `calc` function to let it calculate the value for you:
+
+```css
+/* convert 14px to its rem equivalent */
+font-size: calc(
+  (14 / var(--base-font-size)) * var(--article-text-size-scale) * 1rem
+);
+```
+
+In the above example, our targeted font size is 14px, so in order to get the desired rem value, we divide it by the base font size which is 17px, multiply it by the text size scale value, and then multiply it by 1rem to convert it to rem units.
+
+For line heights, since we want to keep them unitless, we will divide their target pixel value (provided by designers) by the target (not base) font size. Following the above example, we're working with a target font size of 14px.
+
+```css
+/* convert 27px to its unitless equivalent */
+line-height: calc(27 / 14);
+```

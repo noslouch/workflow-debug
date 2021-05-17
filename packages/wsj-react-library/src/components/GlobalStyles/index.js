@@ -194,6 +194,7 @@ export default createGlobalStyle`
     ${Object.entries(toVars(tokens)).map(([key, value]) => `${key}: ${value};`)}
 
     // Computed CSS Variables
+    --article-base-font-size: 17;
     --article-background-color-primary: var(--color-white);
     --article-caption-font-family: var(--font-font-stack-retina);
     --article-font-family: var(--font-font-stack-exchange);

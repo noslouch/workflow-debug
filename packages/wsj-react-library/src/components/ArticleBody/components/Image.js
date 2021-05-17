@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import MediaLayout from './MediaLayout';
 import Img from '../../Image';
 
@@ -21,15 +22,19 @@ const Figcaption = styled.figcaption`
 
 const Caption = styled.span`
   display: block;
-  font-size: calc((16 / 17) * var(--article-text-size-scale) * 1rem); // 16px
-  line-height: 1.375;
+  font-size: calc(
+    (14 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
+  ); // 14px
+  line-height: calc(20 / 14);
   margin-bottom: 4px;
 `;
 
 const Credit = styled.span`
   display: block;
-  font-size: calc((14 / 17) * var(--article-text-size-scale) * 1rem); // 14px
-  line-height: 1.5;
+  font-size: calc(
+    (14 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
+  ); // 14px
+  line-height: calc(20 / 14);
   text-transform: uppercase;
 `;
 
@@ -57,6 +62,24 @@ const Image = ({ data, isAmp = false }) => {
       </Figure>
     </MediaLayout>
   );
+};
+
+Image.propTypes = {
+  data: PropTypes.shape({
+    caption: PropTypes.string,
+    credit: PropTypes.string,
+    properties: PropTypes.shape({
+      location: PropTypes.string,
+      responsive: PropTypes.shape({
+        layout: PropTypes.string,
+      }),
+    }),
+  }).isRequired,
+  isAmp: PropTypes.bool,
+};
+
+Image.defaultProps = {
+  isAmp: false,
 };
 
 export default Image;

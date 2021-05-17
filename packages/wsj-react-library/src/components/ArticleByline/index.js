@@ -44,12 +44,7 @@ const Hedcut = styled.a`
   `}
 `;
 
-const ArticleByline = ({
-  data = [],
-  isAmp = false,
-  isOpinion = false,
-  shouldShowHedcut = false,
-}) => {
+const ArticleByline = ({ data, isAmp, isOpinion, shouldShowHedcut }) => {
   if (!data || !Array.isArray(data) || data.length === 0) return null;
   const bylines = data.map((block, index) => {
     const { id, phrase_type: phraseType, text, type } = block || {};
@@ -112,6 +107,13 @@ ArticleByline.propTypes = {
   isOpinion: PropTypes.bool,
   /** Shows Hedcut for first author, if available */
   shouldShowHedcut: PropTypes.bool,
+};
+
+ArticleByline.defaultProps = {
+  data: [],
+  isAmp: false,
+  isOpinion: false,
+  shouldShowHedcut: false,
 };
 
 export default ArticleByline;

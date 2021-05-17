@@ -8,8 +8,10 @@ describe('ArticleByline Author', () => {
     expect(container.firstChild).toBeNull();
   });
 
-  test('should render author pahe link if isAmp is set', () => {
-    render(<Author data={{ id: 1, text: 'foo' }} isAmp />);
+  test('should render author page link if isAmp is set', () => {
+    render(
+      <Author data={{ id: '1', text: 'foo' }} authorUrl="/news/author/" isAmp />
+    );
     expect(screen.getByText('foo', { selector: 'a' })).toHaveAttribute(
       'href',
       '/news/author/1'
@@ -20,12 +22,13 @@ describe('ArticleByline Author', () => {
     render(
       <Author
         data={{
-          id: 1,
+          id: '1',
           text: 'foo',
           emailAddress: 'foo@email.com',
           twitterHandle: 'foo',
           facebookAccount: 'foo',
         }}
+        authorUrl="/news/author/"
       />
     );
     fireEvent.click(screen.getByText('foo', { selector: 'button' }));
@@ -47,7 +50,9 @@ describe('ArticleByline Author', () => {
   });
 
   test('should open dropdown on focus, and close on blur', () => {
-    render(<Author data={{ id: 1, text: 'foo' }} />);
+    render(
+      <Author data={{ id: '1', text: 'foo' }} authorUrl="/news/author/" />
+    );
     // First tab to focus button
     userEvent.tab();
     fireEvent.click(screen.getByText('foo', { selector: 'button' }));

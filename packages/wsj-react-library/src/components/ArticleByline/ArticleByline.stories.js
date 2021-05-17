@@ -1,7 +1,7 @@
 import ArticleByline from './index';
 
 export default {
-  title: 'Article Byline',
+  title: 'Article/Byline',
   component: ArticleByline,
 };
 

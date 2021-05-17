@@ -14,11 +14,12 @@ const ArticleHero = ({ data, isAmp }) => {
 ArticleHero.propTypes = {
   data: PropTypes.shape({
     type: PropTypes.string,
-  }).isRequired,
+  }),
   isAmp: PropTypes.bool,
 };
 
 ArticleHero.defaultProps = {
+  data: undefined,
   isAmp: false,
 };
 

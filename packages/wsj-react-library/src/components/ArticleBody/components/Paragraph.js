@@ -5,7 +5,7 @@ const Paragraph = styled.p`
   font-family: var(--article-font-family);
   font-size: calc(1rem * var(--article-text-size-scale)); // 17px
   font-weight: var(--article-font-weight);
-  line-height: 1.6;
+  line-height: calc(27 / 17);
   margin: 0 0 1em 0;
   word-wrap: break-word;
 
