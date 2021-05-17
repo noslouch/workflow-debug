@@ -106,7 +106,6 @@ const TickerPercentage = styled.span`
 
 const TickerLink = styled.a`
   text-decoration: none;
-  outline: none;
   color: inherit;
 
   :visited {
