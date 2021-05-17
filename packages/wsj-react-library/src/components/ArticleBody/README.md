@@ -115,6 +115,16 @@ font-size: calc(
 
 In the above example, our targeted font size is 14px, so in order to get the desired rem value, we divide it by the base font size which is 17px, multiply it by the text size scale value, and then multiply it by 1rem to convert it to rem units.
 
+For convenience, we have created a helper function that will take your desired pixel value as an input and will output the css property value required for this, so using it will only require you to import the function and using it inside your template css string:
+
+```js
+import fontSize from '../helpers/fonts/articleFontSize';
+
+const myCss = css`
+  font-size: ${fontSize(14)};
+`;
+```
+
 For line heights, since we want to keep them unitless, we will divide their target pixel value (provided by designers) by the target (not base) font size. Following the above example, we're working with a target font size of 14px.
 
 ```css

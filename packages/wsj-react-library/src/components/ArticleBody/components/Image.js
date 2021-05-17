@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import MediaLayout from './MediaLayout';
 import Img from '../../Image';
+import fontSize from '../../../helpers/fonts/articleFontSize';
 
 const Figure = styled.figure`
   margin: 0 0 22px 0;
@@ -22,18 +23,14 @@ const Figcaption = styled.figcaption`
 
 const Caption = styled.span`
   display: block;
-  font-size: calc(
-    (14 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
-  ); // 14px
+  font-size: ${fontSize(14)};
   line-height: calc(20 / 14);
   margin-bottom: 4px;
 `;
 
 const Credit = styled.span`
   display: block;
-  font-size: calc(
-    (14 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
-  ); // 14px
+  font-size: ${fontSize(14)};
   line-height: calc(20 / 14);
   text-transform: uppercase;
 `;

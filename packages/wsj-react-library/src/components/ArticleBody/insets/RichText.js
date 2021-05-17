@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import MediaLayout from '../components/MediaLayout';
 import renderer, { hashFromObject } from '../renderer';
+import fontSize from '../../../helpers/fonts/articleFontSize';
 
 const Container = styled.div`
   color: var(--article-text-color-secondary);
@@ -9,9 +10,7 @@ const Container = styled.div`
 `;
 
 const Paragraph = styled.p`
-  font-size: calc(
-    (15 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
-  ); // 15px
+  font-size: ${fontSize(15)};
   font-weight: var(--font-weight-regular);
   font-family: var(--font-font-stack-retina);
   line-height: calc(24 / 15);
@@ -24,9 +23,7 @@ const Subhed = styled.h4`
   border-bottom: 1px solid #dadada;
   color: var(--article-text-color-primary);
   font-family: var(--font-font-stack-retina-narrow);
-  font-size: calc(
-    (13 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
-  ); // 13px
+  font-size: ${fontSize(13)};
   font-weight: var(--font-weight-medium);
   line-height: calc(16 / 13);
   margin: 0 0 12px 0;
@@ -42,7 +39,7 @@ const List = styled.ul`
 `;
 
 const ListItem = styled.li`
-  font-size: calc(1rem * var(--article-text-size-scale)); // 17px
+  font-size: ${fontSize(17)};
   font-family: var(--font-family-exchange);
   font-weight: var(--font-weight-regular);
   line-height: calc(27 / 17);

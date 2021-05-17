@@ -1,9 +1,10 @@
 import styled from 'styled-components';
+import fontSize from '../../../helpers/fonts/articleFontSize';
 
 const Paragraph = styled.p`
   color: var(--article-text-color-primary);
   font-family: var(--article-font-family);
-  font-size: calc(1rem * var(--article-text-size-scale)); // 17px
+  font-size: ${fontSize(17)};
   font-weight: var(--article-font-weight);
   line-height: calc(27 / 17);
   margin: 0 0 1em 0;

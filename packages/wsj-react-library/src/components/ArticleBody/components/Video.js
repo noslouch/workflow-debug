@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import MediaLayout from './MediaLayout';
 import VideoPlayer from '../../VideoPlayer';
+import fontSize from '../../../helpers/fonts/articleFontSize';
 
 const Figure = styled.figure`
   margin: 22px 0;
@@ -17,9 +18,7 @@ const Figcaption = styled.figcaption`
   color: var(--article-text-color-secondary);
   font-family: var(--article-caption-font-family);
   font-weight: var(--font-weight-light);
-  font-size: calc(
-    (14 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
-  ); // 14px
+  font-size: ${fontSize(14)};
   line-height: calc(20 / 14);
 `;
 
@@ -31,9 +30,7 @@ const Strap = styled.div`
 const Title = styled.h4`
   color: var(--article-text-color-primary);
   font-family: var(--article-caption-font-family);
-  font-size: calc(
-    (16 / var(--article-base-font-size)) * var(--article-text-size-scale) * 1rem
-  ); // 16px
+  font-size: ${fontSize(16)};
   font-weight: var(--font-weight-regular);
   line-height: calc(20 / 16);
   margin: 8px 0 0 0;
