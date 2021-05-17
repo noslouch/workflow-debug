@@ -74,7 +74,11 @@ const Breadcrumbs = ({ breadcrumbs, flashline, isExclusive, isRecent }) => {
   const schema = generateSchema(breadcrumbs);
   return (
     <BreadcrumbsWrapper>
-      <script type="application/ld+json">{schema}</script>
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: schema }}
+      />
       <List>
         {flashline && (
           <Flashline isRecent={isRecent} isExclusive={isExclusive}>

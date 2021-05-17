@@ -13,8 +13,18 @@ const VideoPlayerContainer = styled.div`
 
 const loadVideoLib = (endpoint) => {
   const videoScript = document.getElementById('wsj-video-script');
-  if (videoScript || window.WSJVideo)
-    return new Promise((resolve) => setTimeout(resolve, 500));
+
+  if (videoScript) {
+    return new Promise((resolve) => {
+      const interval = setInterval(() => {
+        if (typeof window.$jQ111 !== 'undefined') {
+          clearInterval(interval);
+          resolve();
+        }
+      }, 50);
+    });
+  }
+
   return new Promise((resolve, reject) => {
     // Video script
     const script = document.createElement('script');
