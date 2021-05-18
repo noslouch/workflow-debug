@@ -40,12 +40,6 @@ const Link = styled.a`
 
   color: inherit;
   text-decoration: none;
-  outline: none;
-
-  :focus {
-    outline: #0080c3 solid 3px;
-    outline-offset: -2px;
-  }
 
   :hover {
     text-decoration: none;

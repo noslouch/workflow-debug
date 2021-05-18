@@ -11,7 +11,6 @@ const ProductLinksSector = styled.div`
   a:visited {
     color: inherit;
     text-decoration: none;
-    outline: none;
   }
 
   background-color: #e9e9e9;

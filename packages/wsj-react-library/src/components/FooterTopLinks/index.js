@@ -12,7 +12,6 @@ const TopLinksWrapper = styled.div`
   a:visited {
     color: inherit;
     text-decoration: none;
-    outline: none;
   }
 
   background-color: #e9e9e9;
@@ -105,11 +104,6 @@ const BackToTopWrapper = styled.li`
 
   a:hover {
     color: var(--color-white);
-  }
-
-  :focus {
-    outline: #0080c3 solid 3px;
-    outline-offset: -2px;
   }
 `;
 

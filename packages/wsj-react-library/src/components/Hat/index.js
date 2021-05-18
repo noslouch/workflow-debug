@@ -26,16 +26,7 @@ const StyledHat = styled.nav`
   a:link,
   a:visited {
     text-decoration: none;
-    outline: none;
     color: inherit;
-  }
-  & a:focus {
-    outline: #0080c3 solid 3px;
-    outline-offset: 1px;
-  }
-
-  & a:focus:not(:focus-visible) {
-    outline: none;
   }
 `;
 
@@ -57,15 +48,6 @@ const HatButton = styled.button`
   font-weight: 500;
   padding: 0 20px 0 0;
   text-transform: uppercase;
-
-  :focus {
-    outline: #0080c3 solid 3px;
-    outline-offset: 1px;
-  }
-
-  :focus:not(:focus-visible) {
-    outline: none;
-  }
 `;
 
 const HatButtonArrow = styled.span`
@@ -148,15 +130,6 @@ const CloseButton = styled.button`
   color: var(--color-black);
   cursor: pointer;
   border: none;
-
-  :focus {
-    outline: #0080c3 solid 3px;
-    outline-offset: 1px;
-  }
-
-  :focus:not(:focus-visible) {
-    outline: none;
-  }
 `;
 
 const HatEscape = styled.div`

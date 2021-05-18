@@ -55,11 +55,11 @@ const Button = styled.button`
   font-size: 16px;
   margin-bottom: 12px;
   background: none;
-  padding: 0;
+  padding: 4px 0;
   cursor: pointer;
 
-  :focus {
-    outline: none;
+  &:focus {
+    outline-offset: -2px;
   }
 `;
 

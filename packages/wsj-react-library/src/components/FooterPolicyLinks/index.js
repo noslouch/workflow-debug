@@ -11,12 +11,6 @@ const PolicyLinksWrapper = styled.div`
   a:visited {
     color: inherit;
     text-decoration: none;
-    outline: none;
-  }
-
-  a:focus {
-    outline: #0080c3 solid 3px;
-    outline-offset: 1px;
   }
 
   margin: 0 auto;

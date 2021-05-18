@@ -116,12 +116,6 @@ const SuggestionsList = styled.ul`
   & li a:not(${QuoteLink}) {
     padding: 3px 0;
   }
-
-  & li:not(${SearchCategory}):focus-within > a,
-  ${ViewAll}:focus-within, ${QuoteLink}:focus {
-    outline: #0080c3 solid 3px;
-    outline-offset: 1px;
-  }
 `;
 
 const SecondaryResults = styled.div`

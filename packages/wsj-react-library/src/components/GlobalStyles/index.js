@@ -204,12 +204,17 @@ export default createGlobalStyle`
     --article-text-color-secondary: var(--color-nickel);
     --article-text-size-scale: 1;
   }
-
+  *:focus {
+    outline: var(--color-blue) solid 3px;
+    outline-offset: 1px;
+  }
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
   h1, h2, h3, h4, h5, h6 {
     --headline-font-color: var(--color-jet);
     --headline-link-hover-color: var(--color-blue);
   }
-
   p {
     --summary-font-color: var(--color-nickel);
     --summary-bullet-small-font-color: var(--color-jet);

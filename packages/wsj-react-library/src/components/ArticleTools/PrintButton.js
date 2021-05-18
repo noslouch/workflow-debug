@@ -15,14 +15,6 @@ const StyledPrintButton = styled.button`
   font-size: 12px;
   color: var(--color-nickel);
   text-transform: var(--font-case-uppercase);
-
-  :focus:not(:focus-visible) {
-    outline: none;
-  }
-
-  :focus-visible {
-    outline: var(--color-blue) solid 3px;
-  }
 `;
 
 const PrintStrokeMediumIcon = styled(PrintStrokeMedium)`
@@ -76,12 +68,12 @@ const PrintButton = ({ label, printURL }) => {
 export default PrintButton;
 
 PrintButton.propTypes = {
-  /** 
+  /**
     URL for pdf documents, such as downloadable Puzzle pdfs (OPTIONAL)
   */
   printURL: PropTypes.string,
   /**
-    Alternate Text For Print Button. Default is "PRINT" (OPTIONAL) 
+    Alternate Text For Print Button. Default is "PRINT" (OPTIONAL)
    */
   label: PropTypes.string,
 };

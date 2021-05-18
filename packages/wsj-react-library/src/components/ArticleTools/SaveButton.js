@@ -17,14 +17,6 @@ const StyledSaveButton = styled.button`
   text-transform: uppercase;
   display: flex;
   align-items: center;
-
-  :focus {
-    outline: none;
-  }
-
-  :focus-visible {
-    outline: var(--color-light-blue) auto 1px;
-  }
 `;
 
 const SVGWrapper = styled.div`

@@ -10,6 +10,7 @@ const SkipContainer = styled.div`
   transition: top 0.3s;
   z-index: 91;
   width: 320px;
+
   &:focus-within {
     top: 0;
     height: auto;
@@ -39,11 +40,6 @@ const SkipMainButton = styled.button`
   background-color: #027ebe;
   color: var(--color-white);
   margin-bottom: 10px;
-
-  &:focus {
-    outline: var(--color-nickel) solid 3px;
-    outline-offset: 1px;
-  }
 `;
 
 const SkipSearchButton = styled.button`
@@ -60,11 +56,6 @@ const SkipSearchButton = styled.button`
   -moz-appearance: none;
   background-color: var(--color-white);
   color: var(--color-nickel);
-
-  &:focus {
-    outline: var(--color-blue) solid 3px;
-    outline-offset: 1px;
-  }
 `;
 
 const SkipLabel = styled.label`

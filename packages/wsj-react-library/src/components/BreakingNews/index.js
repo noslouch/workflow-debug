@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { ReactComponent as ChevronRightMedium } from '../../assets/icons/Standard/medium/chevron-right-medium.svg';
-import FullHeader from '../FullHeader';
 
 const BreakingNewsWrapper = styled.div`
   display: block;
@@ -18,11 +17,6 @@ const BreakingNewsWrapper = styled.div`
 
   @media (max-width: 639px) {
     padding: 10px;
-  }
-
-  &:focus {
-    outline: var(--color-blue) solid 3px;
-    outline-offset: 1px;
   }
 `;
 

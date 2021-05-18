@@ -54,22 +54,16 @@ const DropdownListItemLink = styled.a`
   align-items: center;
   color: var(--color-nickel);
   display: flex;
-  text-decoration: none;
-  text-transform: uppercase;
-
   font-family: var(--font-family-retina-narrow);
   font-size: 14px;
   font-style: normal;
   font-weight: 300;
   line-height: 32px;
+  text-decoration: none;
+  text-transform: uppercase;
 
   &:hover {
     color: var(--color-jet);
-  }
-
-  :focus {
-    outline: #0080c3 solid 3px;
-    outline-offset: -2px;
   }
 
   svg {

@@ -73,10 +73,7 @@ const mixedMock = [
     ...mockAuthor1,
   },
   {
-    text: ' and ',
-  },
-  {
-    ...mockAuthor2,
+    text: ' and Jane Doe',
   },
 ];
 

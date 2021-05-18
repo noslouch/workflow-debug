@@ -89,6 +89,10 @@ const SearchSubmit = styled.input`
   text-transform: uppercase;
   cursor: pointer;
 
+  &:focus {
+    outline-color: var(--color-nickel);
+  }
+
   &:hover {
     background-color: var(--color-dark-blue);
   }
