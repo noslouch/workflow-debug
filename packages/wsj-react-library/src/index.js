@@ -30,4 +30,5 @@ export { default as Ribbon } from './components/Ribbon';
 export { default as FullHeader } from './components/FullHeader';
 export { UserProvider, useUserContext } from './context/user-context';
 export { default as MostPopular } from './components/MostPopular';
+export { default as TableOfContents } from './components/TableOfContents';
 export { default as TextResizeButton } from './components/ArticleTools/TextResize';

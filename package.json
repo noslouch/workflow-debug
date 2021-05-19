@@ -15,7 +15,7 @@
     "deploy-storybook": "storybook-to-ghpages"
   },
   "devDependencies": {
-    "@newscorp-ghfb/eslint-config-wsj": "^0.1.0",
+    "@newscorp-ghfb/eslint-config-wsj": "^0.1.4",
     "@storybook/storybook-deployer": "newscorp-ghfb/dj-storybook-deployer#v1.0.0-fork.0",
     "eslint": "^7.24.0",
     "eslint-plugin-import": "^2.22.1",

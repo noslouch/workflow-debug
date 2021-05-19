@@ -2266,7 +2266,7 @@
   resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-design-tokens/0.0.23/fb63da0774e2c6014a28038ad9d7e517d584ba6ab90e38141cd87d8b8118f1c6#da662404b3e905f29ce48dfa87f50acd7f10c165"
   integrity sha512-bSlADddDElCkWDvflonebikXxGpKclL6FGpk1hm5CP1UhsEjVvr+gSQBA0oflVtBb97C7Hb+TYQOKFhs79RlGw==
 
-"@newscorp-ghfb/eslint-config-wsj@^0.1.0":
+"@newscorp-ghfb/eslint-config-wsj@^0.1.4":
   version "0.1.4"
   resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/eslint-config-wsj/0.1.4/474bee82345fd5150c6f3ae74383ec1293701bde625fec06c2e191d0945ac266#1e0a0edd95768c6d16fa107fd927fd831eb12d34"
   integrity sha512-QV06SPsJhz2O/Tv/GBIiXZesrtpAbyLLZb5+ZOkO6222Skor1UHeEUuVrXfCZnMU4rsgbDDf7KEsXQ3I+3GWgA==
