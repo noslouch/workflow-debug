@@ -75,7 +75,7 @@ const PopoverPanel = styled.div`
   margin: 12px 0 0 0;
   padding: 10px;
   position: absolute;
-  z-index: 999;
+  z-index: 60;
 `;
 
 const PanelItem = styled(Button)`
