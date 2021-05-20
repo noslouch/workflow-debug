@@ -32,3 +32,4 @@ export { UserProvider, useUserContext } from './context/user-context';
 export { default as MostPopular } from './components/MostPopular';
 export { default as TableOfContents } from './components/TableOfContents';
 export { default as TextResizeButton } from './components/ArticleTools/TextResize';
+export { default as Dek } from './components/Dek';
