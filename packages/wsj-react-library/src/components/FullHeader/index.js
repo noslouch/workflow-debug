@@ -24,8 +24,6 @@ import getSearchURL from '../../searchHelpers/getSearchURL';
 const autocomplete = new Autocomplete();
 
 const EditionPickerWrapper = styled.div`
-  width: 140px;
-  text-align: left;
   z-index: 50;
 `;
 
@@ -36,26 +34,10 @@ const MainHeader = styled.header`
   text-align: center;
   text-rendering: optimizeLegibility;
 
-  & h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1 {
     font-weight: var(--font-weight-regular);
     margin: 0;
     padding: 0;
-  }
-
-  & a:active,
-  a:link,
-  a:visited {
-    color: var(--color-nickel);
-    text-decoration: none;
-  }
-
-  & a:hover {
-    color: var(--color-jet);
   }
 
   ${({ disableScroll }) =>

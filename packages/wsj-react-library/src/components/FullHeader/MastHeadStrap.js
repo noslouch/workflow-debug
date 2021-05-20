@@ -76,6 +76,13 @@ const DateTime = styled.div`
 `;
 
 const StrapLink = styled.a`
+  text-decoration: none;
+  color: var(--color-nickel);
+
+  :hover {
+    color: var(--color-jet);
+  }
+
   &&& {
     color: ${({ isHighlight }) => isHighlight && 'var(--color-blue)'};
   }
@@ -89,6 +96,7 @@ const StrapWrapper = styled.div`
   font-weight: 300;
   text-rendering: optimizeLegibility;
   display: flex;
+  align-items: center;
 
   & > :not(:last-child) {
     padding-right: 9px;

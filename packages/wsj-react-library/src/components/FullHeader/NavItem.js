@@ -80,6 +80,7 @@ const SubSection = styled.div`
 `;
 
 const SectionLink = styled.a`
+  color: var(--color-nickel);
   display: inline-block;
   text-decoration: none;
   &:hover {

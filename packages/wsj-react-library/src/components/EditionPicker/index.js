@@ -4,27 +4,24 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import { setCookie } from '../../cookies';
-import { ReactComponent as ChevronDownSmall } from '../../assets/icons/Standard/small/chevron-down-small.svg';
-import { ReactComponent as ChevronUpSmall } from '../../assets/icons/Standard/small/chevron-up-small.svg';
+import { ReactComponent as Arrow } from '../../assets/icons/Standard/small/arrow-down-filled-small.svg';
 
 const Wrapper = styled.div`
   position: relative;
-
   font-family: var(--font-font-stack-retina);
-  font-weight: 400;
-  font-size: var(--typography-flashline-font-size-m);
-  line-height: 10px;
+  font-weight: var(--font-weight-light);
+  font-size: 12px;
+  line-height: 1.16;
 `;
 
 const Flyout = styled.ul`
   position: absolute;
-  width: 100%;
-
+  width: 125px;
+  text-align: left;
   border: 1px solid var(--color-silver);
   background: #fff;
-
   padding: 0;
-  margin: 0;
+  margin: 5px 0;
   list-style: none;
 `;
 
@@ -43,17 +40,19 @@ const Link = styled.a`
 
   :hover {
     text-decoration: none;
-    color: #0080c3; // need a token for this
+    color: var(--color-dark-blue);
   }
 `;
 
 const Button = styled.button`
+  font-weight: inherit;
+  font-family: inherit;
+  font-size: inherit;
   width: 100%;
+  padding-top: 0;
+  padding-bottom: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  font-family: inherit;
   appearance: none;
   background: transparent;
   border: none;
@@ -75,7 +74,7 @@ export default function EditionPicker({
         {({ open }) => (
           <>
             {currentEditionLabel}{' '}
-            {open ? <ChevronUpSmall /> : <ChevronDownSmall />}
+            <Arrow style={{ transform: open ? 'rotate(180deg)' : '' }} />
           </>
         )}
       </Popover.Button>

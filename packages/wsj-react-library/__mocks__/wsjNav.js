@@ -4,7 +4,7 @@ export default {
       {
         index: 0,
         region: 'na,us',
-        label: 'English',
+        label: 'English Edition',
         mobileURL: 'https://www.s.dev.wsj.com/',
         desktopURL: 'https://www.s.dev.wsj.com/',
         url: 'https://www.s.dev.wsj.com/',
