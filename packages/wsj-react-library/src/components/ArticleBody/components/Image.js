@@ -35,7 +35,7 @@ const Credit = styled.span`
   text-transform: uppercase;
 `;
 
-const Image = ({ data, isAmp = false }) => {
+const Image = ({ data, isAmp = false, loading }) => {
   const {
     caption,
     credit,
@@ -46,6 +46,7 @@ const Image = ({ data, isAmp = false }) => {
     src: location,
     alt: caption,
     isAmp,
+    loading,
     // TODO: srcset, sizes, etc.
   };
   return (
@@ -73,10 +74,12 @@ Image.propTypes = {
     }),
   }).isRequired,
   isAmp: PropTypes.bool,
+  loading: PropTypes.oneOf(['lazy', 'eager']),
 };
 
 Image.defaultProps = {
   isAmp: false,
+  loading: 'lazy',
 };
 
 export default Image;

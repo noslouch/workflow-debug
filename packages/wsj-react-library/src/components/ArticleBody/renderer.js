@@ -116,12 +116,7 @@ const renderer = (array = [], options = {}) =>
     if (type === 'image') return <Image key={key} data={block} isAmp={isAmp} />;
     if (type === 'video') return <Video key={key} data={block} isAmp={isAmp} />;
     // TODO: Phrase component with correct implementation
-    if (type === 'phrase')
-      return (
-        <Link key={key} href="#">
-          {contents}
-        </Link>
-      );
+    if (type === 'phrase') return <Fragment key={key}>{text}</Fragment>;
     if (type === 'Break') return <br key={key} />;
     // Insets
     if (type === 'inset' && insetType === 'pagebreak')

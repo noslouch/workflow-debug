@@ -88,6 +88,7 @@ const BottomBorder = styled.div`
 
 const ExpandButton = styled.button`
   color: var(--color-coal);
+  cursor: pointer;
   font-family: var(--font-font-stack-retina);
   background-color: var(--color-white);
   border: 1px solid var(--color-black-opac-50);

@@ -123,9 +123,9 @@ describe('ArticleBody renderer', () => {
   });
 
   // TODO: replace with correct phrase mock once phrase component exists
-  test('should return tagline component if matching type', () => {
-    render(renderer([{ type: 'phrase' }]));
-    expect(screen.getByTestId('link')).toBeInTheDocument();
+  test('should return phrase component if matching type', () => {
+    render(renderer([{ type: 'phrase', text: 'foo' }]));
+    expect(screen.getByText('foo')).toBeInTheDocument();
   });
 
   test('should return html br if `Break` type', () => {

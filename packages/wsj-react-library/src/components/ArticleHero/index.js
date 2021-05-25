@@ -6,7 +6,8 @@ import Video from '../ArticleBody/components/Video';
 
 const ArticleHero = ({ data, isAmp }) => {
   const { type } = data || {};
-  if (type === 'image') return <Image data={data} isAmp={isAmp} />;
+  if (type === 'image')
+    return <Image data={data} isAmp={isAmp} loading="eager" />;
   if (type === 'video') return <Video data={data} isAmp={isAmp} />;
   return null;
 };
