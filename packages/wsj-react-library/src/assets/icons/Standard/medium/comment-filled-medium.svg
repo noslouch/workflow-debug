@@ -1,0 +1,19 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+>
+          <defs>
+                    <path
+      id="comment-filled-medium-a"
+      d="M20,3 C21.1045695,3 22,3.8954305 22,5 L22,16.2105263 C22,17.3150958 21.1045695,18.2105263 20,18.2105263 L11.4821784,18.2105263 L7.08547365,22 L6.01402217,22 L6.01402217,18.2105263 L4,18.2105263 C2.8954305,18.2105263 2,17.3150958 2,16.2105263 L2,5 C2,3.8954305 2.8954305,3 4,3 L20,3 Z"
+    />
+          </defs>
+          <use
+    fill="#222"
+    fill-rule="evenodd"
+    xlink:href="#comment-filled-medium-a"
+  />
+</svg>
