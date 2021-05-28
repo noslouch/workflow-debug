@@ -99,6 +99,7 @@
     "@newscorp-ghfb/dj-design-tokens": "0.0.23",
     "@styled-system/prop-types": "^5.1.5",
     "prop-types": "^15.7.2",
+    "react-google-invisible-recaptcha": "^0.2.11",
     "styled-system": "^5.1.5",
     "wretch": "^1.7.4"
   },
