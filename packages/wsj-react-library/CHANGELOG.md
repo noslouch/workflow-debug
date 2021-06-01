@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.3.0...wsj-react-library-v0.4.0) (2021-06-01)
+
+### Features
+
+- updating sharetools readme, fixing email validator & setting up tests ([#327](https://www.github.com/newscorp-ghfb/dj-rendering/issues/327)) ([09a64a9](https://www.github.com/newscorp-ghfb/dj-rendering/commit/09a64a93a3fb95f2399009e2f0a7a1f5cef34f33))
+
 ## [0.3.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.2.0...wsj-react-library-v0.3.0) (2021-05-28)
 
 ### Features
