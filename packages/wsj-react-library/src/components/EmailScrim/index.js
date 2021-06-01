@@ -203,7 +203,9 @@ const PostSendToAddresses = styled.div`
 `;
 
 function validateEmail(email) {
-  return email && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(email);
+  return (
+    email && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/.test(email.trim())
+  );
 }
 
 function validateAllEmails(emails = []) {
@@ -244,8 +246,7 @@ export default function EmailScrim({
   }
 
   function validateToInput() {
-    const to =
-      (toAddresses && toAddresses.replace(/\s+/g, '').split(',')) || [];
+    const to = (toAddresses && toAddresses.split(',')) || [];
     let isValidInput = true;
     let inputError = '';
 
@@ -365,6 +366,7 @@ export default function EmailScrim({
           type="email"
           autoCorrect="off"
           autoCapitalize="none"
+          data-testid="emailTo"
         />
         {!isValidToAddress && (
           <EmailDialogErrorMessage>
@@ -379,6 +381,7 @@ export default function EmailScrim({
           autoComplete="off"
           autoCorrect="off"
           autoCapitalize="none"
+          data-testid="emailMessage"
         />
         <EmailDialogButton type="button" onClick={handleSendClick}>
           SEND
@@ -400,7 +403,11 @@ export default function EmailScrim({
       <EmailDialogOverlay />
       <EmailDialogModal rendermobile={renderMobile}>
         <EmailDialogContent rendermobile={renderMobile}>
-          <EmailDialogCloseButton type="button" onClick={handleClose}>
+          <EmailDialogCloseButton
+            type="button"
+            onClick={handleClose}
+            aria-label="Close"
+          >
             <CloseMedium />
           </EmailDialogCloseButton>
           {sent ? renderPostSend() : renderForm()}

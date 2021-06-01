@@ -4,6 +4,7 @@ import { useState } from 'react';
 import getShareUrlWithToken from '../../helpers/entitlements/getShareURL';
 import copyToClipboard from '../../helpers/copy-to-clipboard';
 import sendTracking from '../../helpers/tracking';
+import appendQueryParams from '../../urlHelpers/appendQueryParams';
 import { ReactComponent as Facebook } from '../../assets/social-icons/blue-facebook-round.svg';
 import { ReactComponent as Twitter } from '../../assets/social-icons/blue-twitter.svg';
 import { ReactComponent as LinkedIn } from '../../assets/social-icons/blue-linkedin.svg';
@@ -19,7 +20,9 @@ const icons = {
   mail: Mail,
 };
 
-const StyledShareTools = styled.div`
+const StyledShareTools = styled.ul`
+  list-style: none;
+  padding: 0;
   margin: 0px;
   border: 1px solid #ebebeb;
   background: #fff;
@@ -37,7 +40,7 @@ const ShareText = styled.div`
   padding: 5px 0 5px 0;
 `;
 
-const ShareTarget = styled.div`
+const ShareTarget = styled.li`
   text-transform: uppercase;
   color: #555;
   text-decoration: none;
@@ -124,7 +127,11 @@ const ShareTools = ({
             copyAction(URLWithToken)
           );
         } else {
-          copyAction(articleURL);
+          copyAction(
+            appendQueryParams(articleURL, {
+              reflink: 'desktopwebshare_permalink',
+            })
+          );
         }
         return false;
       }
@@ -146,7 +153,12 @@ const ShareTools = ({
 
     const Icon = icons[key];
     return (
-      <ShareTarget key={key} onClick={handleClick} aria-label="Share Menu">
+      <ShareTarget
+        key={key}
+        onClick={handleClick}
+        role="button"
+        aria-label="Share Button"
+      >
         <Icon />
         <ShareTargetTitle>{title}</ShareTargetTitle>
       </ShareTarget>
@@ -176,6 +188,7 @@ const ShareTools = ({
         onMouseEnter={openShareTools}
         onMouseLeave={closeShareTools}
         shareToolsOpen={shareToolsOpen}
+        aria-label="Share Menu"
       >
         <ShareText>SHARE</ShareText>
         {allShareTargets.map((shareTarget) => renderShareTarget(shareTarget))}
