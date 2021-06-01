@@ -1,5 +1,23 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.2.0...wsj-react-library-v0.3.0) (2021-05-28)
+
+### Features
+
+- Add Dek component ([#319](https://www.github.com/newscorp-ghfb/dj-rendering/issues/319)) ([793cdb2](https://www.github.com/newscorp-ghfb/dj-rendering/commit/793cdb2256d25cd4fbbd004d6ae3dd1f7f1cfad2))
+- adding box-sizing to global styles ([#316](https://www.github.com/newscorp-ghfb/dj-rendering/issues/316)) ([f1358f2](https://www.github.com/newscorp-ghfb/dj-rendering/commit/f1358f26120cd50a40f3ce7d12980a7f46661375))
+- Adding join the conversation component ([#321](https://www.github.com/newscorp-ghfb/dj-rendering/issues/321)) ([2224b3b](https://www.github.com/newscorp-ghfb/dj-rendering/commit/2224b3bc874d5b8a1daadc39cc8478a5dc8cf30c))
+- adding sharetools component ([#322](https://www.github.com/newscorp-ghfb/dj-rendering/issues/322)) ([88dbe81](https://www.github.com/newscorp-ghfb/dj-rendering/commit/88dbe81562253ba0883c094e95aa6fd49856d37b))
+- article font size helper ([#309](https://www.github.com/newscorp-ghfb/dj-rendering/issues/309)) ([e422169](https://www.github.com/newscorp-ghfb/dj-rendering/commit/e4221692a13a548671d676c1385cd2bb391a32ee))
+- Table of Contents ([#315](https://www.github.com/newscorp-ghfb/dj-rendering/issues/315)) ([14d43b3](https://www.github.com/newscorp-ghfb/dj-rendering/commit/14d43b3203651bc134505761304eecf5973ae8c1))
+
+### Bug Fixes
+
+- bug fixes ([#320](https://www.github.com/newscorp-ghfb/dj-rendering/issues/320)) ([9943447](https://www.github.com/newscorp-ghfb/dj-rendering/commit/9943447024a240ea183b848e0712992c7ecf6138))
+- edition picker ([#318](https://www.github.com/newscorp-ghfb/dj-rendering/issues/318)) ([66bdc76](https://www.github.com/newscorp-ghfb/dj-rendering/commit/66bdc768a0be729d0d1412f98267ca57f4f5c466))
+- some bugs ([#308](https://www.github.com/newscorp-ghfb/dj-rendering/issues/308)) ([5f57c98](https://www.github.com/newscorp-ghfb/dj-rendering/commit/5f57c9841afa50ecdb46979beb17eab0ed9d4358))
+- wsj body text design changes ([#301](https://www.github.com/newscorp-ghfb/dj-rendering/issues/301)) ([b9221e7](https://www.github.com/newscorp-ghfb/dj-rendering/commit/b9221e761b02f04ffd325367fa5d75c76c49ca64))
+
 ## [0.2.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.1.0...wsj-react-library-v0.2.0) (2021-05-13)
 
 ### Features
