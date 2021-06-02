@@ -10,16 +10,17 @@ const RibbonContainer = styled.div`
   display: flex;
   width: 100%;
   margin: 0 auto;
-  background-color: ${({ isOpinion }) => (isOpinion ? '#f8f7f5' : '#f4f4f4')};
+  background-color: ${({ isOpinion }) =>
+    isOpinion ? '#f8f7f5' : 'var(--color-snow)'};
   font-family: var(--font-font-stack-retina-narrow);
   border-bottom: ${({ border }) =>
-    border.includes('bottom') ? '1px solid #cccccc' : ''};
+    border.includes('bottom') ? '1px solid var(--color-silver)' : ''};
   border-top: ${({ border }) =>
-    border.includes('top') ? '1px solid #cccccc' : ''};
+    border.includes('top') ? '1px solid var(--color-silver)' : ''};
   border-right: ${({ border }) =>
-    border.includes('right') ? '1px solid #cccccc' : ''};
+    border.includes('right') ? '1px solid var(--color-silver)' : ''};
   border-left: ${({ border }) =>
-    border.includes('left') ? '1px solid #cccccc' : ''};
+    border.includes('left') ? '1px solid var(--color-silver)' : ''};
 
   @media (max-width: 980px) and (min-width: 0px) {
     overflow-x: scroll;
@@ -52,13 +53,13 @@ const SectionTitle = styled.span`
   white-space: nowrap;
 
   & a {
-    color: #222222;
+    color: var(--color-jet);
     text-decoration: none;
   }
 `;
 
 const OpinionSectionTitle = styled.span`
-  font-family: 'Escrow Condensed', Georgia, serif;
+  font-family: var(--font-font-stack-escrow-condensed);
   font-weight: 600;
   letter-spacing: 0.2px;
   height: 22px;
@@ -68,7 +69,7 @@ const OpinionSectionTitle = styled.span`
   white-space: nowrap;
 
   & a {
-    color: #222222;
+    color: var(--color-jet);
     text-decoration: none;
     display: flex;
   }
@@ -77,7 +78,7 @@ const OpinionSectionTitle = styled.span`
 const SectionSubHead = styled.span`
   font-size: 13px;
   line-height: 13px;
-  color: ${({ isOpinion }) => (isOpinion ? '#675842' : '#555555')};
+  color: ${({ isOpinion }) => (isOpinion ? '#675842' : 'var(--color-nickel)')};
   font-weight: 300;
 `;
 
@@ -93,7 +94,7 @@ const LinkContainer = styled(Box)`
 
 const StyledLink = styled.a`
   border: ${({ isOpinion }) =>
-    isOpinion ? '1px solid #867256' : '1px solid #999999'};
+    isOpinion ? '1px solid #867256' : '1px solid var(--color-moon)'};
   border-radius: 2px;
   padding: 6px 10px 4px 10px;
   margin-right: 7px;
@@ -104,7 +105,7 @@ const StyledLink = styled.a`
   font-size: 13px;
   white-space: nowrap;
   text-transform: uppercase;
-  color: ${({ isOpinion }) => (isOpinion ? '#867256' : '#555555')};
+  color: ${({ isOpinion }) => (isOpinion ? '#867256' : 'var(--color-nickel)')};
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -138,11 +139,11 @@ const StyledLink = styled.a`
 `;
 
 const Icon = styled.span`
-  color: ${({ isOpinion }) => (isOpinion ? '#867256' : '#555555')};
+  color: ${({ isOpinion }) => (isOpinion ? '#867256' : 'var(--color-nickel)')};
   margin-right: 6px;
 
   use {
-    fill: ${({ isOpinion }) => (isOpinion ? '#867256' : '#555555')};
+    fill: ${({ isOpinion }) => (isOpinion ? '#867256' : 'var(--color-nickel)')};
   }
 
   ${({ redAndFlashing }) =>

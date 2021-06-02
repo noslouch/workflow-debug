@@ -66,10 +66,6 @@ const EditionPickerWrapper = styled.div`
   margin-right: auto;
 `;
 
-const ChildrenWrapper = styled.li`
-  flex-grow: 1;
-`;
-
 const MemberLinksWrapper = styled.li`
   line-height: 44px;
 `;

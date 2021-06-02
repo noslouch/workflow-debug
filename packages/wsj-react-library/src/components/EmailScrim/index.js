@@ -19,12 +19,12 @@ const EmailDialog = styled(Dialog)`
 const EmailDialogOverlay = styled(Dialog.Overlay)`
   position: absolute;
   inset: 0;
-  background-color: #000;
+  background-color: var(--color-black);
   opacity: 0.3;
 `;
 
 const EmailDialogModal = styled.div`
-  background-color: #fff;
+  background-color: var(--color-white);
   position: absolute;
   ${({ rendermobile }) =>
     rendermobile
@@ -59,7 +59,7 @@ const EmailDialogTitle = styled(Dialog.Title)`
   font-size: 22px;
   font-weight: 600;
   line-height: 26px;
-  color: #333;
+  color: var(--color-coal);
   display: inline-block;
   max-width: 200px;
 `;
@@ -86,7 +86,7 @@ const EmailDialogLabel = styled.label`
   font-size: 12px;
   font-weight: 400;
   line-height: 15px;
-  color: #333;
+  color: var(--color-coal);
 `;
 
 const EmailDialogErrorMessage = styled.div`
@@ -108,7 +108,7 @@ const inputStyle = `
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
-  color: #222;
+  color: var(--color-jet);
   background: #eee;
   border: 1px solid rgb(0 0 0/50%);
   resize: none;
@@ -161,13 +161,13 @@ const EmailDialogButton = styled.button`
   font-weight: 500;
   letter-spacing: 0.1em;
   text-align: center;
-  color: #fff;
-  background: #0274b6;
+  color: var(--color-white);
+  background: var(--color-blue);
   border-radius: 2px;
   cursor: pointer;
 
   :hover {
-    background: #015483;
+    background: var(--color-dark-blue);
   }
 `;
 

@@ -19,7 +19,7 @@ const Flyout = styled.ul`
   width: 125px;
   text-align: left;
   border: 1px solid var(--color-silver);
-  background: #fff;
+  background: var(--color-white);
   padding: 0;
   margin: 5px 0;
   list-style: none;

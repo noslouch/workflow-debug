@@ -27,7 +27,7 @@ const ColumnWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid var(--color-silver);
   padding: 20px;
   position: absolute;
   left: 0;
@@ -56,7 +56,7 @@ const Column = styled.div`
   text-align: left;
 
   &:not(:first-child) {
-    border-left: 1px solid #ccc;
+    border-left: 1px solid var(--color-silver);
   }
 
   & strong {
@@ -106,7 +106,7 @@ const NavWrapper = styled.div`
     isExpanded &&
     `
       padding: 3px 7px;
-      border: 1px solid #ccc;
+      border: 1px solid var(--color-silver);
       padding-top: 2px;
       background-color: #f9f9f9;
     `}

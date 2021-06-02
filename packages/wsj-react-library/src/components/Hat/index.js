@@ -31,7 +31,7 @@ const StyledHat = styled.nav`
 `;
 
 const AboutWsj = styled.a`
-  font-family: 'Retina', sans-serif;
+  font-family: var(--font-font-stack-retina);
   color: var(--color-jet);
   font-size: 12px;
   font-weight: 500;

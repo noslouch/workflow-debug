@@ -35,7 +35,9 @@ test('Ribbon renders the correct sub hed', () => {
 
 test('Ribbon renders the correct background color when isOpinion is false', () => {
   const { container } = render(<Ribbon isOpinion={false} tabs={tabs} />);
-  expect(container.firstChild).toHaveStyle('background-color: #f4f4f4');
+  expect(container.firstChild).toHaveStyle(
+    'background-color: var(--color-snow)'
+  );
 });
 
 test('Ribbon renders the correct background color when isOpinion is true', () => {
