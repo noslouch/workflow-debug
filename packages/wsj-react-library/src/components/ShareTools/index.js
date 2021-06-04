@@ -159,7 +159,7 @@ ShareTools.propTypes = {
   seoId: PropTypes.string,
   shareURLWithToken: PropTypes.string,
   shouldEncodeEmailURL: PropTypes.bool,
-  source: PropTypes.string.isRequired,
+  source: PropTypes.string,
   summary: PropTypes.string,
   template: PropTypes.string.isRequired, // can be 'wsj_video' for video or a template name
   thumbnailURL: PropTypes.string,
@@ -190,6 +190,7 @@ ShareTools.defaultProps = {
   ],
   shareURLWithToken: null,
   shouldEncodeEmailURL: false,
+  source: '',
   summary: '',
   thumbnailURL: '',
 };

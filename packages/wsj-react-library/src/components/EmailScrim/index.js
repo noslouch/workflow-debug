@@ -1,8 +1,7 @@
 // eslint-disable-next-line no-unused-vars
-/* globals grecaptcha */
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Recaptcha from 'react-google-invisible-recaptcha';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { Dialog } from '@headlessui/react';
 import wretch from 'wretch';
 import { useState, useRef } from 'react';
@@ -136,10 +135,6 @@ const inputErrorStyle = `
   }
 `;
 
-const EmailDialogFrom = styled.div`
-  ${inputStyle}
-`;
-
 const EmailDialogTo = styled.input`
   ${inputStyle}
   ${inputFocusStyle}
@@ -227,7 +222,6 @@ export default function EmailScrim({
   summary,
   template,
   thumbnailURL,
-  userEmail,
 }) {
   const [openState, setOpenState] = useState(true);
   const recaptchaEl = useRef(null);
@@ -283,11 +277,10 @@ export default function EmailScrim({
     !validationStatus.touched ||
     (validationStatus.valid && validationStatus.touched);
 
-  function sendEmail() {
+  function sendEmail(recaptchaRes) {
     // This is done because this function was not getting the updated state for some reason
     const { to: currentTo, msg: currentMsg } = getCurrentFormData();
     const to = currentTo.replace(/\s+/g, '').split(',');
-    const recaptchaRes = recaptchaEl.current.getResponse();
     const emailData = {
       to,
       msg: currentMsg,
@@ -355,8 +348,6 @@ export default function EmailScrim({
         <EmailDialogTitle>{headline}</EmailDialogTitle>
         <EmailDialogThumbnail src={thumbnailURL} />
         <EmailDialogDescription>{summary}</EmailDialogDescription>
-        <EmailDialogLabel>From</EmailDialogLabel>
-        <EmailDialogFrom>{userEmail}</EmailDialogFrom>
         <EmailDialogLabel>To</EmailDialogLabel>
         <EmailDialogTo
           ref={emailToEl}
@@ -386,10 +377,11 @@ export default function EmailScrim({
         <EmailDialogButton type="button" onClick={handleSendClick}>
           SEND
         </EmailDialogButton>
-        <Recaptcha
+        <ReCAPTCHA
           ref={recaptchaEl}
           sitekey="6Le53yIUAAAAAJNRIXVFRauqFbABehXfSaPwi2yQ"
-          onResolved={sendEmail}
+          size="invisible"
+          onChange={sendEmail}
         />
       </>
     );
@@ -425,11 +417,10 @@ EmailScrim.propTypes = {
   headline: PropTypes.string,
   renderMobile: PropTypes.bool,
   setEmailDialogOpen: PropTypes.func,
-  source: PropTypes.string.isRequired,
+  source: PropTypes.string,
   summary: PropTypes.string,
   template: PropTypes.string.isRequired, // can be 'wsj_video' for video or a template name
   thumbnailURL: PropTypes.string,
-  userEmail: PropTypes.string,
 };
 
 EmailScrim.defaultProps = {
@@ -438,7 +429,7 @@ EmailScrim.defaultProps = {
   headline: '',
   renderMobile: false,
   setEmailDialogOpen: null,
+  source: '',
   summary: '',
   thumbnailURL: 'https://ore.wsj.net/fp/assets/images/ico/WSJ_facebook.png',
-  userEmail: '',
 };

@@ -20,7 +20,6 @@ const sharedProps = {
     'José Carlos Grubisich pleaded guilty to two counts of conspiring to violate U.S. antibribery law, which carry a possible sentence of 10 years',
   template: 'full',
   thumbnailURL: 'https://images.wsj.net/im-325652/D',
-  userEmail: 'johndoe@wsj.com',
 };
 
 describe('EmailScrim', () => {
@@ -40,12 +39,6 @@ describe('EmailScrim', () => {
     const closeButtonEl = screen.getByLabelText('Close');
     userEvent.click(closeButtonEl);
     expect(() => screen.getByText(sharedProps.headline)).toThrowError();
-  });
-
-  test('should contain the user email in the from box', () => {
-    render(<EmailScrim {...sharedProps} />);
-    const emailTextEl = screen.getByText(sharedProps.userEmail);
-    expect(emailTextEl).toHaveTextContent(sharedProps.userEmail);
   });
 
   test('should contain an error when invalid "to" emails are entered', () => {
