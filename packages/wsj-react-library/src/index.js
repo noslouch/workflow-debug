@@ -36,3 +36,4 @@ export { default as Dek } from './components/Dek';
 export { default as JoinTheConversation } from './components/JoinTheConversation';
 export { default as ReadToMe } from './components/ReadToMe';
 export { default as ShareTools } from './components/ShareTools';
+export { default as ShareButton } from './components/ArticleTools/ShareButton';

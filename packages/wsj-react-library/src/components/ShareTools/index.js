@@ -1,24 +1,10 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
-import getShareUrlWithToken from '../../helpers/entitlements/getShareURL';
-import copyToClipboard from '../../helpers/copy-to-clipboard';
-import sendTracking from '../../helpers/tracking';
-import appendQueryParams from '../../urlHelpers/appendQueryParams';
-import { ReactComponent as Facebook } from '../../assets/social-icons/blue-facebook-round.svg';
-import { ReactComponent as Twitter } from '../../assets/social-icons/blue-twitter.svg';
-import { ReactComponent as LinkedIn } from '../../assets/social-icons/blue-linkedin.svg';
-import { ReactComponent as CopyLink } from '../../assets/icons/Actionables/medium/copy-link-medium.svg';
-import { ReactComponent as Mail } from '../../assets/icons/Actionables/medium/mail-stroke-medium.svg';
-import EmailScrim from '../EmailScrim';
 
-const icons = {
-  facebook: Facebook,
-  twitter: Twitter,
-  linkedin: LinkedIn,
-  permalink: CopyLink,
-  mail: Mail,
-};
+import { useUserContext } from '../../context/user-context';
+import EmailScrim from '../EmailScrim';
+import HeadlessShareItem from '../HeadlessShareItem';
 
 const StyledShareTools = styled.ul`
   list-style: none;
@@ -26,7 +12,7 @@ const StyledShareTools = styled.ul`
   margin: 0px;
   border: 1px solid #ebebeb;
   background: #fff;
-  width: ${({ shareToolsOpen }) => (shareToolsOpen ? '160px' : '50px')};
+  ${({ shareToolsOpen }) => `width: ${shareToolsOpen ? '160' : '50'}px;`};
   transition: width 0.5s;
   overflow: hidden;
   font-family: var(--font-family-retina-narrow);
@@ -43,23 +29,26 @@ const ShareText = styled.div`
 const ShareTarget = styled.li`
   text-transform: uppercase;
   color: #555;
-  text-decoration: none;
   font-size: 14px;
   font-weight: 300;
-  width: 150px;
-  padding: 8px 13px;
+  width: 130px;
+  height: 24px;
+  margin: 16px 12px;
   cursor: pointer;
-
-  svg {
-    display: inline-block;
-    vertical-align: middle;
-    margin-bottom: 2px;
-  }
 `;
 
-const ShareTargetTitle = styled.div`
-  margin-left: 10px;
-  display: inline-block;
+const ShareTargetLink = styled.a`
+  display: flex;
+  align-items: center;
+  color: var(--color-nickel);
+  text-decoration: none;
+  font-weight: var(--font-weight-light);
+
+  & svg {
+    height: 24px;
+    width: 24px;
+    margin-right: 15px;
+  }
 `;
 
 const ShareTools = ({
@@ -69,7 +58,6 @@ const ShareTools = ({
   freeArticle,
   headline,
   id,
-  isLoggedIn,
   seoId,
   shareTargets,
   shareURLWithToken,
@@ -78,92 +66,22 @@ const ShareTools = ({
   summary,
   template,
   thumbnailURL,
-  userEmail,
 }) => {
   const [emailDialogOpen, setEmailDialogOpen] = useState(false);
   const [copyLinkText, setCopyLinkText] = useState('Copy Link');
   const [shareToolsOpen, setShareToolsOpen] = useState(false);
   const openShareTools = () => setShareToolsOpen(true);
   const closeShareTools = () => setShareToolsOpen(false);
+  const { isLoggedIn } = useUserContext();
 
   const allShareTargets = [
     ...shareTargets,
     { key: 'permalink', title: copyLinkText },
   ];
 
-  if (userEmail) {
+  if (isLoggedIn) {
     allShareTargets.push({ key: 'mail', title: 'Email' });
   }
-
-  function sendTrackingFor(socialPlatform) {
-    const params = {
-      event_name: 'social_share',
-      social_share_type: socialPlatform,
-      social_share_headline: headline,
-    };
-    sendTracking(params);
-  }
-
-  function copyAction(copyURL) {
-    return copyToClipboard(copyURL, () => {
-      setCopyLinkText('Copied');
-      setTimeout(() => {
-        setCopyLinkText('Copy Link');
-        sendTrackingFor('permalink');
-      }, 2000);
-    });
-  }
-
-  const renderShareTarget = ({ key, title, baseURL }) => {
-    const handleClick = () => {
-      const encodedUrl = encodeURIComponent(articleURL);
-      let externalURL;
-
-      if (key === 'permalink') {
-        if (shareURLWithToken) {
-          copyAction(shareURLWithToken);
-        } else if (!shareURLWithToken && isLoggedIn && !freeArticle) {
-          getShareUrlWithToken(articleURL).then((URLWithToken) =>
-            copyAction(URLWithToken)
-          );
-        } else {
-          copyAction(
-            appendQueryParams(articleURL, {
-              reflink: 'desktopwebshare_permalink',
-            })
-          );
-        }
-        return false;
-      }
-
-      if (key === 'mail') {
-        return setEmailDialogOpen(true);
-      }
-
-      if (key === 'twitter') {
-        const encodedBody = encodeURIComponent(headline);
-        externalURL = `${baseURL}${encodedBody}&url=${encodedUrl}&via=WSJ`;
-      } else {
-        externalURL = `${baseURL}${encodedUrl}`;
-      }
-
-      window.open(externalURL, '_blank');
-      return sendTrackingFor(title);
-    };
-
-    const Icon = icons[key];
-    return (
-      <ShareTarget
-        key={key}
-        onClick={handleClick}
-        role="button"
-        aria-label="Share Button"
-      >
-        <Icon />
-        <ShareTargetTitle>{title}</ShareTargetTitle>
-      </ShareTarget>
-    );
-  };
 
   const emailScrimProps = {
     articleURL:
@@ -179,7 +97,6 @@ const ShareTools = ({
     summary,
     template,
     thumbnailURL,
-    userEmail,
   };
 
   return (
@@ -191,7 +108,34 @@ const ShareTools = ({
         aria-label="Share Menu"
       >
         <ShareText>SHARE</ShareText>
-        {allShareTargets.map((shareTarget) => renderShareTarget(shareTarget))}
+        {allShareTargets.map((shareTarget) => (
+          <HeadlessShareItem
+            key={shareTarget.key}
+            as={ShareTarget}
+            articleURL={articleURL}
+            headline={headline}
+            shareURLWithToken={shareURLWithToken}
+            freeArticle={freeArticle}
+            itemKey={shareTarget.key}
+            baseURL={shareTarget.baseURL}
+            title={shareTarget.title}
+            setCopyLinkText={setCopyLinkText}
+            setEmailDialogOpen={setEmailDialogOpen}
+          >
+            {({ icon: ItemIcon, externalURL }) => (
+              <ShareTargetLink
+                href={externalURL || null}
+                as={!externalURL && 'div'}
+                target={externalURL ? '_blank' : null}
+                role="button"
+                aria-label="Share Button"
+              >
+                <ItemIcon />
+                <div>{shareTarget.title}</div>
+              </ShareTargetLink>
+            )}
+          </HeadlessShareItem>
+        ))}
       </StyledShareTools>
       <EmailScrim {...emailScrimProps} />
     </>
@@ -205,7 +149,6 @@ ShareTools.propTypes = {
   freeArticle: PropTypes.bool,
   headline: PropTypes.string,
   id: PropTypes.string.isRequired, // guid for video or sbid for articles
-  isLoggedIn: PropTypes.bool,
   shareTargets: PropTypes.arrayOf(
     PropTypes.shape({
       key: PropTypes.string,
@@ -220,13 +163,11 @@ ShareTools.propTypes = {
   summary: PropTypes.string,
   template: PropTypes.string.isRequired, // can be 'wsj_video' for video or a template name
   thumbnailURL: PropTypes.string,
-  userEmail: PropTypes.string,
 };
 
 ShareTools.defaultProps = {
   emailSharePath: null,
   freeArticle: false,
-  isLoggedIn: false,
   articleURL: '',
   headline: '',
   seoId: null,
@@ -251,7 +192,6 @@ ShareTools.defaultProps = {
   shouldEncodeEmailURL: false,
   summary: '',
   thumbnailURL: '',
-  userEmail: '',
 };
 
 export default ShareTools;

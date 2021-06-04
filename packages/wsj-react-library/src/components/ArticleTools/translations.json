@@ -1,0 +1,71 @@
+{
+  "na,us": {
+    "comment": "Response",
+    "comments": "Responses",
+    "copied": "Copied",
+    "save": "Save",
+    "saved": "Saved",
+    "print": "Print",
+    "share": "Share",
+    "Permalink": "Copy Link",
+    "textSize": {
+      "text": "Text",
+      "textSize": "Text Size",
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
+    }
+  },
+  "asia,cn": {
+    "comment": "评论",
+    "comments": "评论",
+    "copied": "已复制",
+    "save": "保存文章",
+    "saved": "已保存",
+    "print": "列印",
+    "share": "分享",
+    "Permalink": "文章链接",
+    "textSize": {
+      "text": "文字大小",
+      "textSize": "文字大小",
+      "small": "小",
+      "medium": "中",
+      "large": "大"
+    }
+  },
+  "asia,cn_hant": {
+    "comment": "评论",
+    "comments": "评论",
+    "copied": "已複製",
+    "save": "保存文章",
+    "saved": "已保存",
+    "print": "列印",
+    "share": "分享",
+    "Permalink": "文章鏈接",
+    "textSize": {
+      "text": "文字大小",
+      "textSize": "文字大小",
+      "small": "小",
+      "medium": "中",
+      "large": "大"
+    }
+  },
+  "asia,jp": {
+    "comment": "評価",
+    "comments": "評価",
+    "copied": "Copied",
+    "save": "保存する",
+    "saved": "保存しました",
+    "print": "印刷",
+    "share": "シェア",
+    "hatena": "はてな",
+    "Permalink": "リンクをコピー",
+    "textSize": {
+      "text": "文字サイズ",
+      "textSize": "文字サイズ",
+      "small": "小",
+      "medium": "中",
+      "large": "大"
+    }
+  }
+}

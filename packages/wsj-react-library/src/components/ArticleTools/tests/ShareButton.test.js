@@ -2,8 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { UserProvider } from '../../context/user-context';
-import ShareTools from './index';
+import { UserProvider } from '../../../context/user-context';
+import ShareButton from '../ShareButton';
 
 global.IntersectionObserver = jest.fn(() => ({
   observe: () => {},
@@ -29,7 +29,6 @@ const sharedProps = {
     'José Carlos Grubisich pleaded guilty to two counts of conspiring to violate U.S. antibribery law, which carry a possible sentence of 10 years',
   template: 'full',
   thumbnailURL: 'https://images.wsj.net/im-325652/D',
-  userEmail: 'johndoe@wsj.com',
   shareTargets: [
     {
       key: 'facebook',
@@ -42,9 +41,14 @@ const sharedProps = {
       baseURL: 'https://twitter.com/intent/tweet?text=',
     },
     {
-      key: 'linkedin',
-      title: 'LinkedIn',
-      baseURL: 'https://www.linkedin.com/shareArticle?mini=true&url=',
+      key: 'whatsapp',
+      title: 'WhatsApp',
+      baseURL: 'whatsapp://send?text=',
+    },
+    {
+      key: 'sms',
+      title: 'SMS',
+      baseURL: 'sms:?&body=',
     },
   ],
 };
@@ -56,19 +60,30 @@ const user = {
 };
 
 describe('ShareTools', () => {
-  test('should expand when mouse over occurs', () => {
-    customRender(<ShareTools {...sharedProps} />, {});
-    const shareMenuEl = screen.getByLabelText('Share Menu');
-    const { width: originalWidth } = window.getComputedStyle(shareMenuEl);
-    userEvent.hover(shareMenuEl);
-    const { width: hoverWidth } = window.getComputedStyle(shareMenuEl);
-    expect(parseInt(hoverWidth, 10)).toBeGreaterThan(
-      parseInt(originalWidth, 10)
+  test('should invoke share button handler', () => {
+    customRender(<ShareButton {...sharedProps} />, {});
+
+    const shareButton = screen.getByRole('button', {
+      name: 'Share',
+    });
+    userEvent.click(shareButton);
+
+    const openedShareDialog = screen.getByRole('dialog', {
+      name: 'Share',
+    });
+    expect(openedShareDialog).toHaveStyle(
+      'background-color: var(--color-white); height: 100vh; width: 100vw;'
     );
   });
 
   test('should contain buttons for each of the share targets', () => {
-    customRender(<ShareTools {...sharedProps} />, {});
+    customRender(<ShareButton {...sharedProps} />, {});
+
+    const shareButton = screen.getByRole('button', {
+      name: 'Share',
+    });
+    userEvent.click(shareButton);
+
     const shareButtonEls = screen.getAllByLabelText('Share Button');
     const shareButtonsText = shareButtonEls.map((button) => button.textContent);
     [...sharedProps.shareTargets, { title: 'Copy Link' }].forEach(
@@ -79,7 +94,13 @@ describe('ShareTools', () => {
   });
 
   test('should not contain the email button when not logged in', () => {
-    customRender(<ShareTools {...sharedProps} />, {});
+    customRender(<ShareButton {...sharedProps} />, {});
+
+    const shareButton = screen.getByRole('button', {
+      name: 'Share',
+    });
+    userEvent.click(shareButton);
+
     const shareButtonEls = screen.getAllByLabelText('Share Button');
     const shareButtonsText = shareButtonEls.map((button) => button.textContent);
     expect(shareButtonsText).not.toContain('Email');
@@ -87,7 +108,15 @@ describe('ShareTools', () => {
 
   test('should contain the email button when logged in', () => {
     const providerProps = { user };
-    customRender(<ShareTools {...sharedProps} />, { providerProps });
+    customRender(<ShareButton {...sharedProps} />, {
+      providerProps,
+    });
+
+    const shareButton = screen.getByRole('button', {
+      name: 'Share',
+    });
+    userEvent.click(shareButton);
+
     const shareButtonEls = screen.getAllByLabelText('Share Button');
     const shareButtonsText = shareButtonEls.map((button) => button.textContent);
     expect(shareButtonsText).toContain('Email');

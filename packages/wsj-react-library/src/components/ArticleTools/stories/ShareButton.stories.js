@@ -1,6 +1,5 @@
-import React from 'react';
-import ShareTools from './index';
-import { UserProvider } from '../../context/user-context';
+import ShareButton from '../ShareButton';
+import { UserProvider } from '../../../context/user-context';
 
 const shareMock = {
   articleURL:
@@ -24,8 +23,8 @@ const user = {
 };
 
 export default {
-  title: 'WSJ/ShareTools',
-  component: ShareTools,
+  title: 'Article/Tools/ShareButton',
+  component: ShareButton,
   decorators: [
     (Story) => (
       <UserProvider>
@@ -35,7 +34,7 @@ export default {
   ],
 };
 
-const Template = (args) => <ShareTools {...args} />;
+const Template = (args) => <ShareButton {...args} />;
 
 export const Regular = Template.bind({});
 Regular.args = { ...shareMock };
