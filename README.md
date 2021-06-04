@@ -234,7 +234,7 @@ registry=https://npm.onservo.com/
 
 This monorepo uses `yarn` as its npm client. Please ensure you've [installed `yarn` for your system](https://yarnpkg.com/getting-started/install).
 
-close the repo and go into the new directory:
+clone the repo and go into the new directory:
 
 ```bash
 git clone git@github.com:newscorp-ghfb/dj-rendering.git && cd dj-rendering
