@@ -34,4 +34,5 @@ export { default as TableOfContents } from './components/TableOfContents';
 export { default as TextResizeButton } from './components/ArticleTools/TextResize';
 export { default as Dek } from './components/Dek';
 export { default as JoinTheConversation } from './components/JoinTheConversation';
+export { default as ReadToMe } from './components/ReadToMe';
 export { default as ShareTools } from './components/ShareTools';
