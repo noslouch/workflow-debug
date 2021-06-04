@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.4.0...wsj-react-library-v0.5.0) (2021-06-04)
+
+### Features
+
+- adding article tools share button ([#332](https://www.github.com/newscorp-ghfb/dj-rendering/issues/332)) ([0825833](https://www.github.com/newscorp-ghfb/dj-rendering/commit/0825833f1f9240ea08084643854387b83de12dc7))
+- Adding read to me component ([#330](https://www.github.com/newscorp-ghfb/dj-rendering/issues/330)) ([af2e334](https://www.github.com/newscorp-ghfb/dj-rendering/commit/af2e334afad7c144c7a0d8e6c1d62c8a570cfb05))
+- share tools updates ([#336](https://www.github.com/newscorp-ghfb/dj-rendering/issues/336)) ([aa5edb6](https://www.github.com/newscorp-ghfb/dj-rendering/commit/aa5edb6f03c3aa3fdb3933f280242afe89e079f5))
+
 ## [0.4.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.3.0...wsj-react-library-v0.4.0) (2021-06-01)
 
 ### Features
