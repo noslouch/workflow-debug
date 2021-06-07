@@ -119,3 +119,5 @@ Breadcrumbs.defaultProps = {
 };
 
 export default Breadcrumbs;
+
+export { Breadcrumb, Flashline };

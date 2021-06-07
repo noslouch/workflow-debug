@@ -4,16 +4,17 @@ const useMediaQuery = (query) => {
   const [matches, setMatches] = useState(false);
 
   useEffect(() => {
-    const media = window.matchMedia(query);
-    if (media.matches !== matches) {
+    if (window?.matchMedia) {
+      const media = window.matchMedia(query);
       setMatches(media.matches);
+
+      const listener = () => setMatches(media.matches);
+      media.addEventListener('change', listener);
+      return () => media.removeEventListener('change', listener);
     }
-    const listener = () => {
-      setMatches(media.matches);
-    };
-    media.addEventListener('change', listener);
-    return () => media.removeEventListener('change', listener);
-  }, [matches, query]);
+
+    return null;
+  }, [query]);
 
   return matches;
 };

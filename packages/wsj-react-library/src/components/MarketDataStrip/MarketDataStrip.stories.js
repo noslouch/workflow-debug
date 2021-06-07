@@ -1,28 +1,13 @@
-/* global window */
 import { useState, useEffect } from 'react';
 import MarketDataStrip from '.';
 import marketDataMock from '../../../__mocks__/marketDataStrip.json';
+
+import useMedia from '../../hooks/useMediaQuery';
 
 export default {
   title: 'Market Data Strip',
   component: MarketDataStrip,
 };
-
-function useMedia(mq) {
-  const [matches, setMatches] = useState(false);
-  useEffect(() => {
-    const mql = window.matchMedia(mq);
-
-    setMatches(mql.matches);
-
-    const handler = (e) => setMatches(e.matches);
-    mql.addEventListener('change', handler);
-
-    return () => mql.removeEventListener('change', handler);
-  }, [mq]);
-
-  return matches;
-}
 
 const twelveUTicker = marketDataMock.filter(
   (ticker) => ticker.hideIn12u !== true

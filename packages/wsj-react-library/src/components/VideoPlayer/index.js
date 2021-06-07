@@ -1,7 +1,9 @@
 // TODO: Tests when implementation has been confirmed to work as expected
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import { loadVideoLib } from '../../lib/load-video-lib';
 
 const VideoPlayerContainer = styled.div`
   cursor: pointer;
@@ -9,42 +11,11 @@ const VideoPlayerContainer = styled.div`
   margin-bottom: 8px;
   padding-bottom: 56.25%;
   position: relative;
-`;
 
-const loadVideoLib = (endpoint) => {
-  const videoScript = document.getElementById('wsj-video-script');
-
-  if (videoScript) {
-    return new Promise((resolve) => {
-      const interval = setInterval(() => {
-        if (typeof window.$jQ111 !== 'undefined') {
-          clearInterval(interval);
-          resolve();
-        }
-      }, 50);
-    });
+  video {
+    display: block;
   }
-
-  return new Promise((resolve, reject) => {
-    // Video script
-    const script = document.createElement('script');
-    script.id = 'wsj-video-script';
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = `${endpoint}api-video/player/v3/js/video.min.js`;
-    script.onload = resolve;
-    script.onerror = reject;
-    // Video styles
-    const style = document.createElement('link');
-    style.id = 'wsj-video-style';
-    style.rel = 'stylesheet';
-    style.type = 'text/css';
-    style.href = `${endpoint}api-video/player/v3/css/video.min.css`;
-    document.body.appendChild(script);
-    document.body.appendChild(style);
-  });
-};
-
+`;
 const AmpVideoPlayer = ({
   guid,
   height,
@@ -110,13 +81,22 @@ const VideoPlayer = ({
       ...props,
     };
     loadVideoLib(endpoint).then(() => {
-      window.$jQ111(videoRef.current).WSJVideo(options);
+      const player = window.$jQ111(videoRef.current).WSJVideo(options);
+
+      if (props.events) {
+        Object.entries(props.events).forEach(([event, callback]) => {
+          player.addEventListener(event, callback);
+        });
+      }
     });
   }, [autoplay, guid, isAmp, endpoint, supressHeadline, props]);
 
   if (!guid) return null;
   if (isAmp) return <AmpVideoPlayer {...props} />;
-  return <VideoPlayerContainer key={guid} ref={videoRef} id={guid} />;
+  // prefix the `id` with a letter so it doesn't fail html validation or throw during `.querySelector` calls
+  // if we didn't specify an id, the video lib would make it `id="wrapper-null"` which would conflict with
+  // multiple video players on a single page
+  return <VideoPlayerContainer key={guid} ref={videoRef} id={`a${guid}`} />;
 };
 
 VideoPlayer.propTypes = {
@@ -126,6 +106,22 @@ VideoPlayer.propTypes = {
   guid: PropTypes.string.isRequired,
   isAmp: PropTypes.bool,
   supressHeadline: PropTypes.bool,
+  events: PropTypes.shape({
+    onInitialize: PropTypes.func,
+    onNewVideo: PropTypes.func,
+    onVideoComplete: PropTypes.func,
+    onPlayerStateChange: PropTypes.func,
+    onMuteUnMute: PropTypes.func,
+    adStarted: PropTypes.func,
+    onCompanions: PropTypes.func,
+    adComplete: PropTypes.func,
+    onAdTimeUpdate: PropTypes.func,
+    adLoaded: PropTypes.func,
+    adError: PropTypes.func,
+    adRequested: PropTypes.func,
+    onTimeUpdate: PropTypes.func,
+    onSuggestionPlay: PropTypes.func,
+  }),
 };
 
 VideoPlayer.defaultProps = {
@@ -134,6 +130,7 @@ VideoPlayer.defaultProps = {
   endpoint: 'https://video-api.wsj.com/',
   isAmp: false,
   supressHeadline: false,
+  events: {},
 };
 
-export default VideoPlayer;
+export default memo(VideoPlayer);

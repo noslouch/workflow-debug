@@ -1,39 +1,11 @@
-import styled from 'styled-components';
 import PropTypes from 'prop-types';
+
 import MediaLayout from './MediaLayout';
 import Img from '../../Image';
-import fontSize from '../../../helpers/fonts/articleFontSize';
-
-const Figure = styled.figure`
-  margin: 0 0 22px 0;
-
-  amp-img,
-  img {
-    display: block;
-    margin-bottom: 8px;
-    max-width: 100%;
-  }
-`;
-
-const Figcaption = styled.figcaption`
-  color: var(--article-text-color-secondary);
-  font-family: var(--article-caption-font-family);
-  font-weight: var(--font-weight-light);
-`;
-
-const Caption = styled.span`
-  display: block;
-  font-size: ${fontSize(14)};
-  line-height: calc(20 / 14);
-  margin-bottom: 4px;
-`;
-
-const Credit = styled.span`
-  display: block;
-  font-size: ${fontSize(14)};
-  line-height: calc(20 / 14);
-  text-transform: uppercase;
-`;
+import Figure from '../../Image/Figure';
+import Figcaption from '../../Image/Figcaption';
+import Caption from '../../Image/Caption';
+import Credit from '../../Image/Credit';
 
 const Image = ({ data, isAmp = false, loading }) => {
   const {
@@ -51,7 +23,7 @@ const Image = ({ data, isAmp = false, loading }) => {
   };
   return (
     <MediaLayout layout={layout}>
-      <Figure itemScope itemType="http://schema.org/ImageObject">
+      <Figure itemScope itemType="https://schema.org/ImageObject">
         <Img {...imgProps} />
         <Figcaption itemProp="caption">
           <Caption>{caption}</Caption>
