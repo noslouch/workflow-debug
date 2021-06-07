@@ -24,6 +24,13 @@ const OptionLink = styled.a`
   line-height: 16px;
   white-space: nowrap;
 
+  &:active,
+  :link,
+  :visited {
+    color: var(--color-nickel);
+    text-decoration: none;
+  }
+
   &&&:hover {
     text-decoration: none;
     color: var(--color-blue);
