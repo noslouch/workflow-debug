@@ -1,0 +1,21 @@
+{
+  "type": "inset",
+  "inset_type": "bigtophero",
+  "properties": {
+    "imagecredit": "Kriston Jae Bethel for The Wall Street Journal",
+    "imagecaption": "David Kelleher, president of David Dodge Chrysler Jeep RAM in Glen Mills, Pa., at his depleted lot. The inventory shortage, he said, ‘is going to be longer and more difficult than most people think.’",
+    "datatype": "Image",
+    "headlineplacement": "LowerThird",
+    "urllarge": "https://images.wsj.net/im-337841/IM",
+    "responsive": {
+      "layout": "bigtophero"
+    },
+    "scope": {
+      "scope": ["web", "mobileapps"]
+    },
+    "urlsmall": "https://images.wsj.net/im-337841/8sr",
+    "headlineiswhite": "false",
+    "flashline": "true"
+  },
+  "ref": "inset-1"
+}

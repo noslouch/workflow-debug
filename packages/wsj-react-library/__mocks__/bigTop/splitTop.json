@@ -1,0 +1,20 @@
+{
+  "type": "inset",
+  "inset_type": "bigtophero",
+  "properties": {
+    "imagecaption": "Some websites allow students to auction off their assignments. These bids came in to a Wall Street Journal post on homeworkforyou.com.",
+    "datatype": "Image",
+    "headlineplacement": "SplitTop",
+    "responsive": {
+      "layout": "bigtophero"
+    },
+    "scope": {
+      "scope": ["web", "mobileapps"]
+    },
+    "urllarge": "https://images.wsj.net/im-321670/?width=1278&size=1",
+    "urlsmall": "https://images.wsj.net/im-321670/?width=1278&size=1",
+    "headlineiswhite": "true",
+    "flashline": "true"
+  },
+  "ref": "inset-1"
+}

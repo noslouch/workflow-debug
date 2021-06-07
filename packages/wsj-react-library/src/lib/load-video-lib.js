@@ -32,4 +32,29 @@ const loadVideoLib = (endpoint) => {
   });
 };
 
-export { loadVideoLib };
+const loadAtmospheric = (endpoint) => {
+  const ID = 'wsj-atmo-script';
+  const videoScript = document.getElementById(ID);
+
+  if (videoScript) {
+    if (window.com_marketwatch_atmplayer_init) {
+      // trigger by hand
+      window.com_marketwatch_atmplayer_init();
+    }
+    return Promise.resolve();
+  }
+
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.id = ID;
+    script.type = 'text/javascript';
+    script.async = true;
+    script.src = `${endpoint}api-video/atmospheric/js/atm.min.js`;
+    script.onload = resolve;
+    script.onerror = reject;
+
+    document.body.appendChild(script);
+  });
+};
+
+export { loadAtmospheric, loadVideoLib };

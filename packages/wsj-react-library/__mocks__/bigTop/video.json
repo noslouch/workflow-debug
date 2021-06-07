@@ -1,0 +1,19 @@
+{
+  "type": "inset",
+  "inset_type": "bigtophero",
+  "properties": {
+    "navigation": "https://asset.wsj.net/wsjnewsgraphics/projects/narrator/036845bc-ee22-4a98-aea2-b81745fcf8b2.json",
+    "datatype": "Video",
+    "headlineplacement": "LowerThird",
+    "responsive": {
+      "layout": "bigtophero"
+    },
+    "scope": {
+      "scope": ["web", "mobileapps"]
+    },
+    "headlineiswhite": "true",
+    "bigtopheroid": "9D954E4D-4EE6-4CA8-B25E-6370ADD2C313",
+    "flashline": "true"
+  },
+  "ref": "inset-1"
+}
