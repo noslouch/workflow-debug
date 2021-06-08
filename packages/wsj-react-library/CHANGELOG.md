@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.6.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.5.0...wsj-react-library-v0.6.0) (2021-06-08)
+
+### Features
+
+- big top ([#324](https://www.github.com/newscorp-ghfb/dj-rendering/issues/324)) ([147be89](https://www.github.com/newscorp-ghfb/dj-rendering/commit/147be8909cc52c935b50e784653fd99e9710d5a1))
+- big top styled components ([#326](https://www.github.com/newscorp-ghfb/dj-rendering/issues/326)) ([d89aeac](https://www.github.com/newscorp-ghfb/dj-rendering/commit/d89aeacc8c98d9d0ac08c6f036b2790740761fb6))
+- Dynamic inset component ([#333](https://www.github.com/newscorp-ghfb/dj-rendering/issues/333)) ([7bd0f14](https://www.github.com/newscorp-ghfb/dj-rendering/commit/7bd0f141bff1035530543569e2ba74ebab93f4ae))
+
+### Bug Fixes
+
+- fixing share dialog zindex and user login anchors ([#339](https://www.github.com/newscorp-ghfb/dj-rendering/issues/339)) ([26015d1](https://www.github.com/newscorp-ghfb/dj-rendering/commit/26015d1ca86a4a544e4a232124e5c1f2270fc8f6))
+
 ## [0.5.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.4.0...wsj-react-library-v0.5.0) (2021-06-04)
 
 ### Features
