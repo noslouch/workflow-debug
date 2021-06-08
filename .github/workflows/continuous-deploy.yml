@@ -195,7 +195,8 @@ jobs:
             echo "::debug::previous tags for this package: $(git tag --list "$PKG-v*")"
 
             # pull the most recent tag for the current $PKG
-            LAST_TAG=$(git describe --tags --abbrev=0 --match "$PKG-v*")
+            # use --always to prevent this from failing on fresh packages
+            LAST_TAG=$(git describe --tags --abbrev=0 --match "$PKG-v*" --always)
 
             # prerelease tags have the format <pkg>-v<rev>-<preid>.<prerev>
             # pull just the version number from full tag 
