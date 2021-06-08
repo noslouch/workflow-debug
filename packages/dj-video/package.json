@@ -1,0 +1,109 @@
+{
+  "name": "@newscorp-ghfb/dj-video",
+  "version": "0.0.0",
+  "description": "DJ Video React component",
+  "main": "dist/cjs/index.js",
+  "module": "dist/es/index.js",
+  "sideEffects": false,
+  "prettier": "../../.config/prettier.config.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "pre-commit": "lint-staged",
+    "start": "npm run storybook --",
+    "lint": "eslint src",
+    "test": "jest --coverage",
+    "clean": "rm -rf dist .out",
+    "build": "NODE_ENV=production npm run build:dev",
+    "build:dev": "npm run compile",
+    "build:storybook": "build-storybook -c .storybook -o .out",
+    "storybook": "start-storybook -p 6006",
+    "compile": "rollup -c",
+    "prepublishOnly": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/newscorp-ghfb/dj-rendering",
+    "directory": "packages/dj-video"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "keywords": [],
+  "author": "DJ Engineering <DJEngineering@dowjones.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/newscorp-ghfb/dj-rendering/issues"
+  },
+  "homepage": "https://github.com/newscorp-ghfb/dj-rendering/wsj#readme",
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.11.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.13.8",
+    "@babel/plugin-transform-runtime": "^7.12.10",
+    "@babel/preset-env": "^7.11.0",
+    "@babel/preset-react": "^7.11.0",
+    "@prettier/plugin-xml": "^0.13.1",
+    "@rollup/plugin-babel": "^5.2.2",
+    "@rollup/plugin-commonjs": "^17.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^11.0.0",
+    "@rollup/plugin-replace": "^2.3.4",
+    "@rollup/plugin-url": "^6.0.0",
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-docs": "^6.1.10",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-knobs": "^6.1.9",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/addon-storysource": "^6.1.16",
+    "@storybook/addons": "^6.1.10",
+    "@storybook/api": "^6.2.8",
+    "@storybook/components": "^6.2.8",
+    "@storybook/core-events": "^6.2.8",
+    "@storybook/react": "^6.2.8",
+    "@storybook/theming": "^6.2.8",
+    "@testing-library/dom": "^7.30.3",
+    "@testing-library/jest-dom": "5.9.0",
+    "@testing-library/react": "^11.2.5",
+    "@testing-library/react-hooks": "^5.1.2",
+    "@testing-library/user-event": "^13.1.3",
+    "babel-loader": "^8.2.2",
+    "babel-plugin-require-context-hook": "1.0.0",
+    "babel-plugin-styled-components": "1.10.7",
+    "jest": "^26.0.0",
+    "lint-staged": "^10.5.4",
+    "npm-run-all": "4.1.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-is": "^17.0.2",
+    "react-test-renderer": "^17.0.1",
+    "regenerator-runtime": "0.13.7",
+    "rollup": "^2.34.2",
+    "storybook-dark-mode": "^1.0.7",
+    "style-dictionary": "^2.10.2",
+    "styled-components": "^5.2.1",
+    "styled-system": "^5.1.5",
+    "url-loader": "^4.1.1",
+    "webpack": "^4.44.1"
+  },
+  "dependencies": {
+    "@babel/runtime": "^7.12.5",
+    "@styled-system/prop-types": "^5.1.5",
+    "prop-types": "^15.7.2",
+    "styled-system": "^5.1.5"
+  },
+  "lint-staged": {
+    "src/**/*.js": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{md,html,css,svg}": [
+      "prettier --write"
+    ]
+  }
+}
