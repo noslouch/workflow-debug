@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const MediaLayout = styled.div`
   clear: both;
+  position: relative;
 
   ${({ layout }) =>
     layout === 'inline' &&

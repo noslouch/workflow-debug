@@ -350,6 +350,20 @@
           ]
         },
         {
+          "type": "inset",
+          "inset_type": "dynamic",
+          "properties": {
+            "url": "https://asset.wsj.net/dynamic-insets/charts/cdc_7840195e8a7afe79d93db563.json",
+            "responsive": {
+              "layout": "inline"
+            },
+            "scope": {
+              "scope": ["web", "mobileapps"]
+            }
+          },
+          "ref": "inset-1"
+        },
+        {
           "type": "paragraph",
           "content": [
             {

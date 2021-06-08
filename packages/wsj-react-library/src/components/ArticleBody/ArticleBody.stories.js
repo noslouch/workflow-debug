@@ -43,6 +43,7 @@ export const WithOverride = () => (
     data={article.data.attributes.body}
     renderBlock={({ type }, index) => {
       if (type === 'paragraph') return <p key={index}>Hello World!</p>;
+      return undefined;
     }}
   />
 );

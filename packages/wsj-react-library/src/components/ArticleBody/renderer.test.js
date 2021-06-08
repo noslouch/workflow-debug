@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 import { queryByTestId } from '@testing-library/dom';
 import renderer from './renderer';
 
+// eslint-disable-next-line react/prop-types
 jest.mock('./components/Paragraph', () => ({ children }) => (
   <div data-testid="paragraph">{children}</div>
 ));
@@ -20,6 +21,7 @@ jest.mock('./components/Subhed', () => () => <div data-testid="subhed" />);
 jest.mock('./components/Tagline', () => () => <div data-testid="tagline" />);
 jest.mock('./components/Image', () => () => <div data-testid="image" />);
 jest.mock('./components/Video', () => () => <div data-testid="video" />);
+jest.mock('./insets/Dynamic', () => () => <div data-testid="dynamic" />);
 jest.mock('./insets/Pagebreak', () => () => <div data-testid="pagebreak" />);
 jest.mock('./insets/RichText', () => () => <div data-testid="rich-text" />);
 
@@ -42,6 +44,7 @@ describe('ArticleBody renderer', () => {
     const ArticleBody = renderer([{ type: 'paragraph', text: 'foo' }], {
       renderBlock: ({ type }) => {
         if (type === 'paragraph') return null;
+        return undefined;
       },
     });
     expect(Array.isArray(ArticleBody)).toBe(true);
@@ -55,6 +58,7 @@ describe('ArticleBody renderer', () => {
         renderBlock: ({ type }, index) => {
           if (type === 'paragraph')
             return <div data-testid="foo" key={index} />;
+          return undefined;
         },
       })
     );
@@ -66,6 +70,7 @@ describe('ArticleBody renderer', () => {
       renderer([{ type: 'paragraph', text: 'foo' }], {
         renderBlock: ({ type }, index) => {
           if (type === 'foo') return <div data-testid="foo" key={index} />;
+          return undefined;
         },
       })
     );
@@ -141,6 +146,11 @@ describe('ArticleBody renderer', () => {
   test('should return video component if matching type', () => {
     render(renderer([{ type: 'video' }]));
     expect(screen.getByTestId('video')).toBeInTheDocument();
+  });
+
+  test('should return dynamic inset if matching type', () => {
+    render(renderer([{ type: 'inset', inset_type: 'dynamic' }]));
+    expect(screen.getByTestId('dynamic')).toBeInTheDocument();
   });
 
   test('should return pagebreak inset if matching type', () => {

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import { Fragment } from 'react';
 // TODO: Figure out a way to dynamically import all these
 // Native
 import Paragraph from './components/Paragraph';
@@ -11,7 +11,9 @@ import Tagline from './components/Tagline';
 import Image from './components/Image';
 import Video from './components/Video';
 // Insets
+import Dynamic from './insets/Dynamic';
 import Pagebreak from './insets/Pagebreak';
+// eslint-disable-next-line import/no-cycle
 import RichText from './insets/RichText';
 
 /**
@@ -71,6 +73,7 @@ const renderer = (array = [], options = {}) =>
       has_drop_cap: hasDropCap,
       hed_type: hedType,
       inset_type: insetType,
+      // eslint-disable-next-line no-unused-vars
       link_type: linkType,
       ordered,
       targets: [{ uri: targetUri }] = [{}],
@@ -119,6 +122,8 @@ const renderer = (array = [], options = {}) =>
     if (type === 'phrase') return <Fragment key={key}>{text}</Fragment>;
     if (type === 'Break') return <br key={key} />;
     // Insets
+    if (type === 'inset' && insetType === 'dynamic')
+      return <Dynamic key={key} data={block} />;
     if (type === 'inset' && insetType === 'pagebreak')
       return <Pagebreak key={key} $data={block} />;
     if (type === 'inset' && insetType === 'richtext')

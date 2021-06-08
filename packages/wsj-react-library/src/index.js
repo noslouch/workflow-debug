@@ -22,6 +22,8 @@ export {
   UnorderedList,
 } from './components/ArticleBody/components/List';
 export { default as ListItem } from './components/ArticleBody/components/ListItem';
+export { default as DynamicInset } from './components/DynamicInset';
+export { default as DynamicInsetLegacyScripts } from './components/DynamicInset/LegacyScripts';
 export { default as Box } from './components/Box';
 export { default as BreadCrumbs } from './components/Breadcrumbs';
 export { default as Hat } from './components/Hat';

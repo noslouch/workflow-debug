@@ -18,5 +18,6 @@
     "window": "readonly",
     "document": "readonly",
     "btoa": "readonly",
+    "fetch": "readonly"
   }
 }
