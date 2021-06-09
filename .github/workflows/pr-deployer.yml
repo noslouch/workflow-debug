@@ -17,7 +17,7 @@ on:
       sha:
         description: 'Optionally deploy a specific sha'
 
-  repository_dispatch: 
+  repository_dispatch:
     types: [deploy-pr]
 
 env:
@@ -37,13 +37,21 @@ jobs:
           # so lerna can properly compare versions
           fetch-depth: "0"
           ref: ${{ env.branch }}
-      
+
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
           always-auth: true
           registry-url: https://npm.pkg.github.com
           scope: '@newscorp-ghfb'
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: bootstrap deps
         run: |
@@ -92,4 +100,4 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
           PREID: "pr${{ env.pr_number }}"
-          
+

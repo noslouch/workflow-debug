@@ -10,7 +10,7 @@ name: Enforce Coding Standards
 on:
   pull_request:
     types: [opened, synchronize]
-  
+
 jobs:
   format_code:
     name: Format with prettier
@@ -27,10 +27,18 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
-          scope: '@newscorp-ghfb'
+          scope: "@newscorp-ghfb"
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: bootstrap deps
         run: |
@@ -77,8 +85,8 @@ jobs:
         id: autocommit
         uses: stefanzweifel/git-auto-commit-action@v4.4.0
         with:
-          commit_message: 'chore: Auto commit changes 🛠'
-          commit_options: '--no-verify -S'
+          commit_message: "chore: Auto commit changes 🛠"
+          commit_options: "--no-verify -S"
           commit_user_email: ${{ secrets.BOT_EMAIL }}
 
   lint_code:
@@ -93,6 +101,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: File Changes Action
         id: file_changes
@@ -142,13 +158,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-    
+
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
-          scope: '@newscorp-ghfb'
+          scope: "@newscorp-ghfb"
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: bootstrap deps
         run: |
@@ -177,7 +201,7 @@ jobs:
         with:
           concurrent_skipping: outdated_runs
           paths_ignore: '["**/README.md", "**/docs/**", "**/CHANGELOG.md"]'
-      
+
       - name: trigger pr deployer
         # check for required states to trigger pr deploy:
         #   - skip if there's another workflow running for this branch

@@ -27,6 +27,14 @@ jobs:
           registry-url: https://npm.pkg.github.com
           scope: '@newscorp-ghfb'
 
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
       - name: install lerna locally
         run: yarn --ignore-scripts
         env:

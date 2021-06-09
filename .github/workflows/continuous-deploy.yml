@@ -28,13 +28,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-    
+
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
           always-auth: true
           registry-url: https://npm.pkg.github.com
           scope: '@newscorp-ghfb'
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: bootstrap deps
         run: |
@@ -50,7 +58,7 @@ jobs:
 
       - name: tests
         run: lerna run test
-      
+
       - name: deploy storybooks
         run: yarn deploy-storybook --packages packages --source-branch main --ci
         env:
@@ -86,7 +94,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
-    
+
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
@@ -112,7 +120,7 @@ jobs:
            bump-minor-pre-major: true
            command: release-pr
            default-branch: main
-      
+
       - name: get release branch
         if: steps.create-pr.outputs.pr
         uses: actions/github-script@v3
@@ -127,7 +135,7 @@ jobs:
             });
 
             return { prBranch: data.head.ref, base: data.base.sha };
-      
+
       - name: sign release branch commits
         if: steps.release-branch.outputs.result
         run: |
@@ -157,7 +165,7 @@ jobs:
           always-auth: true
           registry-url: https://npm.pkg.github.com
           scope: '@newscorp-ghfb'
-      
+
       - name: bootstrap deps
         run: |
           yarn --ignore-scripts --frozen-lockfile
@@ -178,7 +186,7 @@ jobs:
         env:
           GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-      
+
       - name: check for previous prereleases
         env:
           PREID: beta
@@ -199,7 +207,7 @@ jobs:
             LAST_TAG=$(git describe --tags --abbrev=0 --match "$PKG-v*" --always)
 
             # prerelease tags have the format <pkg>-v<rev>-<preid>.<prerev>
-            # pull just the version number from full tag 
+            # pull just the version number from full tag
             LAST_REV=$(sed -E "s/$PKG-v(.*)/\1/" <<< $LAST_TAG)
 
             # if the version number contains our prerelease identifier, then this package is currently in prerelease
@@ -233,7 +241,7 @@ jobs:
             --no-changelog \
             --no-push \
             --preid $PREID
-      
+
       - name: sign and push prerelease tags
         env:
           PREID: beta

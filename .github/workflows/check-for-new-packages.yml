@@ -19,7 +19,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: "14.x"
 
       - name: check for commits on main
         id: check
@@ -28,7 +28,7 @@ jobs:
         run: |
           # get files that changed under `packages/`
           CHANGES_IN_PACKAGES=$(git diff $MAIN --name-only -- packages)
-          
+
           # strip to just `packages/<pkg>`
           FOLDERS_ONLY=$(cut -f 1,2 -d / <<< $CHANGES_IN_PACKAGES | uniq)
 
@@ -60,6 +60,6 @@ jobs:
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v4.4.0
         with:
-          commit_message: 'chore: fix initial package number 🛠'
-          commit_options: '--no-verify -S'
+          commit_message: "chore: fix initial package number 🛠"
+          commit_options: "--no-verify -S"
           commit_user_email: ${{ secrets.BOT_EMAIL }}
