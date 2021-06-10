@@ -34,10 +34,10 @@ jobs:
 
       - name: Cache node_modules
         uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
         with:
-          path: "**/node_modules"
+          path: |
+            node_modules
+            */*/node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: bootstrap deps
@@ -104,10 +104,10 @@ jobs:
 
       - name: Cache node_modules
         uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
         with:
-          path: "**/node_modules"
+          path: |
+            node_modules
+            */*/node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: File Changes Action
@@ -168,10 +168,10 @@ jobs:
 
       - name: Cache node_modules
         uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
         with:
-          path: "**/node_modules"
+          path: |
+            node_modules
+            */*/node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: bootstrap deps

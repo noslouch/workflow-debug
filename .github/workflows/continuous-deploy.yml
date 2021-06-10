@@ -15,7 +15,7 @@ on:
   pull_request:
     types: [closed]
     paths:
-      - 'packages/**'
+      - "packages/**"
     branches: [main]
 
 jobs:
@@ -31,17 +31,17 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
-          scope: '@newscorp-ghfb'
+          scope: "@newscorp-ghfb"
 
       - name: Cache node_modules
         uses: actions/cache@v2
-        env:
-          cache-name: cache-node-modules
         with:
-          path: '**/node_modules'
+          path: |
+            node_modules
+            */*/node_modules
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: bootstrap deps
@@ -97,7 +97,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: "14.x"
 
       - name: import GPG key
         uses: crazy-max/ghaction-import-gpg@v2
@@ -112,14 +112,14 @@ jobs:
         name: open (or edit) release PR for this package version
         id: create-pr
         with:
-           path: packages/${{ matrix.package }}
-           token: ${{ secrets.BOT_TOKEN }}
-           release-type: node
-           package-name: "@${{ github.repository_owner }}/${{ matrix.package }}"
-           monorepo-tags: true
-           bump-minor-pre-major: true
-           command: release-pr
-           default-branch: main
+          path: packages/${{ matrix.package }}
+          token: ${{ secrets.BOT_TOKEN }}
+          release-type: node
+          package-name: "@${{ github.repository_owner }}/${{ matrix.package }}"
+          monorepo-tags: true
+          bump-minor-pre-major: true
+          command: release-pr
+          default-branch: main
 
       - name: get release branch
         if: steps.create-pr.outputs.pr
@@ -161,10 +161,18 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14.x'
+          node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
-          scope: '@newscorp-ghfb'
+          scope: "@newscorp-ghfb"
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: bootstrap deps
         run: |
