@@ -2,6 +2,8 @@ import { useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
+import { QUERIES } from '../../../lib/consts';
+
 const Picture = styled.picture`
   img {
     display: block;
@@ -9,6 +11,14 @@ const Picture = styled.picture`
     height: auto;
 
     margin: 0 auto;
+  }
+`;
+
+const Wrapper = styled.div`
+  margin-bottom: 5px;
+
+  @media ${QUERIES.medium} {
+    margin-bottom: 0;
   }
 `;
 
@@ -20,10 +30,10 @@ export default function BigImage({ ariaCaption, images, onLoad, className }) {
     if (img.current?.complete) {
       onLoad();
     }
-  }, []);
+  }, [onLoad]);
 
   return (
-    <div
+    <Wrapper
       className={className}
       role="img"
       aria-describedby={ariaCaption}
@@ -47,7 +57,7 @@ export default function BigImage({ ariaCaption, images, onLoad, className }) {
           aria-label="big top image"
         />
       </Picture>
-    </div>
+    </Wrapper>
   );
 }
 

@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-import { PLACEMENTS } from '../../lib/consts';
+import { PLACEMENTS } from './lib/big-top-consts';
 
 import ImageBigTop from './src/Image';
 import SplitTop from './src/SplitTop';
@@ -36,6 +36,7 @@ export default function BigTop(props) {
 }
 
 BigTop.PLACEMENTS = PLACEMENTS;
+BigTop.TYPES = TYPES;
 
 BigTop.propTypes = {
   media: PropTypes.shape({

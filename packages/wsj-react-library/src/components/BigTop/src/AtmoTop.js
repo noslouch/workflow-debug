@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { PLACEMENTS, QUERIES } from '../../../lib/consts';
+import { QUERIES } from '../../../lib/consts';
+import { PLACEMENTS } from '../lib/big-top-consts';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import { loadAtmospheric } from '../../../lib/load-video-lib';
 
@@ -20,6 +21,7 @@ export default function AtmoTop({
   isExclusive,
   media,
   videoData,
+  videoEndpoint,
 }) {
   const {
     bigtopheroid: guid,
@@ -33,8 +35,8 @@ export default function AtmoTop({
   const isMedium = useMediaQuery(QUERIES.medium);
 
   useEffect(() => {
-    loadAtmospheric('https://video-api.wsj.com/');
-  }, []);
+    loadAtmospheric(videoEndpoint);
+  }, [videoEndpoint]);
 
   return (
     <ImageWrapper className={className}>
@@ -88,6 +90,7 @@ AtmoTop.propTypes = {
     caption: PropTypes.string,
     thumbnail: PropTypes.string,
   }),
+  videoEndpoint: PropTypes.string,
 };
 
 AtmoTop.defaultProps = {
@@ -99,4 +102,5 @@ AtmoTop.defaultProps = {
   isExclusive: false,
   media: {},
   videoData: {},
+  videoEndpoint: 'https://video-api.wsj.com/',
 };

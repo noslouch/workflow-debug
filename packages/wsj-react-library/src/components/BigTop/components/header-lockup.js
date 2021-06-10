@@ -2,7 +2,8 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import useMediaQuery from '../../../hooks/useMediaQuery';
-import { PLACEMENTS, QUERIES, EXCLUSIVE } from '../../../lib/consts';
+import { QUERIES, EXCLUSIVE } from '../../../lib/consts';
+import { PLACEMENTS } from '../lib/big-top-consts';
 import Breadcrumbs, { Breadcrumb, Flashline } from '../../Breadcrumbs';
 import Dek from '../../Dek';
 

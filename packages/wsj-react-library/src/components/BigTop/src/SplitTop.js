@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -76,6 +76,10 @@ const SplitTopCaption = styled(BigTopCaption)`
   }
 `;
 
+const SplitTopImage = styled(BigImage)`
+  margin-bottom: 0;
+`;
+
 const Root = styled.div.attrs({
   'data-block': 'big-top',
 })`
@@ -128,6 +132,7 @@ export default function SplitTop({
   const [showPreview, setShowPreview] = useState(true);
   const isMedium = useMediaQuery(QUERIES.medium);
   const images = parseImages(media);
+  const onLoad = useCallback(() => setShowPreview(false), []);
 
   const { headlineiswhite, flashline: bigTopFlashlineConfig } = media;
 
@@ -153,10 +158,10 @@ export default function SplitTop({
         <SplitTopDek size={isMedium ? 'm' : 's'}>{dek}</SplitTopDek>
       </HeadlineContainer>
       <ImageContainer>
-        <BigImage
+        <SplitTopImage
           ariaCaption={ariaLabelId}
           images={images}
-          onLoad={() => setShowPreview(false)}
+          onLoad={onLoad}
         />
         <PreviewImage
           src={images.preview.url}

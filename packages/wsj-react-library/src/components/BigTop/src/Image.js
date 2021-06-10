@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import parseImages from '../../../lib/parse-images';
-import { PLACEMENTS, QUERIES } from '../../../lib/consts';
+import { QUERIES } from '../../../lib/consts';
+import { PLACEMENTS } from '../lib/big-top-consts';
 
 import BigImage from '../components/big-image';
 import PreviewImage from '../components/preview';
@@ -34,6 +35,7 @@ export default function ImageBigTop({
   const isMedium = useMediaQuery(QUERIES.medium);
 
   const images = parseImages(media);
+  const onLoad = useCallback(() => setShowPreview(false), []);
 
   return (
     <ImageWrapper className={className}>
@@ -52,11 +54,7 @@ export default function ImageBigTop({
             type={placement}
           />
         )}
-        <BigImage
-          ariaCaption={ariaLabelId}
-          images={images}
-          onLoad={() => setShowPreview(false)}
-        />
+        <BigImage ariaCaption={ariaLabelId} images={images} onLoad={onLoad} />
         <PreviewImage
           src={images.preview.url}
           show={showPreview}
@@ -102,10 +100,6 @@ ImageBigTop.propTypes = {
     urllarge: PropTypes.string,
     urlsmall: PropTypes.string,
   }),
-  videoData: PropTypes.shape({
-    caption: PropTypes.string,
-    thumbnail: PropTypes.string,
-  }),
 };
 
 ImageBigTop.defaultProps = {
@@ -116,5 +110,4 @@ ImageBigTop.defaultProps = {
   headline: '',
   isExclusive: false,
   media: {},
-  videoData: {},
 };

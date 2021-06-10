@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
-import { PLACEMENTS, QUERIES } from '../../../lib/consts';
+import { QUERIES } from '../../../lib/consts';
+import { PLACEMENTS } from '../lib/big-top-consts';
 
 const ImageBackdrop = styled.div`
   position: relative;
@@ -10,6 +11,7 @@ const ImageBackdrop = styled.div`
 
   @media ${QUERIES.medium} {
     display: block;
+    ${({ noMargin }) => (!noMargin ? 'margin-bottom: 5px;' : null)}
   }
 
   ${({ gradient }) =>

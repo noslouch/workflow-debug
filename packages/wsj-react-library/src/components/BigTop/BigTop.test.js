@@ -8,7 +8,7 @@ import Video from '../../../__mocks__/bigTop/video.json';
 
 import GlobalStyles from '../GlobalStyles';
 import BigTop from './index';
-import { CENTER, LOWER_THIRD, UNDERNEATH } from '../../lib/consts';
+import { CENTER, LOWER_THIRD, UNDERNEATH } from './lib/big-top-consts';
 
 import * as videoLib from '../../lib/load-video-lib';
 

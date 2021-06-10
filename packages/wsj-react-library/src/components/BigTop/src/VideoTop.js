@@ -2,7 +2,8 @@ import { useState, useMemo } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { PLACEMENTS, QUERIES } from '../../../lib/consts';
+import { QUERIES } from '../../../lib/consts';
+import { PLACEMENTS } from '../lib/big-top-consts';
 import useMediaQuery from '../../../hooks/useMediaQuery';
 import VideoPlayer from '../../VideoPlayer';
 
@@ -58,10 +59,11 @@ export default function VideoTop({
   );
 
   return (
-    <VideoWrapper className={className} noMargin={dynamicInset}>
+    <VideoWrapper className={className}>
       <ImageBackdrop
         gradient={!hideTitle && placement !== PLACEMENTS.UNDERNEATH}
         placement={placement}
+        noMargin={dynamicInset}
       >
         {!hideTitle && (
           <HeaderLockup
@@ -78,7 +80,6 @@ export default function VideoTop({
           guid={guid}
           autoplay={false}
           chainVideos={false}
-          api="https://video-api.wsj.com/api-video/"
           adsEnabled
           suppressHeadline
           events={events}
