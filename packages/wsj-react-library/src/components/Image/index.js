@@ -21,7 +21,7 @@ Image.propTypes = {
 };
 
 Image.defaultProps = {
-  alt: undefined,
+  alt: '',
   ampLayout: 'responsive',
   isAmp: false,
   loading: 'lazy',

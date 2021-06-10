@@ -122,6 +122,7 @@ const renderer = (array = [], options = {}) =>
         </Subhed>
       );
     if (type === 'tagline') return <Tagline key={key}>{contents}</Tagline>;
+    // TODO: Add widths information for image
     if (type === 'image') return <Image key={key} data={block} isAmp={isAmp} />;
     if (type === 'video') return <Video key={key} data={block} isAmp={isAmp} />;
     // TODO: Phrase component with correct implementation

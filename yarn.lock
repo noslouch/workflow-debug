@@ -2041,6 +2041,11 @@
   version "0.0.23"
   resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-design-tokens/0.0.23/fb63da0774e2c6014a28038ad9d7e517d584ba6ab90e38141cd87d8b8118f1c6#da662404b3e905f29ce48dfa87f50acd7f10c165"
 
+"@newscorp-ghfb/dj-image-handler@0.1.7":
+  version "0.1.7"
+  resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-image-handler/0.1.7/823c27d5273af3a39ee8d38d79420d66930c1a019f1c37130d7fab7e3a39339b#c3e9a06127af76660313c5e0e9c32b5d982e9413"
+  integrity sha512-J4PK0uCayms44zKtQQV8xFTvrJiwCvQu78Dsyj2NFEMztBW+/8oIPNoEuw9iKXtjyLo9szXzMVHk6MV3t9C3sw==
+
 "@newscorp-ghfb/eslint-config-wsj@^0.1.4":
   version "0.1.4"
   resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/eslint-config-wsj/0.1.4/474bee82345fd5150c6f3ae74383ec1293701bde625fec06c2e191d0945ac266#1e0a0edd95768c6d16fa107fd927fd831eb12d34"

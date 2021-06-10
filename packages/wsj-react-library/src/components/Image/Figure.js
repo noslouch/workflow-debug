@@ -8,6 +8,8 @@ const Figure = styled.figure`
     display: block;
     margin-bottom: 8px;
     max-width: 100%;
+    width: 100%;
+    height: auto;
   }
 `;
 

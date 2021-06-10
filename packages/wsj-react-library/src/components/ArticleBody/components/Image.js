@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-
+import { handleGams, handleSoftCrop } from '@newscorp-ghfb/dj-image-handler';
 import MediaLayout from './MediaLayout';
 import Img from '../../Image';
 import Figure from '../../Image/Figure';
@@ -7,20 +7,58 @@ import Figcaption from '../../Image/Figcaption';
 import Caption from '../../Image/Caption';
 import Credit from '../../Image/Credit';
 
-const Image = ({ data, isAmp = false, loading }) => {
+const IMG_MANAGER_REGEX = /https:\/\/images.\w+.(\w+.)?\w+\/im-[0-9]{4,8}/;
+
+const generateIMProps = (location, widths) => {
+  const [trimmedLocation, size] = location.split('?size=');
+  const imageData = {
+    location: trimmedLocation,
+    size,
+  };
+  return handleSoftCrop(widths, imageData);
+};
+
+const generateGamsProps = (data, widths) => {
+  return handleGams(
+    {
+      primaryImage: { ...data, url: data.properties?.location },
+      altImages: data.alt_images,
+    },
+    { widths }
+  );
+};
+
+const Image = ({ data, isAmp = false, loading, widths }) => {
   const {
     caption,
     credit,
     properties: { location, responsive: { layout = 'inline' } = {} } = {},
   } = data || {};
-  // TODO: handling crops
+
+  const isImageManager = IMG_MANAGER_REGEX.test(location);
+
+  const generatedImageProps = isImageManager
+    ? generateIMProps(location, widths)
+    : generateGamsProps(data, widths);
+
+  const {
+    url: src,
+    width,
+    height,
+    srcset: srcSet,
+    sizes,
+  } = generatedImageProps;
+
   const imgProps = {
-    src: location,
-    alt: caption,
+    src,
+    width,
+    height,
+    srcSet,
+    sizes,
     isAmp,
     loading,
-    // TODO: srcset, sizes, etc.
   };
+
   return (
     <MediaLayout layout={layout}>
       <Figure itemScope itemType="https://schema.org/ImageObject">
@@ -47,6 +85,7 @@ Image.propTypes = {
   }).isRequired,
   isAmp: PropTypes.bool,
   loading: PropTypes.oneOf(['lazy', 'eager']),
+  widths: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 Image.defaultProps = {

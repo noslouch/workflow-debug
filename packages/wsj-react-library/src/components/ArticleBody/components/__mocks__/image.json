@@ -1,0 +1,94 @@
+{
+  "softcrop": {
+    "type": "image",
+    "media_type": "Photo",
+    "slug": "bikes",
+    "name": "https://images.stg.wsj.net/im-1714?size=1.3333333333333333",
+    "width": 1280,
+    "height": 960,
+    "size_code": "custom_1280x960",
+    "credit": "Niyi Fote/Zuma Press",
+    "caption": "June 2, 2020, Ney York, USA: (NEW) Peaceful protest in favor of George Floyd at Trump International Hotel,Columbus Circle. June 2, 2020, New York, USA: Protesters marching  up to Trump international hotel at Columbus Circle, Central Park this evening showing their anger and frustrations for the murder of black man George Floyd in Minneapolis this time in a peaceful way with Police officers monitoring them. Credit: Niyi Fote /Thenews2. (Credit Image: Niyi Fote/TheNEWS2 via ZUMA Wire)",
+    "properties": {
+      "responsive": {
+        "layout": "header"
+      },
+      "location": "https://images.stg.wsj.net/im-1714?size=1.3333333333333333",
+      "imphotoid": "im-1714",
+      "reuse_type": "full"
+    },
+    "id": "media-1"
+  },
+  "gams": {
+    "type": "image",
+    "media_type": "ILLUSTRATION",
+    "reuse_type": "restricted",
+    "slug": "INAUGURATION2",
+    "name": "NY-CT724_INAUGU_G_20140101200045.jpg",
+    "width": 553,
+    "height": 369,
+    "alternate_text": "image",
+    "credit": "Seth Wenig/Associated Press",
+    "caption": "Former Mayor Michael Bloomberg and girlfriend Diana Taylor, left.",
+    "alt_images": [
+      {
+        "name": "NY-CT724_INAUGU_A_20140101200045.jpg",
+        "width": 76,
+        "height": 76,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_A_20140101200045.jpg"
+      },
+      {
+        "name": "NY-CT724_INAUGU_BR_20140101200045.jpg",
+        "width": 282,
+        "height": 188,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_BR_20140101200045.jpg"
+      },
+      {
+        "name": "NY-CT724_INAUGU_C_20140101200045.jpg",
+        "width": 167,
+        "height": 94,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_C_20140101200045.jpg"
+      },
+      {
+        "name": "NY-CT724_INAUGU_E_20140101200045.jpg",
+        "width": 359,
+        "height": 239,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_E_20140101200045.jpg"
+      },
+      {
+        "name": "NY-CT724_INAUGU_ER_20140101200045.jpg",
+        "width": 602,
+        "height": 402,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_ER_20140101200045.jpg"
+      },
+      {
+        "name": "NY-CT724_INAUGU_F_20140101200045.jpg",
+        "width": 571,
+        "height": 226,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_F_20140101200045.jpg"
+      },
+      {
+        "name": "NY-CT724_INAUGU_FR_20140101200045.jpg",
+        "width": 632,
+        "height": 810,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_FR_20140101200045.jpg"
+      },
+      {
+        "name": "NY-CT724_INAUGU_GR_20140101200045.jpg",
+        "width": 1242,
+        "height": 810,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_GR_20140101200045.jpg"
+      },
+      {
+        "name": "NY-CT724_INAUGU_P_20140101200045.jpg",
+        "width": 749,
+        "height": 499,
+        "url": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_P_20140101200045.jpg"
+      }
+    ],
+    "properties": {
+      "location": "https://s.wsj.net/public/resources/images/NY-CT724_INAUGU_G_20140101200045.jpg"
+    },
+    "id": "image_cf0fd287-c3fa-4a40-82b6-fd7d94867cf4"
+  }
+}
