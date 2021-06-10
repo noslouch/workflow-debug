@@ -15,6 +15,8 @@ import Dynamic from './insets/Dynamic';
 import Pagebreak from './insets/Pagebreak';
 // eslint-disable-next-line import/no-cycle
 import RichText from './insets/RichText';
+import { CapiPullquote as Pullquote } from '../Pullquote';
+import { CapiTableOfContents as TableOfContents } from '../TableOfContents';
 
 /**
  * Generates hash from object to use as React key
@@ -75,6 +77,7 @@ const renderer = (array = [], options = {}) =>
       inset_type: insetType,
       // eslint-disable-next-line no-unused-vars
       link_type: linkType,
+      list_type: listType,
       ordered,
       targets: [{ uri: targetUri }] = [{}],
       text,
@@ -98,12 +101,15 @@ const renderer = (array = [], options = {}) =>
           {contents}
         </Link>
       );
-    if (type === 'list')
+    if (type === 'list') {
+      if (listType === 'table_of_contents')
+        return <TableOfContents key={key} data={block} />;
       return ordered ? (
         <OrderedList key={key}>{contents}</OrderedList>
       ) : (
         <UnorderedList key={key}>{contents}</UnorderedList>
       );
+    }
     if (type === 'listitem') return <ListItem key={key}>{contents}</ListItem>;
     if (type === 'emphasis' && emphasis === 'BOLD')
       return <Strong key={key}>{contents}</Strong>;
@@ -126,6 +132,8 @@ const renderer = (array = [], options = {}) =>
       return <Dynamic key={key} data={block} />;
     if (type === 'inset' && insetType === 'pagebreak')
       return <Pagebreak key={key} $data={block} />;
+    if (type === 'inset' && insetType === 'pullquote')
+      return <Pullquote key={key} data={block} />;
     if (type === 'inset' && insetType === 'richtext')
       return <RichText key={key} data={block} />;
     // Plain text

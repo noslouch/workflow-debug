@@ -24,6 +24,12 @@ jest.mock('./components/Video', () => () => <div data-testid="video" />);
 jest.mock('./insets/Dynamic', () => () => <div data-testid="dynamic" />);
 jest.mock('./insets/Pagebreak', () => () => <div data-testid="pagebreak" />);
 jest.mock('./insets/RichText', () => () => <div data-testid="rich-text" />);
+jest.mock('../TableOfContents', () => ({
+  CapiTableOfContents: () => <div data-testid="table-of-contents" />,
+}));
+jest.mock('../Pullquote', () => ({
+  CapiPullquote: () => <div data-testid="pullquote" />,
+}));
 
 describe('ArticleBody renderer', () => {
   test('should return empty array when no body data', () => {
@@ -158,9 +164,19 @@ describe('ArticleBody renderer', () => {
     expect(screen.getByTestId('pagebreak')).toBeInTheDocument();
   });
 
+  test('should return pullquote inset if matching type', () => {
+    render(renderer([{ type: 'inset', inset_type: 'pullquote' }]));
+    expect(screen.getByTestId('pullquote')).toBeInTheDocument();
+  });
+
   test('should return richtext inset if matching type', () => {
     render(renderer([{ type: 'inset', inset_type: 'richtext' }]));
     expect(screen.getByTestId('rich-text')).toBeInTheDocument();
+  });
+
+  test('should return table of contents component if matching type', () => {
+    render(renderer([{ type: 'list', list_type: 'table_of_contents' }]));
+    expect(screen.getByTestId('table-of-contents')).toBeInTheDocument();
   });
 
   test('shoulde use recursion to render nested blocks', () => {

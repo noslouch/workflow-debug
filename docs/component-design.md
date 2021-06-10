@@ -77,26 +77,26 @@ There are many different ways to create shareable components, but initially we w
      color: var(--my-color, #f00);
      font-family: var(--my-font, 'Consolas, monaco, monospace');
      font-size: var(--my-font-size, 18px);
-   `
+   `;
 
-   export default Button
+   export default Button;
    ```
 
 2. Headless: these components will be purely logic based, and will let the developer bring their own UI to use. Headless components are especially useful for very complex, logic-heavy components that may require unique UI's per product. A very basic example would be the following component that counts the number of times a button has been clicked:
 
 ```js
 const Counter = () => {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   const handleClick = () => {
-    setCount(count + 1)
-  }
+    setCount(count + 1);
+  };
   return (
     <div>
       <p>{`The button has been clicked ${count} times!`}</p>
       <button onClick={handleClick}>Click me</button>
     </div>
-  )
-}
+  );
+};
 ```
 
 This looks good, and seems shareable. However if a product wanted to introduce breaking changes to the UI, like removing the button after N clicks, this would create a problem. Luckily, by converting this into a headless component all the logic is shared and each team can work with whatever UI they require:
@@ -104,12 +104,12 @@ This looks good, and seems shareable. However if a product wanted to introduce b
 ```js
 // Headless component
 const Counter = ({ children }) => {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   const handleClick = () => {
-    setCount(count + 1)
-  }
-  return children({ count, handleClick })
-}
+    setCount(count + 1);
+  };
+  return children({ count, handleClick });
+};
 
 // Component that uses the headless component and brings its own UI
 const CounterUI = () => (
@@ -121,11 +121,32 @@ const CounterUI = () => (
       </div>
     )}
   </Counter>
-)
+);
 ```
 
 This works by letting your headless component take care of the logic, and then injecting props to its children as a function.
 Additionally, if having to bring your own UI everytime sounds like a lot, you can always set a default UI to use if `children` is not defined in the headless component.
+
+## Supporting multiple data formats
+
+Our components are built with no specific data format in mind, however, users of our component libraries will often have to support specific data formats. To make things easier for them, if you know a component will be used mostly with a specific data format, a good thing to do is to export a version of your component that transforms a specific format to yoir component's generic props.
+
+As an example, our table of contents component is one that could be generic enough, however it is also used on the article body. So we can create our component with generic props, and then have a named export that does the transforming so users can just export this format specific version of your component:
+
+```jsx
+export default function TableOfContents = ({ list }) => {/** ... */}
+
+export const CapiTableOfContents = ({ capi }) => {
+    const props = someTransformFunction(capi);
+    return <TableOfContents {...props} />;
+}
+```
+
+Now, users will be able to decide which version of the component they want to use without having to worry about transforming data:
+
+```jsx
+import TableOfContents, { CapiTableOfContents } from './TableOfContents';
+```
 
 ## Migrating components
 

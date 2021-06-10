@@ -22,6 +22,7 @@ const StyledAuthor = styled.small`
 
 const Pullquote = ({ content, author }) => {
   // checks if content has outermost quote marks, if so, strip them and pass curly quotes
+  // eslint-disable-next-line quotes
   const quoteMarks = ['"', "'", '“', '”', '‘', '’'];
   const renderQuotes =
     quoteMarks.includes(content[0]) &&
@@ -41,4 +42,45 @@ Pullquote.propTypes = {
   author: PropTypes.string,
 };
 
+Pullquote.defaultProps = {
+  author: undefined,
+};
+
 export default Pullquote;
+
+export const CapiPullquote = ({ data }) => {
+  const {
+    content: [
+      {
+        content: [{ text: paragraphObjectContentText } = {}] = [],
+        text: paragraphObjectText,
+      },
+      {
+        content: [{ text: taglineObjectContentText } = {}] = [],
+        text: taglineObjectText,
+      },
+    ],
+  } = data || {};
+  if (!paragraphObjectContentText && !paragraphObjectText) return null;
+  return (
+    <Pullquote
+      content={paragraphObjectContentText || paragraphObjectText}
+      author={taglineObjectContentText || taglineObjectText}
+    />
+  );
+};
+
+CapiPullquote.propTypes = {
+  data: PropTypes.shape({
+    content: PropTypes.arrayOf(
+      PropTypes.shape({
+        content: PropTypes.arrayOf(
+          PropTypes.shape({
+            text: PropTypes.string,
+          })
+        ),
+        text: PropTypes.string,
+      })
+    ),
+  }).isRequired,
+};

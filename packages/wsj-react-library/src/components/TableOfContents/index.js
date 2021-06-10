@@ -214,3 +214,42 @@ TableOfContents.defaultProps = {
 };
 
 export default TableOfContents;
+
+export const CapiTableOfContents = ({ data }) => {
+  const { content = [] } = data || {};
+  const contents = content
+    .filter(
+      (contentItem) =>
+        contentItem.type === 'listitem' && Array.isArray(contentItem.content)
+    )
+    .reduce((contentsArray, listItem) => {
+      const listItemContent =
+        listItem.content.find(
+          (listContentItem) => listContentItem.link_type === 'INTRADOC'
+        ) || {};
+      if (listItemContent.text && listItemContent.uri) {
+        contentsArray.push({
+          id: listItemContent.uri,
+          text: listItemContent.text,
+        });
+      }
+      return contentsArray;
+    }, []);
+  return <TableOfContents contents={contents} />;
+};
+
+CapiTableOfContents.propTypes = {
+  data: PropTypes.shape({
+    content: PropTypes.arrayOf(
+      PropTypes.shape({
+        type: PropTypes.string,
+        content: PropTypes.arrayOf(
+          PropTypes.shape({
+            text: PropTypes.string,
+            uri: PropTypes.string,
+          })
+        ),
+      })
+    ),
+  }).isRequired,
+};
