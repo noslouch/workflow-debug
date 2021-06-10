@@ -67,6 +67,10 @@ jobs:
       - name: run any postinstall scripts
         run: lerna exec -- npm rebuild
 
+      # so that any local cross-dependencies can be imported
+      - name: build local packages for cross-linking
+        run: lerna run prepublishOnly
+
       - name: tests
         run: lerna run test
 
