@@ -22,7 +22,7 @@ const Container = styled.article`
 `;
 
 export default {
-  title: 'Article/Body/Image',
+  title: 'Article/Body/Components/Image',
   component: Image,
   decorators: [
     (Story) => (
