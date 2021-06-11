@@ -20,6 +20,7 @@
     "build:storybook": "build-storybook -c .storybook -o .out",
     "storybook": "start-storybook -p 6006",
     "compile": "rollup -c",
+    "watch": "rollup -c -w",
     "prepublishOnly": "npm run build"
   },
   "repository": {

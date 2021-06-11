@@ -1,5 +1,5 @@
 /* global Event */
-import { render, fireEvent, act } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 
 import ImageBigTop from '../../../__mocks__/bigTop/image.json';
 import SplitTop from '../../../__mocks__/bigTop/splitTop.json';
@@ -9,8 +9,6 @@ import Video from '../../../__mocks__/bigTop/video.json';
 import GlobalStyles from '../GlobalStyles';
 import BigTop from './index';
 import { CENTER, LOWER_THIRD, UNDERNEATH } from './lib/big-top-consts';
-
-import * as videoLib from '../../lib/load-video-lib';
 
 const HEADLINE = 'Test Headline';
 const DEK = 'Test Dek';
@@ -192,9 +190,10 @@ describe('BigTop', () => {
 
   // https://www.wsj.com/articles/im-a-fish-out-of-water-1540822720
   describe('Video', () => {
-    test('renders', async () => {
-      jest.spyOn(videoLib, 'loadVideoLib').mockResolvedValue();
+    beforeAll(() => jest.useFakeTimers());
+    afterAll(() => jest.useRealTimers());
 
+    test('renders', async () => {
       Object.defineProperty(window, 'matchMedia', {
         writable: true,
         value: jest.fn().mockReturnValue({
@@ -204,13 +203,17 @@ describe('BigTop', () => {
         }),
       });
 
+      // create a fake script tag so the player thinks it's already loaded
+      const videoScriptEl = document.createElement('script');
+      videoScriptEl.id = 'wsj-video-script';
+      document.body.appendChild(videoScriptEl);
       const mockVidLib = jest.fn((node) => ({
         WSJVideo: () => node,
       }));
 
       window.$jQ111 = mockVidLib;
 
-      const { container, findByText, getByText } = render(
+      const { container, findByText, getByText, queryByText } = render(
         <BigTop
           media={Video.properties}
           headline={HEADLINE}
@@ -222,21 +225,21 @@ describe('BigTop', () => {
 
       const headline = await findByText(HEADLINE);
       const player = container.querySelector(
-        `#a${Video.properties.bigtopheroid}`
+        `#video${Video.properties.bigtopheroid}`
       );
+
+      jest.runAllTimers();
+      // allow Promises in the video player component to resolve
+      await new Promise((resolve) => setImmediate(() => resolve()));
 
       expect(headline).toBeInTheDocument();
       expect(player).toBeInTheDocument();
       expect(getByText(DEK)).toBeInTheDocument();
 
-      act(() => {
-        fireEvent(player, new Event('onPlayerStateChange'));
-      });
-      expect(headline).not.toBeInTheDocument();
+      fireEvent(player, new Event('onPlayerStateChange'));
+      expect(queryByText(HEADLINE)).not.toBeInTheDocument();
 
-      act(() => {
-        fireEvent(player, new Event('onVideoComplete'));
-      });
+      fireEvent(player, new Event('onVideoComplete'));
       expect(await findByText(HEADLINE)).toBeInTheDocument();
     });
   });

@@ -4,7 +4,7 @@ import VideoPlayer from './index';
 describe('VideoPlayer', () => {
   test('should render the container', () => {
     const { container } = render(<VideoPlayer guid="test" />);
-    expect(container.querySelector('#test')).toBeInTheDocument();
+    expect(container.querySelector('#videotest')).toBeInTheDocument();
   });
 
   describe('AmpVideoPlayer', () => {

@@ -1,11 +1,11 @@
-import { useState, useMemo } from 'react';
+import { useState, useCallback } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { VideoPlayer } from '@newscorp-ghfb/dj-video';
 
 import { QUERIES } from '../../../lib/consts';
 import { PLACEMENTS } from '../lib/big-top-consts';
 import useMediaQuery from '../../../hooks/useMediaQuery';
-import VideoPlayer from '../../VideoPlayer';
 
 import CaptionLockup from '../components/caption-lockup';
 import ImageWrapper from '../components/image-wrapper';
@@ -35,6 +35,12 @@ export default function VideoTop({
 }) {
   const [videoIsActive, setVideoIsActive] = useState(false);
   const isMedium = useMediaQuery(QUERIES.medium);
+  const onPlayerStateChange = useCallback(() => setVideoIsActive(true), [
+    setVideoIsActive,
+  ]);
+  const onVideoComplete = useCallback(() => setVideoIsActive(false), [
+    setVideoIsActive,
+  ]);
 
   const {
     bigtopheroid: guid,
@@ -44,19 +50,6 @@ export default function VideoTop({
 
   const showBreadcrumb = bigTopFlashlineConfig !== 'false'; // these come in as strings from allesseh
   const hideTitle = videoIsActive && isMedium;
-
-  const events = useMemo(
-    () => ({
-      onPlayerStateChange() {
-        // once it starts playing, keep it hidden
-        setVideoIsActive(true);
-      },
-      onVideoComplete() {
-        setVideoIsActive(false);
-      },
-    }),
-    []
-  );
 
   return (
     <VideoWrapper className={className}>
@@ -82,7 +75,8 @@ export default function VideoTop({
           chainVideos={false}
           adsEnabled
           suppressHeadline
-          events={events}
+          onPlayerStateChange={onPlayerStateChange}
+          onVideoComplete={onVideoComplete}
         />
         {!isMedium && <CaptionLockup caption={videoData.caption} />}
       </ImageBackdrop>

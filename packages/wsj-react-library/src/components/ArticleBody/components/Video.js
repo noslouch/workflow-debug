@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import { VideoPlayer } from '@newscorp-ghfb/dj-video';
 import MediaLayout from './MediaLayout';
-import VideoPlayer from '../../VideoPlayer';
 import fontSize from '../../../helpers/fonts/articleFontSize';
 
 const Figure = styled.figure`
