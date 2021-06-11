@@ -97,7 +97,7 @@
     "@babel/runtime": "^7.12.5",
     "@headlessui/react": "^1.0.0",
     "@newscorp-ghfb/dj-design-tokens": "0.0.23",
-    "@newscorp-ghfb/dj-video": "0.2.0-beta.0",
+    "@newscorp-ghfb/dj-video": "^0.1.0",
     "@newscorp-ghfb/dj-image-handler": "0.1.7",
     "@styled-system/prop-types": "^5.1.5",
     "mustache": "^4.2.0",
