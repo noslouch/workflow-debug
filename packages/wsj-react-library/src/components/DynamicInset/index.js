@@ -56,11 +56,7 @@ export const extractScripts = (html = '') => {
 
 export const renderOnClient = (element, html) => {
   const fragment = document.createRange().createContextualFragment(html);
-  if (element.current) {
-    element.current.appendChild(fragment);
-  } else {
-    element.appendChild(fragment);
-  }
+  if (element && element.current) element.current.appendChild(fragment);
 };
 
 const DynamicInset = ({ data, url }) => {
@@ -71,7 +67,7 @@ const DynamicInset = ({ data, url }) => {
     // Scripts extracted from initial rendered html need to be manually added to the DOM for them to be evaluated
     if (scripts.length) {
       scripts.forEach((script) => {
-        renderOnClient(document.getElementsByTagName('body')[0], script);
+        renderOnClient(dynamicInsetRef, script);
       });
     }
     // If data is not set, but url is, fetch and render manually
