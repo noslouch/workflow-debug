@@ -1,5 +1,9 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import DynamicInset, { hashToObject, htmlFromData } from './index';
+import DynamicInset, {
+  extractScripts,
+  hashToObject,
+  htmlFromData,
+} from './index';
 
 const insetMock = {
   serverside: {
@@ -19,6 +23,15 @@ global.fetch = jest.fn(() =>
     json: () => Promise.resolve(insetMock),
   })
 );
+
+describe('DynamicInset/extractScripts', () => {
+  test('should return array of extracted scripts if any', () => {
+    const html = '<p>Foo</p><script>console.log("foo")</script>';
+    const [insetHtml, scripts] = extractScripts(html);
+    expect(insetHtml).toBe('<p>Foo</p>');
+    expect(scripts.length).toEqual(1);
+  });
+});
 
 describe('DynamicInset/hashToObject', () => {
   test('should not break if malformed url is passed', () => {
@@ -63,6 +76,16 @@ describe('DynamicInset', () => {
   test('should render html if data is passed', () => {
     render(<DynamicInset data={insetMock} />);
     expect(screen.getByText('Foo', { selector: 'p' })).toBeInTheDocument();
+  });
+
+  test('should add extracted scripts from rendered html', () => {
+    const insetMockWithScripts = { ...insetMock };
+    insetMockWithScripts.serverside.template.template = `${insetMockWithScripts.serverside.template.template}<script data-testid="script">console.log("foo")</script>`;
+    render(<DynamicInset data={insetMockWithScripts} />);
+    expect(screen.getByText('Foo', { selector: 'p' })).toBeInTheDocument();
+    expect(
+      screen.getByTestId('script', { selector: 'script' })
+    ).toBeInTheDocument();
   });
 
   test('should render html from fetched data when no data is passed but url is', async () => {

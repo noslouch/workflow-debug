@@ -42,17 +42,38 @@ export const htmlFromData = (data, url) => {
   return html;
 };
 
+export const extractScripts = (html = '') => {
+  const scripts = [];
+  const newHtml = html.replace(
+    /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
+    (match) => {
+      scripts.push(match);
+      return '';
+    }
+  );
+  return [newHtml, scripts];
+};
+
 export const renderOnClient = (element, html) => {
   const fragment = document.createRange().createContextualFragment(html);
-  // eslint-disable-next-line no-param-reassign
-  element.current.innerHTML = '';
-  element.current.appendChild(fragment);
+  if (element.current) {
+    element.current.appendChild(fragment);
+  } else {
+    element.appendChild(fragment);
+  }
 };
 
 const DynamicInset = ({ data, url }) => {
   const dynamicInsetRef = useRef(null);
-  const insetHtml = htmlFromData(data, url);
+  const renderedHtml = htmlFromData(data, url);
+  const [insetHtml, scripts] = extractScripts(renderedHtml);
   useEffect(() => {
+    // Scripts extracted from initial rendered html need to be manually added to the DOM for them to be evaluated
+    if (scripts.length) {
+      scripts.forEach((script) => {
+        renderOnClient(document.getElementsByTagName('body')[0], script);
+      });
+    }
     // If data is not set, but url is, fetch and render manually
     if (!data && url) {
       fetch(url)
@@ -63,14 +84,12 @@ const DynamicInset = ({ data, url }) => {
         })
         .catch((error) => console.error(error));
     }
-  }, [data, url]);
+  }, [data, scripts, url]);
   if (!data && !url) return null;
-  // dangerouslySetInnerHTML + suppressHydrationWarning: https://github.com/facebook/react/issues/10923#issuecomment-338715787
   return (
     <div
       dangerouslySetInnerHTML={{ __html: insetHtml }}
       ref={dynamicInsetRef}
-      suppressHydrationWarning
     />
   );
 };
