@@ -107,7 +107,12 @@ const MostPopular = ({ type, collection }) => {
               </Headline>
               <ImgWrapper>
                 {type === 'videos' && <PlayTriangleFilledMedium />}
-                <img src={item.image} alt={item.caption} />
+                <img
+                  src={item.image}
+                  alt={item.caption}
+                  width="111"
+                  height="62"
+                />
               </ImgWrapper>
             </Link>
           </li>
