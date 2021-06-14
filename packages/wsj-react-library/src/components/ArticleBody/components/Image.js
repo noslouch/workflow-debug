@@ -7,6 +7,8 @@ import Figcaption from '../../Image/Figcaption';
 import Caption from '../../Image/Caption';
 import Credit from '../../Image/Credit';
 
+import INSET_WIDTHS from '../insets/widths';
+
 const IMG_MANAGER_REGEX = /https:\/\/images.\w+.(\w+.)?\w+\/im-[0-9]{4,8}/;
 
 const generateIMProps = (location, widths) => {
@@ -28,7 +30,7 @@ const generateGamsProps = (data, widths) => {
   );
 };
 
-const Image = ({ data, isAmp = false, loading, widths }) => {
+const Image = ({ data, isAmp = false, loading }) => {
   const {
     caption,
     credit,
@@ -36,6 +38,7 @@ const Image = ({ data, isAmp = false, loading, widths }) => {
   } = data || {};
 
   const isImageManager = IMG_MANAGER_REGEX.test(location);
+  const widths = INSET_WIDTHS[layout];
 
   const generatedImageProps = isImageManager
     ? generateIMProps(location, widths)
@@ -85,7 +88,6 @@ Image.propTypes = {
   }).isRequired,
   isAmp: PropTypes.bool,
   loading: PropTypes.oneOf(['lazy', 'eager']),
-  widths: PropTypes.arrayOf(PropTypes.number).isRequired,
 };
 
 Image.defaultProps = {

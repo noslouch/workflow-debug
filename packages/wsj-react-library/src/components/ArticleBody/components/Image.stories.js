@@ -2,8 +2,6 @@ import styled from 'styled-components';
 import Image from './Image';
 import imageMock from './__mocks__/image.json';
 
-const SAMPLE_WIDTHS = [639, 640, 560, 720];
-
 const Container = styled.article`
   margin: 0 auto;
   width: 100%;
@@ -34,9 +32,7 @@ export default {
 };
 
 export const SoftCropImageManagerImage = () => (
-  <Image widths={SAMPLE_WIDTHS} data={imageMock.softcrop} />
+  <Image data={imageMock.softcrop} />
 );
 
-export const GAMSImage = () => (
-  <Image widths={SAMPLE_WIDTHS} data={imageMock.gams} />
-);
+export const GAMSImage = () => <Image data={imageMock.gams} />;

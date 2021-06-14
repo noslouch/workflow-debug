@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+// Use defined inset widths per layout
+// Defined in an array ascending from 4u-16u
+// so arr[0] = 4u, arr[3] = 16u etc.
+import INSET_WIDTHS from '../insets/widths';
+
 const MediaLayout = styled.div`
   clear: both;
   position: relative;
@@ -15,7 +20,7 @@ const MediaLayout = styled.div`
     `
     @media (min-width: 1300px) {
       margin-left: -80px;
-      width: 860px;
+      width: ${INSET_WIDTHS.header[3]}px;
     }
   `}
 
@@ -25,7 +30,7 @@ const MediaLayout = styled.div`
     @media (min-width: 640px) {
       float: left;
       margin: 4px 32px 24px 0;
-      width: 300px;
+      width: ${INSET_WIDTHS.wrap[1]}px;
     }
   `}
 
@@ -34,7 +39,7 @@ const MediaLayout = styled.div`
     `
     float: left;
     margin: 4px 32px 24px 0;
-    width: 140px;
+    width: ${INSET_WIDTHS.twocolumn[0]}px;
   `}
 
   ${({ layout }) =>
@@ -47,12 +52,12 @@ const MediaLayout = styled.div`
 
     @media (min-width: 980px) {
       margin-left: -80px;
-      width: 940px;
+      width: ${INSET_WIDTHS.bleed[2]}px;
     }
 
     @media (min-width: 1300px) {
       margin-left: -160px;
-      width: 1260px;
+      width: ${INSET_WIDTHS.bleed[3]}px;
     }
   `}
 
@@ -63,7 +68,7 @@ const MediaLayout = styled.div`
       float: left;
       margin-left: 0;
       margin-right: 30px;
-      width: 300px;
+      width: ${INSET_WIDTHS.margin[1]}px;
     }
 
     @media (min-width: 980px) {
