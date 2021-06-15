@@ -32,28 +32,28 @@ AdsProvider.propTypes = {
       trackingKey: PropTypes.string,
       formattedAdSizes: PropTypes.shape({
         at4units: PropTypes.arrayOf(
-          PropTypes.oneOfType(
+          PropTypes.oneOfType([
             PropTypes.arrayOf(PropTypes.number),
-            PropTypes.string
-          )
+            PropTypes.string,
+          ])
         ),
         at8units: PropTypes.arrayOf(
-          PropTypes.oneOfType(
+          PropTypes.oneOfType([
             PropTypes.arrayOf(PropTypes.number),
-            PropTypes.string
-          )
+            PropTypes.string,
+          ])
         ),
         at12units: PropTypes.arrayOf(
-          PropTypes.oneOfType(
+          PropTypes.oneOfType([
             PropTypes.arrayOf(PropTypes.number),
-            PropTypes.string
-          )
+            PropTypes.string,
+          ])
         ),
         at16units: PropTypes.arrayOf(
-          PropTypes.oneOfType(
+          PropTypes.oneOfType([
             PropTypes.arrayOf(PropTypes.number),
-            PropTypes.string
-          )
+            PropTypes.string,
+          ])
         ),
       }),
     })
