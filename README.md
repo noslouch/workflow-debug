@@ -240,10 +240,10 @@ clone the repo and go into the new directory:
 git clone git@github.com:newscorp-ghfb/dj-rendering.git && cd dj-rendering
 ```
 
-Bootstrap the project with `lerna bootstrap`. This will install common dependencies in the root of the project so you aren't installing more than one copy of any module for a given version.
+Bootstrap the project with `yarn`. Since we're using workspaces, this will install common dependencies in the root of the project so you aren't installing more than one copy of any module for a given version. We don't use `lerna bootstrap`, because [it's the same thing as calling `yarn` from the root](https://github.com/lerna/lerna/issues/1021#issuecomment-333598007), and it's more explicit what's happening this way.
 
 ```bash
-npx lerna bootstrap
+yarn
 ```
 
 `cd` into the package you are working on, e.g.
@@ -373,7 +373,7 @@ packages/
     package.json <-- declares react ^16
 ```
 
-The root `yarn.lock` will have entries for both version of react. When you run `lerna bootstrap`, `react@17` will be installed in `pacakges/foo/node_modules`, and `react@16` will be installed in `./node_modules` (the root).
+The root `yarn.lock` will have entries for both version of react. When you run `yarn` from the root, `react@17` will be installed in `pacakges/foo/node_modules`, and `react@16` will be installed in `./node_modules` (the root).
 
 #### Adding a New Dependency
 
@@ -393,9 +393,9 @@ If you have a dependency to add to all packages, drop the `--scope` flag:
 lerna add [--dev] <dependency>
 ```
 
-After installing, `lerna` will run `bootstrap`, which handles any linking that may be required, and will ensure only a single copy of a shared dependency (given the version numbers match) is installed.
+After installing, `lerna` will run `bootstrap`, [which just runs `yarn install` from the root](https://github.com/lerna/lerna/issues/1021#issuecomment-333598007). This will handle any linking that may be required, and will ensure only a single copy of a shared dependency (given the version numbers match) is installed.
 
-Lerna will install dependencies to the root of the repository by default, which allows the module to be used by all packages, thanks to node's resolution algorithm. If there's a conflict in dependency name and version number (like the react example above), lerna will install one copy at the root, and the conflicting copy in the package's local `node_modules`.
+Yarn will install dependencies to the root of the repository by default, which allows the module to be used by all packages, thanks to node's resolution algorithm. If there's a conflict in dependency name and version number (like the react example above), lerna will install one copy at the root, and the conflicting copy in the package's local `node_modules`.
 
 #### Install Dependencies at the Root
 

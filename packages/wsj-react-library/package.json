@@ -20,7 +20,7 @@
     "build:storybook": "build-storybook -c .storybook -o .out",
     "storybook": "start-storybook -p 6006",
     "compile": "rollup -c",
-    "prepublishOnly": "npm run build"
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",

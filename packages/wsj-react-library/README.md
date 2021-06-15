@@ -87,7 +87,7 @@ There are docs for other frameworks at that link as well.
 ```bash
 git clone git@github.com:newscorp-ghfb/dj-rendering.git
 cd dj-rendering
-npx lerna bootstrap
+yarn
 cd packages/wsj-react-library
 yarn start
 ```

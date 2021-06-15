@@ -56,18 +56,15 @@ jobs:
       - name: bootstrap deps
         run: |
           yarn --ignore-scripts --frozen-lockfile
-          lerna bootstrap --ignore-scripts -- --frozen-lockfile
         env:
           NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
 
       # run scripts without auth token
       # https://github.com/actions/setup-node
       - name: run any postinstall scripts
-        run: lerna exec -- npm rebuild
-
-      # so that any local cross-dependencies can be imported
-      - name: build local packages for cross-linking
-        run: lerna run prepublishOnly
+        run: |
+          yarn rebuild
+          yarn prepare
 
       - name: tests
         run: lerna run test

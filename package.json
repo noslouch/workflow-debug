@@ -12,7 +12,9 @@
     "url": "git@github.com:newscorp-ghfb/dj-rendering.git"
   },
   "scripts": {
-    "deploy-storybook": "storybook-to-ghpages"
+    "deploy-storybook": "storybook-to-ghpages",
+    "prepare": "lerna run --stream --sort prepare",
+    "rebuild": "lerna exec --stream --sort -- npm rebuild"
   },
   "devDependencies": {
     "@newscorp-ghfb/eslint-config-wsj": "^0.1.4",

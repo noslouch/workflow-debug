@@ -29,7 +29,7 @@ yalc publish
 
 ![image](https://user-images.githubusercontent.com/2090382/92021580-fe0d1880-ed27-11ea-893a-fa8a6671cb74.png)
 
-Or build and publish in one step (note this runs the `prepublishOnly` script):
+Or build and publish in one step (note this runs the `prepare` script):
 
 ```sh
 yalc push
