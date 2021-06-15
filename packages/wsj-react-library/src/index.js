@@ -31,6 +31,7 @@ export { default as MarketDataStrip } from './components/MarketDataStrip';
 export { default as Ribbon } from './components/Ribbon';
 export { default as FullHeader } from './components/FullHeader';
 export { UserProvider, useUserContext } from './context/user-context';
+export { AdsProvider, useAdsContext } from './context/ads-context';
 export { default as MostPopular } from './components/MostPopular';
 export { default as TableOfContents } from './components/TableOfContents';
 export { default as TextResizeButton } from './components/ArticleTools/TextResize';
