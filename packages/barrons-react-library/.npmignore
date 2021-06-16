@@ -1,0 +1,14 @@
+docs
+src
+__mocks__
+coverage
+
+babel.config.js
+eslintrc.js
+jest.config.js
+
+rollup.config.js
+
+yalc.lock
+
+.*
