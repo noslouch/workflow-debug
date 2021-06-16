@@ -24,3 +24,16 @@ export const StandardVideo = Template.bind({});
 StandardVideo.args = {
   guid: 'BA978506-2434-4014-9B5E-082BB22101E1',
 };
+
+export const MultipleVideos = () => (
+  <>
+    <VideoPlayer
+      guid="BA978506-2434-4014-9B5E-082BB22101E1"
+      idPrefix="video1"
+    />
+    <VideoPlayer
+      guid="BA978506-2434-4014-9B5E-082BB22101E1"
+      idPrefix="video2"
+    />
+  </>
+);

@@ -1,40 +1,7 @@
 import { useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-
-const loadVideoLib = (endpoint) => {
-  const videoScript = document.getElementById('wsj-video-script');
-
-  if (videoScript) {
-    return new Promise((resolve) => {
-      const interval = setInterval(() => {
-        if (typeof window.$jQ111 !== 'undefined') {
-          clearInterval(interval);
-          resolve();
-        }
-      }, 50);
-    });
-  }
-
-  return new Promise((resolve, reject) => {
-    // Video script
-    const script = document.createElement('script');
-    script.id = 'wsj-video-script';
-    script.type = 'text/javascript';
-    script.async = true;
-    script.src = `${endpoint}api-video/player/v3/js/video.min.js`;
-    script.onload = resolve;
-    script.onerror = reject;
-    // Video styles
-    const style = document.createElement('link');
-    style.id = 'wsj-video-style';
-    style.rel = 'stylesheet';
-    style.type = 'text/css';
-    style.href = `${endpoint}api-video/player/v3/css/video.min.css`;
-    document.body.appendChild(script);
-    document.body.appendChild(style);
-  });
-};
+import { loadVideoLib } from '../../helpers/load-libs';
 
 const VideoPlayerContainer = styled.div`
   cursor: pointer;
@@ -122,14 +89,16 @@ const VideoPlayer = (props) => {
       supressHeadline,
       ...props,
     };
-    loadVideoLib(endpoint).then(() => {
-      const player = window.$jQ111(videoRef.current).WSJVideo(options);
-      playerEvents.forEach((event) => {
-        if (typeof props[event] === 'function') {
-          player.addEventListener(event, props[event]);
-        }
-      });
-    });
+    loadVideoLib(endpoint)
+      .then(() => {
+        const player = window.$jQ111(videoRef.current).WSJVideo(options);
+        playerEvents.forEach((event) => {
+          if (typeof props[event] === 'function') {
+            player.addEventListener(event, props[event]);
+          }
+        });
+      })
+      .catch((err) => console.error('Failed to load video lib', err));
   }, [autoplay, guid, isAmp, endpoint, supressHeadline, props]);
 
   if (!guid) return null;

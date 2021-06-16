@@ -1,7 +1,17 @@
 import { render } from '@testing-library/react';
 import VideoPlayer from './index';
 
+jest.mock('../../helpers/load-libs', () => ({
+  loadVideoLib: jest.fn().mockResolvedValue(),
+}));
+
 describe('VideoPlayer', () => {
+  beforeEach(() => {
+    window.$jQ111 = jest.fn((node) => ({
+      WSJVideo: () => node,
+    }));
+  });
+
   test('should render the container', () => {
     const { container } = render(<VideoPlayer guid="test" />);
     expect(container.querySelector('#videotest')).toBeInTheDocument();
