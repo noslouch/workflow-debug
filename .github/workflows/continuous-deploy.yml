@@ -124,7 +124,7 @@ jobs:
 
       - name: get release branch
         if: steps.create-pr.outputs.pr
-        uses: actions/github-script@v3
+        uses: actions/github-script@v4
         id: release-branch
         with:
           script: |
