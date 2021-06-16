@@ -1,0 +1,53 @@
+{
+  "barrons": [
+    {
+      "label": "Privacy Notice",
+      "href": "https://www.dowjones.com/privacy-notice/?mod=BOL",
+      "hover": true,
+      "bold": true
+    },
+    {
+      "label": "Cookie Notice",
+      "href": "https://www.dowjones.com/cookie-notice/?mod=BOL",
+      "hover": true,
+      "bold": true
+    },
+    {
+      "label": "Manage Cookies",
+      "gdprApplies": true,
+      "bold": true
+    },
+    {
+      "label": "Do Not Sell My Personal Information",
+      "href": "https://www.dowjones.com/notice-ca-residents/?mod=BOL",
+      "ccpaApplies": true,
+      "bold": true
+    },
+    {
+      "label": "Copyright Policy",
+      "href": "https://www.barrons.com/about/copyright-policy?mod=hp_FOOTER",
+      "bold": true
+    },
+    {
+      "label": "Data Policy",
+      "href": "https://www.barrons.com/about/data-policy?mod=hp_FOOTER"
+    },
+    {
+      "label": "Your Ad Choices",
+      "href": "https://www.dowjones.com/cookie-notice/?mod=hp_FOOTER#cookies-advertising",
+      "hover": true
+    },
+    {
+      "label": "Subscriber Agreement & Terms of Use",
+      "href": "https://www.barrons.com/about/subscriber-agreement?mod=hp_FOOTER"
+    },
+    {
+      "label": "Barron's Archive",
+      "href": "https://www.barrons.com/archive/years?mod=hp_FOOTER"
+    },
+    {
+      "label": "Corporate Subscriptions",
+      "href": "https://corporate.barrons.com/?utm_source=Barron%27sCorp&utm_medium=Website_5-12-2021&mod=djm_Website_Barronsweb_5-12-2021&mod=hp_FOOTER"
+    }
+  ]
+}

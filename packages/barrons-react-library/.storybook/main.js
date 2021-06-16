@@ -1,5 +1,14 @@
 module.exports = {
-  stories: ['../src/**/*.stories.js'],
+  webpackFinal: (config) => {
+    return {
+      ...config,
+      node: {
+        __dirname: true,
+        __filename: true,
+      },
+    };
+  },
+  stories: ['../src/**/*stories.js'],
   addons: [
     '@storybook/addon-docs',
     '@storybook/addon-actions',
