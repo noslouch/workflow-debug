@@ -19,6 +19,73 @@
     },
     "id": "media-1"
   },
+  "resizeonly": {
+    "type": "image",
+    "media_type": "Photo",
+    "reuse_type": "full",
+    "slug": "SUMMERBOOKS",
+    "name": "S1-KS301_SUMMER_OR_20210615143324.jpg",
+    "width": 1280,
+    "height": 1934,
+    "alternate_text": "image",
+    "alt_images": [
+      {
+        "name": "S1-KS301_SUMMER_A_20210615143324.jpg",
+        "width": 76,
+        "height": 76,
+        "size_code": "A",
+        "url": "https://images.wsj.net/im-354327/A"
+      },
+      {
+        "name": "S1-KS301_SUMMER_C_20210615143324.jpg",
+        "width": 167,
+        "height": 94,
+        "size_code": "C",
+        "url": "https://images.wsj.net/im-354327/C"
+      },
+      {
+        "name": "S1-KS301_SUMMER_D_20210615143324.jpg",
+        "width": 262,
+        "height": 174,
+        "size_code": "D",
+        "url": "https://images.wsj.net/im-354327/D"
+      },
+      {
+        "name": "S1-KS301_SUMMER_E_20210615143324.jpg",
+        "width": 359,
+        "height": 239,
+        "size_code": "E",
+        "url": "https://images.wsj.net/im-354327/E"
+      },
+      {
+        "name": "S1-KS301_SUMMER_G_20210615143324.jpg",
+        "width": 553,
+        "height": 369,
+        "size_code": "G",
+        "url": "https://images.wsj.net/im-354327/G"
+      },
+      {
+        "name": "S1-KS301_SUMMER_M_20210615143324.jpg",
+        "width": 1280,
+        "height": 853,
+        "size_code": "M",
+        "url": "https://images.wsj.net/im-354327/M"
+      }
+    ],
+    "properties": {
+      "softcrop": "Resize Only",
+      "promotype": "None",
+      "responsive": {
+        "layout": "wrap"
+      },
+      "scope": {
+        "scope": ["web", "mobileapps"]
+      },
+      "location": "https://images.wsj.net/im-354327/?size=custom_1688x2550",
+      "imphotoid": "im-354327"
+    },
+    "id": "media-8"
+  },
   "gams": {
     "type": "image",
     "media_type": "ILLUSTRATION",

@@ -36,3 +36,5 @@ export const SoftCropImageManagerImage = () => (
 );
 
 export const GAMSImage = () => <Image data={imageMock.gams} />;
+
+export const ResizeOnly = () => <Image data={imageMock.resizeonly} />;

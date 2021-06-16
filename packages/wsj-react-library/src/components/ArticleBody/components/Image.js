@@ -11,12 +11,21 @@ import INSET_WIDTHS from '../insets/widths';
 
 const IMG_MANAGER_REGEX = /https:\/\/images.\w+.(\w+.)?\w+\/im-[0-9]{4,8}/;
 
-const generateIMProps = (location, widths) => {
-  const [trimmedLocation, size] = location.split('?size=');
+const SIZE_NUMBER_REGEX = /^(\d+(?:\.\d+)?)$/;
+
+const generateIMProps = ({ properties, width, height }, widths) => {
+  const [trimmedLocation, size] = properties?.location.split('?size=');
+
+  // Trailing size parameter could be a digit based aspect ratio or a named crop
+  // if named crop, calcuate ratio instead by dividing width by height
+  const sizeIsRatio = SIZE_NUMBER_REGEX.test(size);
+  const desiredSize = sizeIsRatio ? size : width / height;
+
   const imageData = {
     location: trimmedLocation,
-    size,
+    size: desiredSize,
   };
+
   return handleSoftCrop(widths, imageData);
 };
 
@@ -37,12 +46,12 @@ const Image = ({ data, isAmp = false, loading }) => {
     properties: { location, responsive: { layout = 'inline' } = {} } = {},
   } = data || {};
 
-  const isImageManager = IMG_MANAGER_REGEX.test(location);
   const widths = INSET_WIDTHS[layout];
 
-  const generatedImageProps = isImageManager
-    ? generateIMProps(location, widths)
-    : generateGamsProps(data, widths);
+  const isImageManager = IMG_MANAGER_REGEX.test(location);
+
+  const generateFunction = isImageManager ? generateIMProps : generateGamsProps;
+  const generatedImageProps = generateFunction(data, widths);
 
   const {
     url: src,
