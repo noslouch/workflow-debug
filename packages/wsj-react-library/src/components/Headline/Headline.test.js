@@ -31,7 +31,7 @@ describe('Headlines', () => {
 
   test('Should pass size and type', () => {
     const { container } = render(
-      <Headline size="m" type="features">
+      <Headline size="m" $type="features">
         Tech Shares Start Week Higher
       </Headline>
     );

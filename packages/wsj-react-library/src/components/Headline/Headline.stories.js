@@ -51,124 +51,124 @@ HeadlineXXS.args = {
 
 export const HeadlineOpinionXXL = Template.bind({});
 HeadlineOpinionXXL.args = {
-  type: 'opinion',
+  $type: 'opinion',
   children: 'Headline Opinion XXL',
 };
 
 export const HeadlineOpinionXL = Template.bind({});
 HeadlineOpinionXL.args = {
-  type: 'opinion',
+  $type: 'opinion',
   size: 'xl',
   children: 'Headline Opinion XL',
 };
 
 export const HeadlineOpinionL = Template.bind({});
 HeadlineOpinionL.args = {
-  type: 'opinion',
+  $type: 'opinion',
   size: 'l',
   children: 'Headline Opinion L',
 };
 
 export const HeadlineOpinionM = Template.bind({});
 HeadlineOpinionM.args = {
-  type: 'opinion',
+  $type: 'opinion',
   size: 'm',
   children: 'Headline Opinion M',
 };
 
 export const HeadlineOpinionS = Template.bind({});
 HeadlineOpinionS.args = {
-  type: 'opinion',
+  $type: 'opinion',
   size: 's',
   children: 'Headline Opinion S',
 };
 
 export const HeadlineOpinionXS = Template.bind({});
 HeadlineOpinionXS.args = {
-  type: 'opinion',
+  $type: 'opinion',
   size: 'xs',
   children: 'Headline Opinion XS',
 };
 
 export const HeadlineFeaturesXXL = Template.bind({});
 HeadlineFeaturesXXL.args = {
-  type: 'features',
+  $type: 'features',
   size: 'xxl',
   children: 'Headline Features XXL',
 };
 
 export const HeadlineFeaturesXL = Template.bind({});
 HeadlineFeaturesXL.args = {
-  type: 'features',
+  $type: 'features',
   size: 'xl',
   children: 'Headline Features XL',
 };
 
 export const HeadlineFeaturesL = Template.bind({});
 HeadlineFeaturesL.args = {
-  type: 'features',
+  $type: 'features',
   size: 'l',
   children: 'Headline Features L',
 };
 
 export const HeadlineFeaturesM = Template.bind({});
 HeadlineFeaturesM.args = {
-  type: 'features',
+  $type: 'features',
   size: 'm',
   children: 'Headline Features m',
 };
 
 export const HeadlineFeaturesS = Template.bind({});
 HeadlineFeaturesS.args = {
-  type: 'features',
+  $type: 'features',
   size: 's',
   children: 'Headline Features S',
 };
 
 export const HeadlineFeaturesXS = Template.bind({});
 HeadlineFeaturesXS.args = {
-  type: 'features',
+  $type: 'features',
   size: 'xs',
   children: 'Headline Features XS',
 };
 
 export const HeadlineMagazineXXL = Template.bind({});
 HeadlineMagazineXXL.args = {
-  type: 'magazine',
+  $type: 'magazine',
   children: 'Headline Magazine XXL',
 };
 
 export const HeadlineMagazineXL = Template.bind({});
 HeadlineMagazineXL.args = {
-  type: 'magazine',
+  $type: 'magazine',
   size: 'xl',
   children: 'Headline Magazine XL',
 };
 
 export const HeadlineMagazineL = Template.bind({});
 HeadlineMagazineL.args = {
-  type: 'magazine',
+  $type: 'magazine',
   size: 'l',
   children: 'Headline Magazine L',
 };
 
 export const HeadlineMagazineM = Template.bind({});
 HeadlineMagazineM.args = {
-  type: 'magazine',
+  $type: 'magazine',
   size: 'm',
   children: 'Headline Magazine M',
 };
 
 export const HeadlineMagazineS = Template.bind({});
 HeadlineMagazineS.args = {
-  type: 'magazine',
+  $type: 'magazine',
   size: 's',
   children: 'Headline Magazine S',
 };
 
 export const HeadlineMagazineXS = Template.bind({});
 HeadlineMagazineXS.args = {
-  type: 'magazine',
+  $type: 'magazine',
   size: 'xs',
   children: 'Headline Magazine XS',
 };

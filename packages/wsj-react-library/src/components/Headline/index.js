@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 
 const StyledHeadline = styled.h1`
   margin: 0px;
-  ${({ type, size }) => ` 
-    font-size: var(--typography-headline-${type}-${size}-font-size);
-    line-height: var(--typography-headline-${type}-${size}-line-height);
-    font-family: var(--typography-headline-${type}-${size}-font-family);
-    font-weight: var(--typography-headline-${type}-${size}-font-weight);
-    text-transform: var(--typography-headline-${type}-${size}-text-transform);
+  ${({ $type, size }) => `
+    font-size: var(--typography-headline-${$type}-${size}-font-size);
+    line-height: var(--typography-headline-${$type}-${size}-line-height);
+    font-family: var(--typography-headline-${$type}-${size}-font-family);
+    font-weight: var(--typography-headline-${$type}-${size}-font-weight);
+    text-transform: var(--typography-headline-${$type}-${size}-text-transform);
     color: var(--headline-font-color);
   `}
-  ${({ type }) =>
-    type === 'opinion' &&
+  ${({ $type }) =>
+    $type === 'opinion' &&
     `
     font-style: var(--font-style-italic);
   `}
@@ -57,12 +57,12 @@ const Headline = (props) => {
 
 Headline.propTypes = {
   size: PropTypes.oneOf(['xxl', 'xl', 'l', 'm', 's', 'xs', 'xxs']),
-  type: PropTypes.oneOf(['standard', 'opinion', 'features', 'magazine']),
+  $type: PropTypes.oneOf(['standard', 'opinion', 'features', 'magazine']),
 };
 
 Headline.defaultProps = {
   size: 'xxl',
-  type: 'standard',
+  $type: 'standard',
 };
 
 export default Headline;

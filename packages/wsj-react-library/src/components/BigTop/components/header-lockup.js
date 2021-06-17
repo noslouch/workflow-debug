@@ -33,7 +33,7 @@ const HeadlineContainer = styled.div`
     max-width: 960px;
   }
 
-  ${({ type }) => PLACEMENTS[type]}
+  ${({ $type }) => PLACEMENTS[$type]}
 `;
 
 export default function BigHeader({
@@ -49,7 +49,7 @@ export default function BigHeader({
   const noFlashline = !flashline && !isExclusive;
 
   return (
-    <HeadlineContainer type={type}>
+    <HeadlineContainer $type={type}>
       {showBreadcrumb && (
         <Breadcrumbs
           breadcrumbs={noFlashline ? breadcrumb : []}

@@ -1,7 +1,11 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-unused-prop-types */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/no-array-index-key */
 import React from 'react';
 import PropTypes from 'prop-types';
-import defaultSocialLinks from './socialLinks.json';
 import styled from 'styled-components';
+import defaultSocialLinks from './socialLinks.json';
 import { ReactComponent as facebook } from '../../assets/social-icons/facebook-black-333.svg';
 import { ReactComponent as twitter } from '../../assets/social-icons/twitter-black-333.svg';
 import { ReactComponent as youtube } from '../../assets/social-icons/youtube-black-333.svg';
@@ -45,8 +49,8 @@ const SocialLogoLink = styled.a`
     (socialClass === 'appstore' && '75px') ||
     'initial'};
 
-  ${({ type }) =>
-    (type === 'icon' &&
+  ${({ $type }) =>
+    ($type === 'icon' &&
       `
       width: 30px;
       height: 30px;
@@ -55,7 +59,7 @@ const SocialLogoLink = styled.a`
       border-radius: 50%;
       font-size: 0;
     `) ||
-    (type === 'store-badge' &&
+    ($type === 'store-badge' &&
       `
       background: var(--color-black);
       border-radius: 3px;
@@ -76,7 +80,7 @@ function FooterSocialLinks({ socialLinks: links = defaultSocialLinks }) {
         const isStoreBadge = type === 'store-badge';
         return (
           <SocialLogo key={`${label}_${type}_${i}`}>
-            <SocialLogoLink socialClass={className} type={type} href={url}>
+            <SocialLogoLink socialClass={className} $type={type} href={url}>
               {label}
               <SocialSvg
                 viewBox={isStoreBadge ? '35 -8 40 40' : '-8 -5 35 35'}

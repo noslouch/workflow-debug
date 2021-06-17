@@ -15,8 +15,8 @@ const SubHed = styled.h4`
   font-weight: var(--font-weight-medium);
   font-size: var(--typography-headline-font-size-xs);
   line-height: var(--typography-headline-font-line-height-xs);
-  color: ${({ type }) =>
-    type === 'opinion' ? 'var(--color-gold)' : 'var(--color-coal)'};
+  color: ${({ $type }) =>
+    $type === 'opinion' ? 'var(--color-gold)' : 'var(--color-coal)'};
 `;
 
 const List = styled.ul`
@@ -95,7 +95,7 @@ const MostPopular = ({ type, collection }) => {
 
   return (
     <StyledMostPopular>
-      <SubHed type={type}>{subhed}</SubHed>
+      <SubHed $type={type}>{subhed}</SubHed>
       <List>
         {collection.map((item) => (
           <li key={item.url}>
