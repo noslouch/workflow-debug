@@ -33,6 +33,22 @@ function waitOnScript(url) {
   });
 }
 
+export async function loadAudioLib(endpoint) {
+  const scriptUrl = `${endpoint}api-video/audio/js/audioplayer.min.js`;
+  const styleUrl = `${endpoint}api-video/audio/css/audioplayer.min.css`;
+  if (window.com_marketwatch_audioplayer) {
+    return;
+  }
+
+  if (scriptExists(scriptUrl)) {
+    // wait for the existing script tag to load
+    await waitOnScript(scriptUrl);
+    return;
+  }
+
+  await Promise.all([loadScript(scriptUrl), loadStyles(styleUrl)]);
+}
+
 export async function loadVideoLib(endpoint) {
   const scriptUrl = `${endpoint}api-video/player/v3/js/video.min.js`;
   const styleUrl = `${endpoint}api-video/player/v3/css/video.min.css`;
