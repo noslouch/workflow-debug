@@ -49,7 +49,7 @@ export default function BigHeader({
   const noFlashline = !flashline && !isExclusive;
 
   return (
-    <HeadlineContainer $type={type}>
+    <HeadlineContainer $type={type} data-testid={`bigtop-headline-${type}`}>
       {showBreadcrumb && (
         <Breadcrumbs
           breadcrumbs={noFlashline ? breadcrumb : []}

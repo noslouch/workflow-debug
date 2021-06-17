@@ -1,5 +1,5 @@
 /* global Event */
-import { render, fireEvent } from '@testing-library/react';
+import { screen, render, fireEvent } from '@testing-library/react';
 
 import ImageBigTop from '../../../__mocks__/bigTop/image.json';
 import SplitTop from '../../../__mocks__/bigTop/splitTop.json';
@@ -74,16 +74,16 @@ describe('BigTop', () => {
         headlineplacement: CENTER,
       };
 
-      const { container, queryByRole, rerender } = render(
-        <BigTop media={media} />
-      );
+      const { queryByRole, rerender } = render(<BigTop media={media} />);
 
-      expect(container.querySelector(`[type="${CENTER}"]`)).toBeInTheDocument();
+      expect(
+        screen.getByTestId(`bigtop-headline-${CENTER}`)
+      ).toBeInTheDocument();
 
       media.headlineplacement = LOWER_THIRD;
       rerender(<BigTop media={media} />);
       expect(
-        container.querySelector(`[type="${LOWER_THIRD}"]`)
+        screen.getByTestId(`bigtop-headline-${LOWER_THIRD}`)
       ).toBeInTheDocument();
 
       media.headlineplacement = UNDERNEATH;

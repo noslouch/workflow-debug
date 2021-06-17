@@ -15,8 +15,9 @@ describe('Headlines', () => {
     const { container } = render(
       <Headline>Tech Shares Start Week Higher</Headline>
     );
-    const type = container.querySelector('h1[type="standard"]');
-    expect(type).toBeInTheDocument();
+    expect(container.firstChild).toHaveStyle(`
+      font-family: var(--typography-headline-standard-xxl-font-family);
+    `);
   });
 
   test('Should render link', () => {
@@ -35,7 +36,8 @@ describe('Headlines', () => {
         Tech Shares Start Week Higher
       </Headline>
     );
-    const type = container.querySelector('h4[type="features"]');
-    expect(type).toBeInTheDocument();
+    expect(container.firstChild).toHaveStyle(`
+      font-family: var(--typography-headline-features-m-font-family);
+    `);
   });
 });
