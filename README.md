@@ -111,6 +111,8 @@ There are times when a component might offer utility across so many use-cases th
 
 ### CI/CD Process
 
+Having trouble? Check out [troubleshooting](docs/troubleshooting.md).
+
 #### Automated versioning
 
 During deployment, we automatically bump package versions based on [Conventional Commits](https://www.conventionalcommits.org/).
