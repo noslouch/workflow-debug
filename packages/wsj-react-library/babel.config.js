@@ -13,10 +13,19 @@ module.exports = {
       },
     ],
   ],
-  plugins: ['babel-plugin-styled-components', '@babel/plugin-transform-runtime'],
+  plugins: [
+    'babel-plugin-styled-components',
+    '@babel/plugin-transform-runtime',
+  ],
   env: {
     test: {
-      plugins: ['require-context-hook', '@babel/plugin-proposal-optional-chaining'],
+      plugins: [
+        'require-context-hook',
+        '@babel/plugin-proposal-optional-chaining',
+      ],
+    },
+    production: {
+      plugins: [['transform-react-remove-prop-types', { removeImport: true }]],
     },
   },
 };
