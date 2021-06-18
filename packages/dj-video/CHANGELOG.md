@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/dj-video-v0.2.0...dj-video-v0.3.0) (2021-06-18)
+
+### Features
+
+- Create AtmosphericPlayer component ([#369](https://www.github.com/newscorp-ghfb/dj-rendering/issues/369)) ([74f2d3d](https://www.github.com/newscorp-ghfb/dj-rendering/commit/74f2d3d33ce5f1b34e1bd3708e96303d1bccaa2a))
+- Create AudioPlayer component ([#378](https://www.github.com/newscorp-ghfb/dj-rendering/issues/378)) ([0d12075](https://www.github.com/newscorp-ghfb/dj-rendering/commit/0d12075e9e8a0ee70ac2bd5a41de9a05afea1eed))
+
 ## [0.2.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/dj-video-v0.1.0...dj-video-v0.2.0) (2021-06-11)
 
 ### Features
