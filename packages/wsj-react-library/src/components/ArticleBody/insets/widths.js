@@ -1,7 +1,7 @@
 // Defines widths of each layout,
 // based on breakpoint from 4u - 16u (ascending)
 
-module.exports = {
+export default {
   header: [639, 620, 540, 860],
   wrap: [639, 300, 300, 300],
   inline: [639, 620, 540, 700],
