@@ -1,6 +1,6 @@
 {
   "name": "@newscorp-ghfb/wsj-react-library",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Library of functional React components that implements the WSJ and Noted. design system.",
   "main": "dist/cjs/index.js",
   "module": "dist/es/index.js",

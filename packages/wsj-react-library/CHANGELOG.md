@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.7.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.6.0...wsj-react-library-v0.7.0) (2021-06-18)
+
+### Features
+
+- Add Inset widths per layout ([#364](https://www.github.com/newscorp-ghfb/dj-rendering/issues/364)) ([a62af23](https://www.github.com/newscorp-ghfb/dj-rendering/commit/a62af23170c335ba76f92284134d06b41b391022))
+- Add support for IM images with crop names as size parameter ([#379](https://www.github.com/newscorp-ghfb/dj-rendering/issues/379)) ([5640d1b](https://www.github.com/newscorp-ghfb/dj-rendering/commit/5640d1b87c044bdf4d621ea6c088516a885a2735))
+- adding ads context ([#365](https://www.github.com/newscorp-ghfb/dj-rendering/issues/365)) ([0571129](https://www.github.com/newscorp-ghfb/dj-rendering/commit/05711291a910bb9c18fde6c8ecbfae0a265c5b4c))
+- CapiComponents in Article Body ([#346](https://www.github.com/newscorp-ghfb/dj-rendering/issues/346)) ([8d8fa4d](https://www.github.com/newscorp-ghfb/dj-rendering/commit/8d8fa4dcbd872338895ec9e6890bef9caded1493))
+- Image Component with full srcset, sizes and GAMS support [WPT-609] ([#353](https://www.github.com/newscorp-ghfb/dj-rendering/issues/353)) ([e6d53f7](https://www.github.com/newscorp-ghfb/dj-rendering/commit/e6d53f7eb41dabb468b7571b512073cba0e3c679))
+- Use dj-video package in wsj-react-library ([#343](https://www.github.com/newscorp-ghfb/dj-rendering/issues/343)) ([09531ec](https://www.github.com/newscorp-ghfb/dj-rendering/commit/09531ec5d2dc3b508d795b5a84e0355d461bf1b7))
+
+### Bug Fixes
+
+- big top tweaks ([#344](https://www.github.com/newscorp-ghfb/dj-rendering/issues/344)) ([c99e98a](https://www.github.com/newscorp-ghfb/dj-rendering/commit/c99e98ab3828d5c8c99ba31d5e0720b65c7104f1))
+- Fix broken type tests due to previous merge ([#381](https://www.github.com/newscorp-ghfb/dj-rendering/issues/381)) ([f2f9665](https://www.github.com/newscorp-ghfb/dj-rendering/commit/f2f9665af33de06c2b284874616f4f3dd899c67d))
+- fixing array proptypes for ads context and minor fix for share button ([#371](https://www.github.com/newscorp-ghfb/dj-rendering/issues/371)) ([7319b52](https://www.github.com/newscorp-ghfb/dj-rendering/commit/7319b521e75bc3215639f6f81b92e7f059fe4e51))
+- leaking styled components props to html attrs ([#380](https://www.github.com/newscorp-ghfb/dj-rendering/issues/380)) ([b39a753](https://www.github.com/newscorp-ghfb/dj-rendering/commit/b39a7533ad022d15e2f245a04e44fa35ec1adee8))
+- place dynamic inset scripts in same container ([#367](https://www.github.com/newscorp-ghfb/dj-rendering/issues/367)) ([500978a](https://www.github.com/newscorp-ghfb/dj-rendering/commit/500978ad535e24fb336784f7e087d19b9b6357d1))
+- preserve some space while video loads ([#376](https://www.github.com/newscorp-ghfb/dj-rendering/issues/376)) ([4b1ba99](https://www.github.com/newscorp-ghfb/dj-rendering/commit/4b1ba9987687675fdb7c4af9eddc66708908b7f8))
+
 ## [0.6.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.5.0...wsj-react-library-v0.6.0) (2021-06-08)
 
 ### Features
