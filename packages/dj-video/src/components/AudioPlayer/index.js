@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { loadAudioLib } from '../../helpers/load-libs';
@@ -81,7 +81,7 @@ AudioPlayer.propTypes = {
   descriptionOverride: PropTypes.string,
   endpoint: PropTypes.string,
   guid: PropTypes.string,
-  height: PropTypes.string,
+  height: PropTypes.number,
   hideDescription: PropTypes.bool,
   hideFeedback: PropTypes.bool,
   isAmp: PropTypes.bool,
@@ -102,7 +102,7 @@ AudioPlayer.propTypes = {
     'mg-article-reader',
   ]),
   titleOverride: PropTypes.string,
-  width: PropTypes.string,
+  width: PropTypes.number,
   onEnded: PropTypes.func,
   onPlayPause: PropTypes.func,
   noAudio: PropTypes.func,
@@ -171,4 +171,4 @@ const AmpAudioPlayer = ({
 AmpAudioPlayer.propTypes = AudioPlayer.propTypes;
 AmpAudioPlayer.defaultProps = AudioPlayer.defaultProps;
 
-export default AudioPlayer;
+export default memo(AudioPlayer);
