@@ -48,7 +48,7 @@ const AudioPlayer = (props) => {
       });
   }, [isAmp, endpoint, props]);
 
-  if (!guid) return null;
+  if (!guid && !sbid) return null;
   if (isAmp) return <AmpAudioPlayer {...props} />;
   return (
     <AudioPlayerContainer
@@ -120,7 +120,7 @@ AudioPlayer.defaultProps = {
   hideFeedback: false,
   isAmp: false,
   savePublication: null,
-  sbid: '',
+  sbid: null,
   showHeader: true,
   showSubscribe: true,
   showTitle: true,
