@@ -2046,10 +2046,10 @@
   resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-image-handler/0.1.8/9aa56c1a917aae2f21cde5a9f696f5ffa1ea3fdded7d850e4d5f6eb85bf57344#821fad014aa7d9f768d75fdbffcd51791f3b019b"
   integrity sha512-Uuvt3LOd18D+CJXPuXyAjUjdcKa2qUgJzRjJ9T7iXvCR6zr8tN9RRSZ2Ghm8x12iRoj8kS+pZqkK711eSgRywg==
 
-"@newscorp-ghfb/dj-video@0.2.0":
-  version "0.2.0"
-  resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-video/0.2.0/3141348337c0531f3922f2a30fd7b4869faf48df479d7ddfb47d5eaddf0ea94e#e68f5cff604cadb9bdf12978e579db629f1cd734"
-  integrity sha512-/RFObWhoYiOi1bMT7FsvKi66gnzLP1SbolWQBQtvQCaiEfPfnblt6bYD1VTT10AoFai2uFHC+nNNiocm3edB/g==
+"@newscorp-ghfb/dj-video@0.3.1":
+  version "0.3.1"
+  resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-video/0.3.1/a4a86297de58c616712bb955337c39cfcbf245d30272afde18b24408e98d8508#fb7af39415f6509be0706001c264ee5f61789201"
+  integrity sha512-tP6dY+nVnSAUDd48g5+xlQ0EAacB8HQpS0TX29TCVNeKEOcH1hAzQ/9sOW8Uxst4wee6ybtYTK40t913QYd9Yg==
   dependencies:
     "@babel/runtime" "^7.12.5"
     "@styled-system/prop-types" "^5.1.5"

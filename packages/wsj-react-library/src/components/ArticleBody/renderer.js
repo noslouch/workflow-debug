@@ -10,6 +10,7 @@ import Subhed from './components/Subhed';
 import Tagline from './components/Tagline';
 import Image from './components/Image';
 import Video from './components/Video';
+import Audio from './components/Audio';
 // Insets
 import Dynamic from './insets/Dynamic';
 import Pagebreak from './insets/Pagebreak';
@@ -78,6 +79,7 @@ const renderer = (array = [], options = {}) =>
       // eslint-disable-next-line no-unused-vars
       link_type: linkType,
       list_type: listType,
+      media_type: mediaType,
       ordered,
       targets: [{ uri: targetUri }] = [{}],
       text,
@@ -125,6 +127,8 @@ const renderer = (array = [], options = {}) =>
     // TODO: Add widths information for image
     if (type === 'image') return <Image key={key} data={block} isAmp={isAmp} />;
     if (type === 'video') return <Video key={key} data={block} isAmp={isAmp} />;
+    if (type === 'media' && mediaType === 'AUDIO')
+      return <Audio key={key} data={block} isAmp={isAmp} />;
     // TODO: Phrase component with correct implementation
     if (type === 'phrase') return <Fragment key={key}>{text}</Fragment>;
     if (type === 'Break') return <br key={key} />;

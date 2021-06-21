@@ -21,6 +21,7 @@ jest.mock('./components/Subhed', () => () => <div data-testid="subhed" />);
 jest.mock('./components/Tagline', () => () => <div data-testid="tagline" />);
 jest.mock('./components/Image', () => () => <div data-testid="image" />);
 jest.mock('./components/Video', () => () => <div data-testid="video" />);
+jest.mock('./components/Audio', () => () => <div data-testid="audio" />);
 jest.mock('./insets/Dynamic', () => () => <div data-testid="dynamic" />);
 jest.mock('./insets/Pagebreak', () => () => <div data-testid="pagebreak" />);
 jest.mock('./insets/RichText', () => () => <div data-testid="rich-text" />);
@@ -152,6 +153,11 @@ describe('ArticleBody renderer', () => {
   test('should return video component if matching type', () => {
     render(renderer([{ type: 'video' }]));
     expect(screen.getByTestId('video')).toBeInTheDocument();
+  });
+
+  test('should return audio component if matching type', () => {
+    render(renderer([{ type: 'media', media_type: 'AUDIO' }]));
+    expect(screen.getByTestId('audio')).toBeInTheDocument();
   });
 
   test('should return dynamic inset if matching type', () => {

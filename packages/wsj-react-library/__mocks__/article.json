@@ -50,6 +50,21 @@
           ]
         },
         {
+          "type": "media",
+          "media_type": "AUDIO",
+          "slug": "audio-AF96F573-03F3-4C52-8AD9-5716CDD86214",
+          "name": "AF96F573-03F3-4C52-8AD9-5716CDD86214",
+          "properties": {
+            "responsive": {
+              "layout": "inline"
+            },
+            "scope": {
+              "scope": ["web", "mobileapps"]
+            }
+          },
+          "id": "media-8"
+        },
+        {
           "type": "paragraph",
           "fragment_id": "correction",
           "content": [
