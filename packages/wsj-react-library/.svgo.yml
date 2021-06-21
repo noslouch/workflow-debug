@@ -1,9 +1,0 @@
-# .svgo.yml
-# Plugin overrides.
-# See Default plugin settings: https://github.com/svg/svgo#what-it-can-do
-# from https://github.com/gregberge/svgr/issues/454#issuecomment-719679693
-plugins:
-  # Whether to remove the <title> tag.
-  - removeTitle: false
-  # Whether to remove the <desc> tag.
-  - removeDesc: false

@@ -34,7 +34,6 @@ jobs:
           node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
-          scope: "@newscorp-ghfb"
 
       - name: Cache node_modules
         uses: actions/cache@v2
@@ -47,8 +46,6 @@ jobs:
       - name: bootstrap deps
         run: |
           yarn --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
 
       # run scripts without auth token
       # https://github.com/actions/setup-node
@@ -59,11 +56,6 @@ jobs:
 
       - name: tests
         run: lerna run test
-
-      - name: deploy storybooks
-        run: yarn deploy-storybook --packages packages --source-branch main --ci
-        env:
-          GH_TOKEN: ${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}
 
   find_changes:
     needs: build_and_test
@@ -114,7 +106,6 @@ jobs:
         id: create-pr
         with:
           path: packages/${{ matrix.package }}
-          token: ${{ secrets.BOT_TOKEN }}
           release-type: node
           package-name: "@${{ github.repository_owner }}/${{ matrix.package }}"
           monorepo-tags: true
@@ -165,7 +156,6 @@ jobs:
           node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
-          scope: "@newscorp-ghfb"
 
       - name: Cache node_modules
         uses: actions/cache@v2
@@ -178,8 +168,6 @@ jobs:
       - name: bootstrap deps
         run: |
           yarn --ignore-scripts --frozen-lockfile
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
 
       # run scripts without auth token
       # https://github.com/actions/setup-node
@@ -201,7 +189,7 @@ jobs:
         env:
           PREID: beta
         run: |
-          git config user.email ${{ secrets.BOT_EMAIL }}
+          git config user.email me@brianwhitton.com
 
           PACKAGES="${{ join(fromJSON(needs.find_changes.outputs.changed_packages), ' ') }}"
 
@@ -239,10 +227,9 @@ jobs:
 
       - name: publish prerelease
         env:
-          NODE_AUTH_TOKEN: ${{secrets.PUBLISH_TOKEN}}
           PREID: beta
         run: |
-          git config user.email ${{ secrets.BOT_EMAIL }}
+          git config user.email me@brianwhitton.com
 
           lerna publish \
             --yes \
@@ -256,11 +243,11 @@ jobs:
         env:
           PREID: beta
         run: |
-          git config user.email ${{ secrets.BOT_EMAIL }}
+          git config user.email me@brianwhitton.com
 
           # gather tags from this release
           TAGS=$(git tag --points-at HEAD)
-          PACKAGES=$(sed -E "s|@newscorp-ghfb/(.*)@[0-9.]+-$PREID\.[0-9]+|\1|" <<< $TAGS)
+          PACKAGES=$(sed -E "s|@noslouch/(.*)@[0-9.]+-$PREID\.[0-9]+|\1|" <<< $TAGS)
 
           # generate release tags using values from package files
           # lerna revved the numbers so they're reliable

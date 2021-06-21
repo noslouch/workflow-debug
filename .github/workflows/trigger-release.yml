@@ -25,7 +25,6 @@ jobs:
           node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
-          scope: "@newscorp-ghfb"
 
       - name: Cache node_modules
         uses: actions/cache@v2
@@ -37,8 +36,6 @@ jobs:
 
       - name: install lerna locally
         run: yarn --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
 
       - name: find changed files
         id: changed_files
@@ -50,5 +47,4 @@ jobs:
         uses: peter-evans/repository-dispatch@v1
         with:
           event-type: cut-release
-          token: ${{ secrets.BOT_TOKEN }}
           client-payload: '{ "sha": "${{ github.sha }}", "packages": ${{ steps.changed_files.outputs.changed_packages }} }'

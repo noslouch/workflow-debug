@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-          <defs>
-                    <path id="bookmark-stroke-medium-a" d="M16,2 C17.1045695,2 18,2.8954305 18,4 L18,22 L17.3610731,22 L12.0092408,18.2011817 L6.67017746,21.9552474 L6,21.9552474 L6,4 C6,2.8954305 6.8954305,2 8,2 L16,2 Z M16,3 L8,3 C7.48716416,3 7.06449284,3.38604019 7.00672773,3.88337887 L7,4 L7,20.5 L12.0119705,16.976808 L17,20.517 L17,4 C17,3.48716416 16.6139598,3.06449284 16.1166211,3.00672773 L16,3 Z"/>
-          </defs>
-          <use fill="#222" fill-rule="evenodd" xlink:href="#bookmark-stroke-medium-a"/>
-</svg>
