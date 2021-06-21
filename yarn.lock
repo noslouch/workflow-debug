@@ -2046,6 +2046,16 @@
   resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-image-handler/0.1.8/9aa56c1a917aae2f21cde5a9f696f5ffa1ea3fdded7d850e4d5f6eb85bf57344#821fad014aa7d9f768d75fdbffcd51791f3b019b"
   integrity sha512-Uuvt3LOd18D+CJXPuXyAjUjdcKa2qUgJzRjJ9T7iXvCR6zr8tN9RRSZ2Ghm8x12iRoj8kS+pZqkK711eSgRywg==
 
+"@newscorp-ghfb/dj-video@0.2.0":
+  version "0.2.0"
+  resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/dj-video/0.2.0/3141348337c0531f3922f2a30fd7b4869faf48df479d7ddfb47d5eaddf0ea94e#e68f5cff604cadb9bdf12978e579db629f1cd734"
+  integrity sha512-/RFObWhoYiOi1bMT7FsvKi66gnzLP1SbolWQBQtvQCaiEfPfnblt6bYD1VTT10AoFai2uFHC+nNNiocm3edB/g==
+  dependencies:
+    "@babel/runtime" "^7.12.5"
+    "@styled-system/prop-types" "^5.1.5"
+    prop-types "^15.7.2"
+    styled-system "^5.1.5"
+
 "@newscorp-ghfb/eslint-config-wsj@^0.1.4":
   version "0.1.4"
   resolved "https://npm.pkg.github.com/download/@newscorp-ghfb/eslint-config-wsj/0.1.4/474bee82345fd5150c6f3ae74383ec1293701bde625fec06c2e191d0945ac266#1e0a0edd95768c6d16fa107fd927fd831eb12d34"
@@ -2952,9 +2962,10 @@
     prettier "~2.2.1"
     regenerator-runtime "^0.13.7"
 
-"@storybook/storybook-deployer@newscorp-ghfb/dj-storybook-deployer#v1.0.0-fork.0":
-  version "2.8.7"
-  resolved "https://codeload.github.com/newscorp-ghfb/dj-storybook-deployer/tar.gz/cdafe10113069b9464af6ff0f44d5d0327f0ad67"
+"@storybook/storybook-deployer@^2.8.10":
+  version "2.8.10"
+  resolved "https://registry.yarnpkg.com/@storybook/storybook-deployer/-/storybook-deployer-2.8.10.tgz#3cf96aea823d424fbfce98e76fca108d07470ec2"
+  integrity sha512-2uleH0AFuI98sdTkbyHt1BgPa0kmLxhC3zwfwtacE8FB+2ffdRdqBlp6GYDZ7CZ+R4B4XuPYhsgUKWkB+zngyQ==
   dependencies:
     git-url-parse "^11.1.2"
     glob "^7.1.3"
