@@ -1,5 +1,5 @@
 function foo() {
-  return;
+  return 1;
 }
 
 module.exports = {
