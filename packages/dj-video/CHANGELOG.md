@@ -1,5 +1,11 @@
 # Changelog
 
+### [0.3.1](https://www.github.com/newscorp-ghfb/dj-rendering/compare/dj-video-v0.3.0...dj-video-v0.3.1) (2021-06-18)
+
+### Bug Fixes
+
+- sbid bug ([#393](https://www.github.com/newscorp-ghfb/dj-rendering/issues/393)) ([ce92727](https://www.github.com/newscorp-ghfb/dj-rendering/commit/ce92727236a87511423fd344af402cda627dda6e))
+
 ## [0.3.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/dj-video-v0.2.0...dj-video-v0.3.0) (2021-06-18)
 
 ### Features
