@@ -42,7 +42,7 @@ AtmosphericPlayer.propTypes = {
 };
 
 AtmosphericPlayer.defaultProps = {
-  endpoint: 'https://video-api.wsj.com/',
+  endpoint: 'https://video-api.wsj.com',
   idPrefix: 'atmo',
 };
 

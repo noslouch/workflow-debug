@@ -22,7 +22,7 @@ const AmpVideoPlayer = ({
   placeholderSrc,
   width,
 }) => {
-  const src = `${endpoint}api-video/player/v3/iframe.html?guid=${guid}&height=${height}&width=${width}&plid=video_amp&chainVideos=true&resetOnComplete=true&a=a${
+  const src = `${endpoint}/api-video/player/v3/iframe.html?guid=${guid}&height=${height}&width=${width}&plid=video_amp&chainVideos=true&resetOnComplete=true&a=a${
     parentUrl ? `&parentUrl=${encodeURIComponent(parentUrl)}` : ''
   }`;
   return (
@@ -52,7 +52,7 @@ AmpVideoPlayer.propTypes = {
 
 AmpVideoPlayer.defaultProps = {
   height: 225,
-  endpoint: 'https://video-api.wsj.com/',
+  endpoint: 'https://video-api.wsj.com',
   parentUrl: undefined,
   placeholderSrc: undefined,
   width: 400,
@@ -138,7 +138,7 @@ VideoPlayer.propTypes = {
 VideoPlayer.defaultProps = {
   adsEnabled: true,
   autoplay: false,
-  endpoint: 'https://video-api.wsj.com/',
+  endpoint: 'https://video-api.wsj.com',
   idPrefix: 'video',
   isAmp: false,
   supressHeadline: false,

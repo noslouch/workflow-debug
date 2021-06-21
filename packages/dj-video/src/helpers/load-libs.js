@@ -34,8 +34,8 @@ function waitOnScript(url) {
 }
 
 export async function loadAudioLib(endpoint) {
-  const scriptUrl = `${endpoint}api-video/audio/js/audioplayer.min.js`;
-  const styleUrl = `${endpoint}api-video/audio/css/audioplayer.min.css`;
+  const scriptUrl = `${endpoint}/api-video/audio/js/audioplayer.min.js`;
+  const styleUrl = `${endpoint}/api-video/audio/css/audioplayer.min.css`;
   if (window.com_marketwatch_audioplayer) {
     return;
   }
@@ -50,8 +50,8 @@ export async function loadAudioLib(endpoint) {
 }
 
 export async function loadVideoLib(endpoint) {
-  const scriptUrl = `${endpoint}api-video/player/v3/js/video.min.js`;
-  const styleUrl = `${endpoint}api-video/player/v3/css/video.min.css`;
+  const scriptUrl = `${endpoint}/api-video/player/v3/js/video.min.js`;
+  const styleUrl = `${endpoint}/api-video/player/v3/css/video.min.css`;
   if (window.$jQ111) {
     return;
   }
@@ -66,7 +66,7 @@ export async function loadVideoLib(endpoint) {
 }
 
 export async function loadAtmoLib(endpoint) {
-  const scriptUrl = `${endpoint}api-video/atmospheric/js/atm.min.js`;
+  const scriptUrl = `${endpoint}/api-video/atmospheric/js/atm.min.js`;
   if (window.com_marketwatch_atmplayer) {
     return;
   }

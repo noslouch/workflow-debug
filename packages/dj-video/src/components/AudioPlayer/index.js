@@ -113,7 +113,7 @@ AudioPlayer.defaultProps = {
   autoplay: false,
   articleSnippet: false,
   descriptionOverride: null,
-  endpoint: 'https://video-api.wsj.com/',
+  endpoint: 'https://video-api.wsj.com',
   guid: null,
   height: 300,
   hideDescription: false,
@@ -151,7 +151,7 @@ const AmpAudioPlayer = ({
   width,
 }) => {
   const id = guid ? `guid=${guid}` : `sbid=${sbid}`;
-  const src = `${endpoint}api-video/audio/iframe.html?${id}&height=${height}&width=${width}&showHeader=${showHeader}&showTitle=${showTitle}&showSubscribe=${showSubscribe}&hideFeedback=${hideFeedback}&theme=${theme}&adsEnabled=${adsEnabled}&hideDescription=${hideDescription}&articleSnippet=${articleSnippet}&autoplay=${autoplay}${
+  const src = `${endpoint}/api-video/audio/iframe.html?${id}&height=${height}&width=${width}&showHeader=${showHeader}&showTitle=${showTitle}&showSubscribe=${showSubscribe}&hideFeedback=${hideFeedback}&theme=${theme}&adsEnabled=${adsEnabled}&hideDescription=${hideDescription}&articleSnippet=${articleSnippet}&autoplay=${autoplay}${
     titleOverride ? `&titleOverride=${titleOverride}` : ''
   }${parentUrl ? `&parentUrl=${encodeURIComponent(parentUrl)}` : ''}`;
   return (
