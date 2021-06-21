@@ -227,6 +227,7 @@ jobs:
 
       - name: publish prerelease
         env:
+          NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
           PREID: beta
         run: |
           git config user.email brian.whitton@wsj.com
