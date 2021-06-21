@@ -189,7 +189,7 @@ jobs:
         env:
           PREID: beta
         run: |
-          git config user.email me@brianwhitton.com
+          git config user.email brian.whitton@wsj.com
 
           PACKAGES="${{ join(fromJSON(needs.find_changes.outputs.changed_packages), ' ') }}"
 
@@ -229,7 +229,7 @@ jobs:
         env:
           PREID: beta
         run: |
-          git config user.email me@brianwhitton.com
+          git config user.email brian.whitton@wsj.com
 
           lerna publish \
             --yes \
@@ -243,7 +243,7 @@ jobs:
         env:
           PREID: beta
         run: |
-          git config user.email me@brianwhitton.com
+          git config user.email brian.whitton@wsj.com
 
           # gather tags from this release
           TAGS=$(git tag --points-at HEAD)

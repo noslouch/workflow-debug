@@ -141,7 +141,7 @@ jobs:
           # reset the checkout to the provided ref
           git reset --hard ${{ env.ref }}
 
-          git config user.email me@brianwhitton.com
+          git config user.email brian.whitton@wsj.com
 
           lerna publish from-package \
             --yes \
@@ -152,7 +152,7 @@ jobs:
 
       - name: sign release tag
         run: |
-          git config user.email me@brianwhitton.com
+          git config user.email brian.whitton@wsj.com
 
           # release-please doesn't sign release tags
           # gather them up and create new signed versions
