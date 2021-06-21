@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
-          <defs>
-                    <path id="bookmark-filled-medium-a" d="M16,2 C17.1045695,2 18,2.8954305 18,4 L18,22 L17.3610731,22 L12.0092408,18.2011817 L6.67017746,21.9552474 L6,21.9552474 L6,4 C6,2.8954305 6.8954305,2 8,2 L16,2 Z"/>
-          </defs>
-          <use fill="#222" fill-rule="evenodd" xlink:href="#bookmark-filled-medium-a"/>
-</svg>
