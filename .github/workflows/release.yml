@@ -137,6 +137,8 @@ jobs:
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: publish release
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         run: |
           # reset the checkout to the provided ref
           git reset --hard ${{ env.ref }}
