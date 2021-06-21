@@ -46,5 +46,6 @@ jobs:
       - name: trigger release workflow
         uses: peter-evans/repository-dispatch@v1
         with:
+          token: ${{ secrets.PUBLISH_TOKEN }}
           event-type: cut-release
           client-payload: '{ "sha": "${{ github.sha }}", "packages": ${{ steps.changed_files.outputs.changed_packages }} }'
