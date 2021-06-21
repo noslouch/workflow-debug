@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.8.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.7.0...wsj-react-library-v0.8.0) (2021-06-21)
+
+### Features
+
+- add audio player to article body ([#398](https://www.github.com/newscorp-ghfb/dj-rendering/issues/398)) ([b036b14](https://www.github.com/newscorp-ghfb/dj-rendering/commit/b036b1401812a9cf4c90e41f326050e80d1954df))
+
 ## [0.7.0](https://www.github.com/newscorp-ghfb/dj-rendering/compare/wsj-react-library-v0.6.0...wsj-react-library-v0.7.0) (2021-06-18)
 
 ### Features
