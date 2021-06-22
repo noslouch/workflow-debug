@@ -248,20 +248,14 @@ jobs:
 
           # gather tags from this release
           TAGS=$(git tag --points-at HEAD)
-          PACKAGES=$(sed -E "s|@noslouch/(.*)@[0-9.]+-$PREID\.[0-9]+|\1|" <<< $TAGS)
 
-          # generate release tags using values from package files
-          # lerna revved the numbers so they're reliable
+          # `main` is protected, so we can push back the commit lerna makes
+          # move the tag lerna creates to point at the merge commit
+          #
           # tags must be signed and annotated in order for lerna
           # to recognize them when calculating version bumps in future commits
-          #
-          # NOTE this tag format (<pkg>-v<rev>) matches the format
-          # release-please generates for releases
 
-          while IFS= read -r PKG; do
-            NEXT_REV=$(jq -j .version "packages/$PKG/package.json")
-            NEXT_TAG="$PKG-v$NEXT_REV"
-
-            git tag -s --force -m $NEXT_TAG $NEXT_TAG ${{ github.sha }}
-            git push origin $NEXT_TAG --force
-          done <<< $PACKAGES
+          while IFS= read -r TAG; do
+            git tag -s --force -m $TAG $TAG ${{ github.sha }}
+            git push origin $TAG --force
+          done <<< $TAGS
