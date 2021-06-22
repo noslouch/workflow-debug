@@ -1,0 +1,20 @@
+{
+  "name": "@noslouch/baz",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/noslouch/workflow-debug.git",
+    "directory": "packages/baz"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noslouch/workflow-debug/issues"
+  },
+  "homepage": "https://github.com/noslouch/workflow-debug#readme"
+}
