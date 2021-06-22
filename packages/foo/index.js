@@ -8,4 +8,5 @@ function boo() {
 
 module.exports = {
   foo,
+  boo,
 }
