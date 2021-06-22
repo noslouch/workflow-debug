@@ -1,0 +1,11 @@
+{
+  "name": "@noslouch/bar",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "the test"
+  },
+  "author": "",
+  "license": "ISC"
+}
