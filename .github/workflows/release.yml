@@ -158,13 +158,17 @@ jobs:
 
           # release-please doesn't sign release tags
           # gather them up and create new signed versions
-          NEW_TAGS=$(git tag --points-at HEAD)
+          RELEASE_PLEASE_TAGS=$(git tag --points-at HEAD)
 
           while IFS= read -r TAG; do
+            NEW_TAG=$(sed -E "s/(.*)-v(.*)/@${{ github.repository_owner }}\/\1@\2/" <<< $TAG)
+
             MSG=$(git tag -l $TAG --format "%(subject)
 
             %(body)")
 
-            git tag -sfm "$MSG" $TAG HEAD
-            git push origin $TAG --force
-          done <<< $NEW_TAGS
+            git tag -sfm "$MSG" $NEW_TAG HEAD
+            git push origin $NEW_TAG --force
+
+            git push origin :$TAG
+          done <<< $RELEASE_PLEASE_TAGS
