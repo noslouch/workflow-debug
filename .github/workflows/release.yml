@@ -152,23 +152,23 @@ jobs:
             --no-changelog \
             --no-push
 
-      - name: sign release tag
-        run: |
-          git config user.email brian.whitton@wsj.com
+      # - name: sign release tag
+      #   run: |
+      #     git config user.email brian.whitton@wsj.com
 
-          # release-please doesn't sign release tags
-          # gather them up and create new signed versions
-          RELEASE_PLEASE_TAGS=$(git tag --points-at HEAD)
+      #     # release-please doesn't sign release tags
+      #     # gather them up and create new signed versions
+      #     RELEASE_PLEASE_TAGS=$(git tag --points-at HEAD)
 
-          while IFS= read -r TAG; do
-            NEW_TAG=$(sed -E "s/(.*)-v(.*)/@${{ github.repository_owner }}\/\1@\2/" <<< $TAG)
+      #     while IFS= read -r TAG; do
+      #       NEW_TAG=$(sed -E "s/(.*)-v(.*)/@${{ github.repository_owner }}\/\1@\2/" <<< $TAG)
 
-            MSG=$(git tag -l $TAG --format "%(subject)
+      #       MSG=$(git tag -l $TAG --format "%(subject)
 
-            %(body)")
+      #       %(body)")
 
-            git tag -sfm "$MSG" $NEW_TAG HEAD
-            git push origin $NEW_TAG --force
+      #       git tag -sfm "$MSG" $NEW_TAG HEAD
+      #       git push origin $NEW_TAG --force
 
-            git push origin :$TAG
-          done <<< $RELEASE_PLEASE_TAGS
+      #       git push origin :$TAG
+      #     done <<< $RELEASE_PLEASE_TAGS
