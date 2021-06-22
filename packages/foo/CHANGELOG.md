@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/noslouch/workflow-debug/compare/foo-v0.1.1...foo-v0.2.0) (2021-06-22)
+
+
+### Features
+
+* new feat ([#22](https://www.github.com/noslouch/workflow-debug/issues/22)) ([c2c9f4e](https://www.github.com/noslouch/workflow-debug/commit/c2c9f4ee329cd2a2fc22a6275a20dea262a6f8d6))
+
 ### [0.1.1](https://www.github.com/noslouch/workflow-debug/compare/foo-v0.1.0...foo-v0.1.1) (2021-06-22)
 
 
