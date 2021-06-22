@@ -2,8 +2,8 @@ function foo(a, b) {
   return a + b;
 }
 
-function boo() {
-  return null
+function boo(a) {
+  return a;
 }
 
 module.exports = {
