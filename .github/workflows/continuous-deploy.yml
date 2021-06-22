@@ -198,15 +198,15 @@ jobs:
           # look at the tags for each changed package and rev the package file by hand
           # so that lerna can properly bump the prerelease number
           for PKG in $PACKAGES; do
-            echo "::debug::previous tags for this package: $(git tag --list "$PKG-v*")"
+            echo "::debug::previous tags for this package: $(git tag --list "@${{ github.repository_owner }}/$PKG@*")"
 
             # pull the most recent tag for the current $PKG
             # use --always to prevent this from failing on fresh packages
-            LAST_TAG=$(git describe --tags --abbrev=0 --match "$PKG-v*" --always)
+            LAST_TAG=$(git describe --tags --abbrev=0 --match "@${{ github.repository_owner }}/$PKG@*" --always)
 
-            # prerelease tags have the format <pkg>-v<rev>-<preid>.<prerev>
+            # prerelease tags have the format @<scope>/<pkg>@<rev>-<preid>.<prerev>
             # pull just the version number from full tag
-            LAST_REV=$(sed -E "s/$PKG-v(.*)/\1/" <<< $LAST_TAG)
+            LAST_REV=$(sed -E "s/@${{ github.repository_owner }}\/$PKG@(.*)/\1/" <<< $LAST_TAG)
 
             # if the version number contains our prerelease identifier, then this package is currently in prerelease
             # if grep doesn't match, use "|| :;" to prevent the runner from dying
