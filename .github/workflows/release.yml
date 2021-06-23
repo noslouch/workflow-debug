@@ -31,42 +31,42 @@ jobs:
       - id: parse
         run: echo "::set-output name=packages::$(jq -Rc 'split(",") | map(ltrimstr(" ")  | rtrimstr(" "))' <<< "${{ env.packages }}")"
 
-  build_and_test:
-    name: build and test
-    runs-on: ubuntu-latest
+  # build_and_test:
+  #   name: build and test
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ env.ref }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         ref: ${{ env.ref }}
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14.x"
-          always-auth: true
-          registry-url: https://npm.pkg.github.com
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "14.x"
+  #         always-auth: true
+  #         registry-url: https://npm.pkg.github.com
 
-      - name: Cache node_modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+  #     - name: Cache node_modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           node_modules
+  #           */*/node_modules
+  #         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
-      - name: bootstrap deps
-        run: |
-          yarn --ignore-scripts
+  #     - name: bootstrap deps
+  #       run: |
+  #         yarn --ignore-scripts
 
-      # run scripts without auth token
-      # https://github.com/actions/setup-node
-      - name: run any postinstall scripts
-        run: |
-          yarn rebuild
-          yarn prepare
+  #     # run scripts without auth token
+  #     # https://github.com/actions/setup-node
+  #     - name: run any postinstall scripts
+  #       run: |
+  #         yarn rebuild
+  #         yarn prepare
 
-      - name: tests
-        run: lerna run test
+  #     - name: tests
+  #       run: lerna run test
 
   github_release:
     name: Create GitHub Release
@@ -122,10 +122,10 @@ jobs:
 
       # run scripts without auth token
       # https://github.com/actions/setup-node
-      - name: run any postinstall scripts
-        run: |
-          yarn rebuild
-          yarn prepare
+      # - name: run any postinstall scripts
+      #   run: |
+      #     yarn rebuild
+      #     yarn prepare
 
       - name: import GPG key
         uses: crazy-max/ghaction-import-gpg@v2
