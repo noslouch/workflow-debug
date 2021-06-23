@@ -155,7 +155,7 @@ jobs:
       - name: sign release tags
         id: tags
         run: |
-          # release-please tags `main`, but it's unsigned. make new signed tags to match lerna format
+          # release-please tags `main` on releases but they need to be in lerna format
 
           # get all tags via git: https://github.community/t/bug-jobs-output-should-return-a-list-for-a-matrix-job/128626/20
           TAGS=$(git tag --points-at HEAD)
@@ -164,7 +164,7 @@ jobs:
           # output them as a json array for use in github script
           echo "::set-output name=tags::$(jq -Rsc 'split("\n")[:-1]' <<< $TAGS)"
 
-          # generate signed tags in lerna format based on release-please content
+          # generate tags in lerna format based on release-please content
           while IFS= read -r tag
           do
             msg=$(git tag -l $tag --format "%(subject)
