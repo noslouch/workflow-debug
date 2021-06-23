@@ -166,8 +166,6 @@ jobs:
         env:
           PREID: beta
         run: |
-          git config user.email brian.whitton@wsj.com
-
           PACKAGES="${{ join(fromJSON(needs.find_changes.outputs.changed_packages), ' ') }}"
 
           # lerna reads the version in the package file when revving prereleases
@@ -207,8 +205,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
           PREID: beta
         run: |
-          git config user.email brian.whitton@wsj.com
-
           lerna publish \
             --yes \
             --conventional-commits \

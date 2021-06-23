@@ -143,8 +143,6 @@ jobs:
           # reset the checkout to the provided ref
           git reset --hard ${{ env.ref }}
 
-          git config user.email brian.whitton@wsj.com
-
           lerna publish from-package \
             --yes \
             --conventional-commits \
