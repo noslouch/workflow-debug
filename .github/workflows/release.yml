@@ -167,7 +167,7 @@ jobs:
 
             for (const tag of TAGS) {
               const NEW_TAG = tag.replace(/(.*)-v(.*)/, `@${owner}/$1@$2`);
-              const { id } = await github.repos.getReleaseByTag({
+              const { data: { id } } = await github.repos.getReleaseByTag({
                 owner,
                 repo,
                 tag,
