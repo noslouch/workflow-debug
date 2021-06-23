@@ -113,32 +113,6 @@ jobs:
           command: release-pr
           default-branch: main
 
-      - name: get release branch
-        if: steps.create-pr.outputs.pr
-        uses: actions/github-script@v4
-        id: release-branch
-        with:
-          script: |
-            const { owner, repo } = context.repo;
-            const { data } = await github.pulls.get({
-              owner,
-              repo,
-              pull_number: "${{ steps.create-pr.outputs.pr }}"
-            });
-
-            return { prBranch: data.head.ref, base: data.base.sha };
-
-      - name: sign release branch commits
-        if: steps.release-branch.outputs.result
-        run: |
-          BRANCH=${{ fromJSON(steps.release-branch.outputs.result).prBranch }}
-          SHA=${{ fromJSON(steps.release-branch.outputs.result).base }}
-
-          git fetch origin
-          git checkout $BRANCH
-          git rebase --exec 'git commit --amend --no-edit -n -S' $SHA
-          git push origin --force $BRANCH
-
   prerelease:
     name: Publish Prerelease to Package Registry
     runs-on: ubuntu-latest
