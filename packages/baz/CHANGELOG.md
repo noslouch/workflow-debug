@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/noslouch/workflow-debug/compare/baz-v0.1.0...baz-v0.1.1) (2021-06-23)
+
+
+### Bug Fixes
+
+* baz ([#59](https://www.github.com/noslouch/workflow-debug/issues/59)) ([36ed774](https://www.github.com/noslouch/workflow-debug/commit/36ed774ad63231ab8da271d00d7b1fc331e2f2b7))
+
 ## 0.1.0 (2021-06-23)
 
 
