@@ -137,6 +137,7 @@ jobs:
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: publish release
+        id: publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         run: |
@@ -151,24 +152,29 @@ jobs:
             --conventional-graduate \
             --no-changelog \
             --no-push
+          
+          # stash the release me tags
+          echo "::set-output name=tags::$(git tag --points-at HEAD)"
+          
+      
+      - name: reconcile tags
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const TAGS = ${{ fromJSON(steps.publish.outputs.tags) }}
 
-      # - name: sign release tag
-      #   run: |
-      #     git config user.email brian.whitton@wsj.com
-
-      #     # release-please doesn't sign release tags
-      #     # gather them up and create new signed versions
-      #     RELEASE_PLEASE_TAGS=$(git tag --points-at HEAD)
-
-      #     while IFS= read -r TAG; do
-      #       NEW_TAG=$(sed -E "s/(.*)-v(.*)/@${{ github.repository_owner }}\/\1@\2/" <<< $TAG)
-
-      #       MSG=$(git tag -l $TAG --format "%(subject)
-
-      #       %(body)")
-
-      #       git tag -sfm "$MSG" $NEW_TAG HEAD
-      #       git push origin $NEW_TAG --force
-
-      #       git push origin :$TAG
-      #     done <<< $RELEASE_PLEASE_TAGS
+            for (const tag of TAGS) {
+              const NEW_TAG = tag.replace(/(.*)-v(.*)/, `@${owner}/$1@$2`);
+              const { id } = await github.repos.getReleaseByTag({
+                owner,
+                repo,
+                tag,
+              });
+              await github.repos.updateRelease({
+                owner,
+                repo,
+                release_id: id,
+                tag_name: NEW_TAG
+              });
+            }
