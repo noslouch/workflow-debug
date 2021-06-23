@@ -77,7 +77,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ${{ fromJson(needs.parse.outputs.packages) }}
+        package: ${{ fromJSON(needs.parse.outputs.packages) }}
     steps:
       - uses: google-github-actions/release-please-action@v2
         id: gh-release
