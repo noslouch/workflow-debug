@@ -137,7 +137,6 @@ jobs:
           PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: publish release
-        id: publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
         run: |
@@ -154,6 +153,7 @@ jobs:
             --no-push
           
       - name: pass release please tags to GH script
+        id: tags
         run: |
           # we'll have to update these tags to match the lerna format
           # we're not using the output from the release please step by design
@@ -171,7 +171,7 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const TAGS = ${{ steps.publish.outputs.tags }}
+            const TAGS = ${{ steps.tags.outputs.tags }}
 
             for (const tag of TAGS) {
               // convert release-please tags format (<pkg>-v<rev>)
