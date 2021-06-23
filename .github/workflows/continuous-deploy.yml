@@ -227,6 +227,6 @@ jobs:
           # to recognize them when calculating version bumps in future commits
 
           while IFS= read -r TAG; do
-            git tag -s --force -m $TAG $TAG ${{ github.sha }}
+            git tag --force -m $TAG $TAG ${{ github.sha }}
             git push origin $TAG --force
           done <<< $TAGS

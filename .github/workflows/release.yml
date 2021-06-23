@@ -171,7 +171,7 @@ jobs:
 
             new_tag=$(sed -E "s/(.*)-v(.*)/@${{ github.repository_owner }}\/\1@\2/" <<< $tag)
 
-            git tag -sfm "$msg" $new_tag HEAD
+            git tag -fm "$msg" $new_tag HEAD
             git push origin $new_tag --force
           done <<< $TAGS
 
