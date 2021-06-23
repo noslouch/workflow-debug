@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/noslouch/workflow-debug/compare/bar-v0.1.0...bar-v0.1.1) (2021-06-23)
+
+
+### Bug Fixes
+
+* bar ([#55](https://www.github.com/noslouch/workflow-debug/issues/55)) ([f13a1c8](https://www.github.com/noslouch/workflow-debug/commit/f13a1c8c89b66cfb577a37730c10202de98378b9))
+
 ## 0.1.0 (2021-06-23)
 
 
