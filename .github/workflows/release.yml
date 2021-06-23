@@ -154,7 +154,8 @@ jobs:
             --no-push
           
           # stash the release me tags
-          echo "::set-output name=tags::$(git tag --points-at HEAD)"
+          TAGS=$(git tag --points-at HEAD | jq --slurp --raw-input --compact-output 'split("\n")[:-1]')
+          echo "::set-output name=tags::$TAGS"
           
       
       - name: reconcile tags
