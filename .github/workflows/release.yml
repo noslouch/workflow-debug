@@ -152,52 +152,63 @@ jobs:
             --no-changelog \
             --no-push
           
-      # - name: pass release please tags to GH script
-      #   id: tags
-      #   run: |
-      #     # we'll have to update these tags to match the lerna format
-      #     # we're not using the output from the release please step by design
-      #     # if more than one package is released by this commit, the matrix strategy
-      #     # overwrites the output on each run
-      #     # https://github.community/t/bug-jobs-output-should-return-a-list-for-a-matrix-job/128626/20
-      #     # so we use regular git to gather all the tags that might have been generated
+      - name: sign release tags
+        id: tags
+        run: |
+          # release-please tags `main`, but it's unsigned. make new signed tags to match lerna format
 
-      #     TAGS=$(git tag --points-at HEAD | jq --slurp --raw-input --compact-output 'split("\n")[:-1]')
-      #     echo "::set-output name=tags::$TAGS"
-          
+          # get all tags via git: https://github.community/t/bug-jobs-output-should-return-a-list-for-a-matrix-job/128626/20
+          TAGS=$(git tag --points-at HEAD | jq --slurp --raw-input --compact-output 'split("\n")[:-1]')
+
+          # we'll need the release please tags in the next step to update the GH release object
+          echo "::set-output name=tags::$TAGS"
+
+          # generate signed tags in lerna format based on release-please content
+          while IFS= read -r tag
+          do
+            msg=$(git tag -l $tag --format "%(subject)
+
+            %(body)")
+
+            new_tag=$(sed -E "s/(.*)-v(.*)/@${{ github.repository_owner }}\/\1@\2/" <<< $tag)
+
+            git tag -sfm "$msg" $new_tag HEAD
+            git push origin $new_tag --force
+          done <<< $TAGS
+
       
-      # - name: reconcile tags
-      #   uses: actions/github-script@v4
-      #   with:
-      #     script: |
-      #       const { owner, repo } = context.repo;
-      #       const TAGS = ${{ steps.tags.outputs.tags }}
+      - name: reconcile tags
+        uses: actions/github-script@v4
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const OLD_TAGS = ${{ steps.tags.outputs.tags }}
 
-      #       for (const tag of TAGS) {
-      #         // convert release-please tags format (<pkg>-v<rev>)
-      #         // to lerna format (@<owner>/<pkg>@<rev>)
-      #         // and update corresponding GH release
-      #         const NEW_TAG = tag.replace(/(.*)-v(.*)/, `@${owner}/$1@$2`);
+            for (const tag of OLD_TAGS) {
+              // convert release-please tags format (<pkg>-v<rev>)
+              // to lerna format (@<owner>/<pkg>@<rev>)
+              // and update corresponding GH release
+              const NEW_TAG = tag.replace(/(.*)-v(.*)/, `@${owner}/$1@$2`);
 
-      #         // get the GH release according to the release-please tag
-      #         const { data: { id } } = await github.repos.getReleaseByTag({
-      #           owner,
-      #           repo,
-      #           tag,
-      #         });
+              // get the GH release according to the release-please tag
+              const { data: { id } } = await github.repos.getReleaseByTag({
+                owner,
+                repo,
+                tag,
+              });
 
-      #         // update the releast with a new tag name; this also creates the tag
-      #         await github.repos.updateRelease({
-      #           owner,
-      #           repo,
-      #           release_id: id,
-      #           tag_name: NEW_TAG
-      #         });
+              // update the release to point to the lerna tag
+              await github.repos.updateRelease({
+                owner,
+                repo,
+                release_id: id,
+                tag_name: NEW_TAG
+              });
 
-      #         // clean up. delete the release-please tag
-      #         await github.git.deleteRef({
-      #           owner,
-      #           repo,
-      #           ref: `tags/${tag}`,
-      #         });
-      #       }
+              // clean up. delete the release-please tag
+              await github.git.deleteRef({
+                owner,
+                repo,
+                ref: `tags/${tag}`,
+              });
+            }
