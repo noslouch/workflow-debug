@@ -1,5 +1,5 @@
-function bar() {
-  return 'bar';
+function bar(a) {
+  return a;
 }
 
 module.exports = {
