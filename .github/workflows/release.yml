@@ -163,7 +163,7 @@ jobs:
         with:
           script: |
             const { owner, repo } = context.repo;
-            const TAGS = ${{ fromJson(steps.publish.outputs.tags) }}
+            const TAGS = ${{ steps.publish.outputs.tags }}
 
             for (const tag of TAGS) {
               const NEW_TAG = tag.replace(/(.*)-v(.*)/, `@${owner}/$1@$2`);
