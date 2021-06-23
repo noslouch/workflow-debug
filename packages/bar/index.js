@@ -1,1 +1,7 @@
-module.exports = {}
+function bar() {
+  return 'bar';
+}
+
+module.exports = {
+  bar,
+}
