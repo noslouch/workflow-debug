@@ -1,0 +1,16 @@
+{
+  "name": "@noslouch/bar",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo the test"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git://git@github.com:noslouch/workflow-debug",
+    "directory": "packages/bar"
+  }
+}
