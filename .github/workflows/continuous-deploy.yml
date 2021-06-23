@@ -88,20 +88,6 @@ jobs:
         with:
           fetch-depth: "0"
 
-      # - uses: actions/setup-node@v2
-      #   with:
-      #     node-version: "14.x"
-
-      # - name: import GPG key
-      #   uses: crazy-max/ghaction-import-gpg@v2
-      #   with:
-      #     git_user_signingkey: true
-      #     git_commit_gpgsign: true
-      #     git_push_gpgsign: true
-      #   env:
-      #     GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
-      #     PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
-
       - uses: google-github-actions/release-please-action@v2
         name: open (or edit) release PR for this package version
         id: create-pr
