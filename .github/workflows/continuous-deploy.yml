@@ -82,7 +82,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: ${{ fromJson(needs.find_changes.outputs.changed_packages) }}
+        package: ${{ fromJSON(needs.find_changes.outputs.changed_packages) }}
     steps:
       - uses: actions/checkout@v2
         with:
