@@ -84,9 +84,9 @@ jobs:
       matrix:
         package: ${{ fromJSON(needs.find_changes.outputs.changed_packages) }}
     steps:
-      # - uses: actions/checkout@v2
-      #   with:
-      #     fetch-depth: "0"
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
 
       # - uses: actions/setup-node@v2
       #   with:
