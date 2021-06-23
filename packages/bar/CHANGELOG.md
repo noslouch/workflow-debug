@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0](https://www.github.com/noslouch/workflow-debug/compare/bar-v0.2.0...bar-v0.3.0) (2021-06-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* add bar (#76)
+
+### Features
+
+* add bar ([#76](https://www.github.com/noslouch/workflow-debug/issues/76)) ([19a3529](https://www.github.com/noslouch/workflow-debug/commit/19a3529e7a428f8ad95ca449def3517a074ad946))
+
 ## [0.2.0](https://www.github.com/noslouch/workflow-debug/compare/bar-v0.1.0...bar-v0.2.0) (2021-06-23)
 
 
