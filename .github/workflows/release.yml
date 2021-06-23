@@ -152,52 +152,52 @@ jobs:
             --no-changelog \
             --no-push
           
-      - name: pass release please tags to GH script
-        id: tags
-        run: |
-          # we'll have to update these tags to match the lerna format
-          # we're not using the output from the release please step by design
-          # if more than one package is released by this commit, the matrix strategy
-          # overwrites the output on each run
-          # https://github.community/t/bug-jobs-output-should-return-a-list-for-a-matrix-job/128626/20
-          # so we use regular git to gather all the tags that might have been generated
+      # - name: pass release please tags to GH script
+      #   id: tags
+      #   run: |
+      #     # we'll have to update these tags to match the lerna format
+      #     # we're not using the output from the release please step by design
+      #     # if more than one package is released by this commit, the matrix strategy
+      #     # overwrites the output on each run
+      #     # https://github.community/t/bug-jobs-output-should-return-a-list-for-a-matrix-job/128626/20
+      #     # so we use regular git to gather all the tags that might have been generated
 
-          TAGS=$(git tag --points-at HEAD | jq --slurp --raw-input --compact-output 'split("\n")[:-1]')
-          echo "::set-output name=tags::$TAGS"
+      #     TAGS=$(git tag --points-at HEAD | jq --slurp --raw-input --compact-output 'split("\n")[:-1]')
+      #     echo "::set-output name=tags::$TAGS"
           
       
-      - name: reconcile tags
-        uses: actions/github-script@v4
-        with:
-          script: |
-            const { owner, repo } = context.repo;
-            const TAGS = ${{ steps.tags.outputs.tags }}
+      # - name: reconcile tags
+      #   uses: actions/github-script@v4
+      #   with:
+      #     script: |
+      #       const { owner, repo } = context.repo;
+      #       const TAGS = ${{ steps.tags.outputs.tags }}
 
-            for (const tag of TAGS) {
-              // convert release-please tags format (<pkg>-v<rev>)
-              // to lerna format (@<owner>/<pkg>@<rev>)
-              // and update corresponding GH release
-              const NEW_TAG = tag.replace(/(.*)-v(.*)/, `@${owner}/$1@$2`);
+      #       for (const tag of TAGS) {
+      #         // convert release-please tags format (<pkg>-v<rev>)
+      #         // to lerna format (@<owner>/<pkg>@<rev>)
+      #         // and update corresponding GH release
+      #         const NEW_TAG = tag.replace(/(.*)-v(.*)/, `@${owner}/$1@$2`);
 
-              // get the GH release according to the release-please tag
-              const { data: { id } } = await github.repos.getReleaseByTag({
-                owner,
-                repo,
-                tag,
-              });
+      #         // get the GH release according to the release-please tag
+      #         const { data: { id } } = await github.repos.getReleaseByTag({
+      #           owner,
+      #           repo,
+      #           tag,
+      #         });
 
-              // update the releast with a new tag name; this also creates the tag
-              await github.repos.updateRelease({
-                owner,
-                repo,
-                release_id: id,
-                tag_name: NEW_TAG
-              });
+      #         // update the releast with a new tag name; this also creates the tag
+      #         await github.repos.updateRelease({
+      #           owner,
+      #           repo,
+      #           release_id: id,
+      #           tag_name: NEW_TAG
+      #         });
 
-              // clean up. delete the release-please tag
-              await github.git.deleteRef({
-                owner,
-                repo,
-                ref: `tags/${tag}`,
-              });
-            }
+      #         // clean up. delete the release-please tag
+      #         await github.git.deleteRef({
+      #           owner,
+      #           repo,
+      #           ref: `tags/${tag}`,
+      #         });
+      #       }
