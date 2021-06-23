@@ -158,10 +158,11 @@ jobs:
           # release-please tags `main`, but it's unsigned. make new signed tags to match lerna format
 
           # get all tags via git: https://github.community/t/bug-jobs-output-should-return-a-list-for-a-matrix-job/128626/20
-          TAGS=$(git tag --points-at HEAD | jq --slurp --raw-input --compact-output 'split("\n")[:-1]')
+          TAGS=$(git tag --points-at HEAD)
 
           # we'll need the release please tags in the next step to update the GH release object
-          echo "::set-output name=tags::$TAGS"
+          # output them as a json array for use in github script
+          echo "::set-output name=tags::$(jq -Rsc 'split("\n")[:-1]' <<< $TAGS)"
 
           # generate signed tags in lerna format based on release-please content
           while IFS= read -r tag
