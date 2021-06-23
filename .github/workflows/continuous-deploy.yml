@@ -19,46 +19,46 @@ on:
     branches: [main]
 
 jobs:
-  build_and_test:
-    name: build and test
-    # filter for merged PRs and skip release branches or any with our escape hatch label 'no-deploy'
-    if: ${{ github.event.pull_request.merged == true && !startsWith(github.head_ref, 'release-') && !contains(github.event.pull_request.labels.*.name, 'no-deploy') }}
+  # build_and_test:
+  #   name: build and test
+  #   # filter for merged PRs and skip release branches or any with our escape hatch label 'no-deploy'
+  #   if: ${{ github.event.pull_request.merged == true && !startsWith(github.head_ref, 'release-') && !contains(github.event.pull_request.labels.*.name, 'no-deploy') }}
 
-    runs-on: ubuntu-latest
+  #   runs-on: ubuntu-latest
 
-    steps:
-      - uses: actions/checkout@v2
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14.x"
-          always-auth: true
-          registry-url: https://npm.pkg.github.com
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "14.x"
+  #         always-auth: true
+  #         registry-url: https://npm.pkg.github.com
 
-      - name: Cache node_modules
-        uses: actions/cache@v2
-        with:
-          path: |
-            node_modules
-            */*/node_modules
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+  #     - name: Cache node_modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           node_modules
+  #           */*/node_modules
+  #         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
-      - name: bootstrap deps
-        run: |
-          yarn --ignore-scripts
+  #     - name: bootstrap deps
+  #       run: |
+  #         yarn --ignore-scripts
 
-      # run scripts without auth token
-      # https://github.com/actions/setup-node
-      - name: run any postinstall scripts
-        run: |
-          yarn rebuild
-          yarn prepare
+  #     # run scripts without auth token
+  #     # https://github.com/actions/setup-node
+  #     - name: run any postinstall scripts
+  #       run: |
+  #         yarn rebuild
+  #         yarn prepare
 
-      - name: tests
-        run: lerna run test
+  #     - name: tests
+  #       run: lerna run test
 
   find_changes:
-    needs: build_and_test
+    # needs: build_and_test
     runs-on: ubuntu-latest
     outputs:
       changed_packages: ${{ steps.changes.outputs.changed_paths }}
@@ -84,13 +84,13 @@ jobs:
       matrix:
         package: ${{ fromJSON(needs.find_changes.outputs.changed_packages) }}
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: "0"
+      # - uses: actions/checkout@v2
+      #   with:
+      #     fetch-depth: "0"
 
-      - uses: actions/setup-node@v2
-        with:
-          node-version: "14.x"
+      # - uses: actions/setup-node@v2
+      #   with:
+      #     node-version: "14.x"
 
       - name: import GPG key
         uses: crazy-max/ghaction-import-gpg@v2
@@ -147,10 +147,10 @@ jobs:
 
       # run scripts without auth token
       # https://github.com/actions/setup-node
-      - name: run any postinstall scripts
-        run: |
-          yarn rebuild
-          yarn prepare
+      # - name: run any postinstall scripts
+      #   run: |
+      #     yarn rebuild
+      #     yarn prepare
 
       - name: import GPG key
         uses: crazy-max/ghaction-import-gpg@v2
