@@ -178,4 +178,9 @@ jobs:
                 release_id: id,
                 tag_name: NEW_TAG
               });
+              await github.repos.deleteRef({
+                owner,
+                repo,
+                ref: `tags/${tag}`,
+              });
             }
