@@ -214,8 +214,6 @@ jobs:
             --preid $PREID
 
       - name: sign and push prerelease tags
-        env:
-          PREID: beta
         run: |
           # gather tags from this release
           TAGS=$(git tag --points-at HEAD)
