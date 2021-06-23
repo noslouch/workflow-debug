@@ -1,0 +1,20 @@
+{
+  "name": "@noslouch/foo",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo no tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/noslouch/workflow-debug.git",
+    "directory": "packages/foo"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/noslouch/workflow-debug/issues"
+  },
+  "homepage": "https://github.com/noslouch/workflow-debug#readme"
+}
