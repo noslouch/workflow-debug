@@ -62,4 +62,4 @@ jobs:
         with:
           commit_message: "chore: fix initial package number 🛠"
           commit_options: "--no-verify -S"
-          commit_user_email: brian.whitton@wsj.com
+          commit_user_email: ${{ secrets.BOT_EMAIL }}
