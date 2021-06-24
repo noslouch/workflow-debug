@@ -1,0 +1,16 @@
+{
+  "line-length": false,
+  "no-inline-html": {
+    "allowed_elements": ["a"]
+  },
+  "ignore_front_matter": true,
+  "no-multiple-blanks": false,
+  "single-title": false,
+  "heading-increment": false,
+  "no-duplicate-heading": {
+    "siblings_only": true
+  },
+  "ul-style": {
+    "style": "dash"
+  }
+}

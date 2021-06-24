@@ -1,0 +1,212 @@
+# This workflow runs on all PRs to enforce coding standards and optionally publish to a unique dist tag.
+#
+# The jobs are:
+#   `format_code`: runs our prettier config on the code base, fixes violations in place and commits them
+#   `lint_code`: runs syntax checking and linting over JSON, Markdown, Yaml, and JS (soon) files. This job will only run if `format_code` did not make any changes. If `format_code` commits, a new workflow run for the branch will kick off.
+#   `pr_deployer`: if this PR has been given a `deploy` label, build and publish this commit under a dist tag `pr<pr number>`, e.g. `pr45`. Users can specify the dist tag instead of a version number to install this branch in their apps.
+
+name: Enforce Coding Standards
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  format_code:
+    name: Format with prettier
+    runs-on: ubuntu-latest
+
+    outputs:
+      filesChanged: ${{ steps.autocommit.outputs.changes_detected }}
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.head_ref }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+          always-auth: true
+          registry-url: https://npm.pkg.github.com
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: bootstrap deps
+        run: |
+          yarn --ignore-scripts --frozen-lockfile
+
+      # run scripts without auth token
+      # https://github.com/actions/setup-node
+      # - name: run any postinstall scripts
+      #   run: |
+      #     yarn rebuild
+      #     yarn prepare
+
+      - name: Detects Files Changes
+        id: file_changes
+        uses: trilom/file-changes-action@v1.2.4
+
+      - name: Files to Prettify
+        id: prettify
+        run: |
+          changedFiles=$(jq -c -s '.[0] + .[1]' "$HOME/files_modified.json" "$HOME/files_added.json")
+          supportedFiles=$(jq -c \
+            '[.[] | select(. | test(".(json|html|css|js|md)$") or (endswith(".yml") and (contains(".github/workflows/") | not)))]' \
+            <<< ${changedFiles} \
+          )
+          echo "::set-output name=files::$supportedFiles"
+
+      - name: Prettify Code Base
+        if: ${{ !contains(toJson(steps.prettify.outputs.files), '[]') }}
+        run: |
+          npx prettier --config .config/prettier.config.js --ignore-path .config/.prettierignore \
+            --write ${{ join(fromJSON(steps.prettify.outputs.files), ' ') }}
+
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v2
+        with:
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+          PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Commit changes
+        id: autocommit
+        uses: stefanzweifel/git-auto-commit-action@v4.4.0
+        with:
+          commit_message: "chore: Auto commit changes 🛠"
+          commit_options: "--no-verify -S"
+          commit_user_email: ${{ secrets.BOT_EMAIL }}
+
+  lint_code:
+    name: Lint code
+    runs-on: ubuntu-latest
+
+    needs: format_code
+
+    # skip linting if prettier made newer commits. they will be linted on the pushed commit.
+    if: ${{ needs.format_code.outputs.filesChanged == 'false' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: File Changes Action
+        id: file_changes
+        uses: trilom/file-changes-action@v1.2.4
+
+      - name: Group Files by extension
+        id: group_files
+        run: |
+          FILES_CHANGED=$(jq -c -s '.[0] + .[1]' "$HOME/files_modified.json" "$HOME/files_added.json")
+          echo "::set-output name=jsFiles::$(jq -c -s '.[] | map(select(. | endswith(".js")))' <<< ${FILES_CHANGED})"
+          echo "::set-output name=jsonFiles::$(jq -c -s '.[] | map(select(. | endswith(".json")))' <<< ${FILES_CHANGED})"
+          echo "::set-output name=markdowns::$(jq -c -s '.[] | map(select(. | endswith(".md")))' <<< ${FILES_CHANGED})"
+          echo "::set-output name=yamls::$(jq -c -s '.[] | map(select(. | endswith(".yml") and (contains(".github/workflows/") | not)))' <<< ${FILES_CHANGED})"
+
+      - name: Lint JSON Files
+        if: ${{ always() && endsWith(steps.group_files.outputs.jsonFiles, '.json"]') }}
+        run: |
+          set +e
+          npm i jsonlint -s
+          jsonFiles=${{ join(fromJSON(steps.group_files.outputs.jsonFiles), ',') }}
+
+          # jsonlint will exit on the first error; we want it report all errors, so we need to do some hand holding
+          jsonlintExitCode=0
+          for i in ${jsonFiles//,/ }; do
+            lintErrors="$(./node_modules/.bin/jsonlint -q -c $i 2>&1 >/dev/null)"
+            ec=$?
+            if [ $ec -ne 0 ]; then
+                jsonlintExitCode=$ec
+                echo "${lintErrors}"
+            fi
+          done
+          exit $jsonlintExitCode
+
+      - name: Lint Markdown Files
+        if: ${{ always() && endsWith(steps.group_files.outputs.markdowns, '.md"]') }}
+        run: npx -q markdownlint-cli -c .config/.markdownlint.json ${{ join(fromJSON(steps.group_files.outputs.markdowns), ' ') }}
+
+      - name: Lint Yaml Files
+        if: ${{ always() && endsWith(steps.group_files.outputs.yamls, '.yml"]') }}
+        run: |
+          sudo apt-get install yamllint -qq > /dev/null
+          yamllint -c .config/.yamllint.yml ${{ join(fromJSON(steps.group_files.outputs.yamls), ' ') }}
+
+  # run_tests:
+  #   name: Tests
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     - uses: actions/checkout@v2
+
+  #     - uses: actions/setup-node@v2
+  #       with:
+  #         node-version: "14.x"
+  #         always-auth: true
+  #         registry-url: https://npm.pkg.github.com
+  #         scope: "@newscorp-ghfb"
+
+  #     - name: Cache node_modules
+  #       uses: actions/cache@v2
+  #       with:
+  #         path: |
+  #           node_modules
+  #           */*/node_modules
+  #         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+  #     - name: bootstrap deps
+  #       run: |
+  #         yarn --ignore-scripts
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{secrets.BOT_TOKEN}}
+
+  #     # run scripts without auth token
+  #     # https://github.com/actions/setup-node
+  #     - name: run any postinstall scripts
+  #       run: |
+  #         yarn rebuild
+  #         yarn prepare
+      
+  #     - name: tests
+  #       run: lerna run test
+
+  # trigger_pr_deploy:
+  #   name: Deploy PR Trigger
+  #   runs-on: ubuntu-latest
+
+  #   needs: lint_code
+
+  #   steps:
+  #     - id: skip_check
+  #       uses: fkirc/skip-duplicate-actions@master
+  #       with:
+  #         concurrent_skipping: outdated_runs
+  #         paths_ignore: '["**/README.md", "**/docs/**", "**/CHANGELOG.md"]'
+
+  #     - name: trigger pr deployer
+  #       # check for required states to trigger pr deploy:
+  #       #   - skip if there's another workflow running for this branch
+  #       #   - this PR requires a 'deploy' label
+  #       if: ${{ steps.skip_check.outputs.should_skip != 'true' && contains(github.event.pull_request.labels.*.name, 'deploy') }}
+  #       uses: peter-evans/repository-dispatch@v1
+  #       with:
+  #         event-type: deploy-pr
+  #         token: ${{ secrets.BOT_TOKEN }}
+  #         client-payload: '{"sha": "${{ github.event.pull_request.head.sha }}", "branch": "${{ github.head_ref }}", "pr_number": "${{ github.event.pull_request.number }}" }'
