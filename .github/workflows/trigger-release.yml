@@ -25,6 +25,7 @@ jobs:
           node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
+          scope: "@newscorp-ghfb"
 
       - name: Cache node_modules
         uses: actions/cache@v2
@@ -36,6 +37,9 @@ jobs:
 
       - name: install lerna locally
         run: yarn --ignore-scripts
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.PAT}}
+
 
       - name: find changed files
         id: changed_files

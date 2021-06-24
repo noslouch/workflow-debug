@@ -29,6 +29,7 @@ jobs:
           node-version: "14.x"
           always-auth: true
           registry-url: https://npm.pkg.github.com
+          scope: "@newscorp-ghfb"
 
       - name: Cache node_modules
         uses: actions/cache@v2
@@ -41,6 +42,8 @@ jobs:
       - name: bootstrap deps
         run: |
           yarn --ignore-scripts --frozen-lockfile
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.PAT}}
 
       # run scripts without auth token
       # https://github.com/actions/setup-node
