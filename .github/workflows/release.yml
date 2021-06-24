@@ -101,6 +101,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: "0"
+          ref: ${{ env.ref }}
 
       - uses: actions/setup-node@v2
         with:
@@ -144,9 +145,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.BOT_TOKEN }}
         run: |
-          # reset the checkout to the provided ref
-          git reset --hard ${{ env.ref }}
-
           lerna publish from-package \
             --yes \
             --conventional-commits \
