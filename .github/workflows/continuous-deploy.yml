@@ -85,10 +85,6 @@ jobs:
       matrix:
         package: ${{ fromJSON(needs.find_changes.outputs.changed_packages) }}
     steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: "0"
-
       - uses: google-github-actions/release-please-action@v2
         name: open (or edit) release PR for this package version
         id: create-pr
