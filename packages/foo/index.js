@@ -1,1 +1,5 @@
-module.exports = {}
+const foo = () => 'foo';
+
+module.exports = {
+  foo,
+}
