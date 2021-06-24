@@ -87,6 +87,7 @@ jobs:
         with:
           commit_message: "chore: Auto commit changes 🛠"
           commit_options: "--no-verify"
+          commit_user_email: ${{ secrets.BOT_EMAIL }}
 
   lint_code:
     name: Lint code
