@@ -59,6 +59,7 @@ jobs:
 
   find_changes:
     # needs: build_and_test
+    if: ${{ github.event.pull_request.merged == true && !startsWith(github.head_ref, 'release-') && !contains(github.event.pull_request.labels.*.name, 'no-deploy') }}
     runs-on: ubuntu-latest
     outputs:
       changed_packages: ${{ steps.changes.outputs.changed_paths }}
